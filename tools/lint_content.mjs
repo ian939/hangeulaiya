@@ -92,7 +92,14 @@ for (const key of epKeys) {
 
   // --- 누적 자모 규칙 ---
   // N화 시점에 쓸 수 있는 카드 = N화 이전에 배운 것 + N화의 새 카드
-  const allowedCards = new Set([...AIYA.data.taught(ep.episode), ...(ep.jamo?.new || [])]);
+  /* 기준은 '배정된 카드' 가 아니라 '그때까지 화면에 나온 자모' 다.
+     방송은 목표 낱말을 만들려고 다른 자모도 그 회차에서 찾아와 소개한다
+     (3화 「어디」의 ㄷ 는 '다리' 에서 찾아온다). available() 이 그걸 포함한다. */
+  const allowedCards = new Set([
+    ...AIYA.data.available(ep.episode),
+    ...(ep.jamo?.new || []),
+    ...(ep.jamo?.seen || [])
+  ]);
 
   /** 글자 하나가 허용 범위 안인지. 받침은 '받침 X' 카드로 따로 따진다. */
   function checkSyllable(ch, where, { allowGuest = false } = {}) {

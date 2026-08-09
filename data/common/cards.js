@@ -59,11 +59,43 @@
     56: ['받침 ㄻ'], 57: ['받침 ㄼ'], 58: ['받침 ㄾ'], 59: ['받침 ㅀ'], 60: ['받침 ㅄ']
   };
 
+  /* 회차에서 **함께 소개되는** 자모.
+   *
+   * 방송은 오늘의 자모만 다루지 않는다. 목표 낱말을 만들려면 다른 자모도
+   * 필요하고, 그건 용사가 그 회차에서 찾아오며 이름을 불러 소개한다.
+   *   3화 「어디」 — 오늘은 모음 ㅓ 인데, ㄷ 을 '다리' 에서 찾아온다
+   *   6화 「요가」 — 오늘은 모음 ㅛ 인데, ㄱ 을 '기린' 에서 찾아온다
+   *   8화 「가수」 — 오늘은 자음 ㄱ 인데, ㅅ 을 '산' 에서 찾아온다
+   *
+   * 그래서 '아직 안 배운 글자를 쓰지 않는다' 규칙의 기준은 카드 배정표가
+   * 아니라 이 목록까지 합친 것이어야 한다. 카드(앨범)는 여전히 curriculum 만
+   * 따른다 — 3화에서 ㄷ 카드를 주지는 않는다.
+   *
+   * 이 목록은 tools/gen_episodes.py 가 회차 명세의 hunts 에서 만들어 준다.
+   */
+  AIYA.data.introduced = {
+    3: ['ㄷ'],    // 「어디」 — ㄷ 을 '다리' 에서 찾아온다
+    6: ['ㄱ'],    // 「요가」 — ㄱ 을 '기린' 에서 찾아온다
+    8: ['ㅅ'],    // 「가수」 — ㅅ 을 '산' 에서 찾아온다
+    9: ['ㅂ'],    // 「나비」 — ㅂ 을 '봉투' 에서 찾아온다
+    12: ['ㅈ'],   // 「모자」 — ㅈ 을 '잠자리' 에서 찾아온다
+    13: ['ㅅ']    // 「버스」 — ㅅ 을 '수박' 에서 찾아온다
+  };
+
   /** N화 시작 시점에 이미 배운 카드들. */
   AIYA.data.taught = function (n) {
     var out = [];
     Object.keys(AIYA.data.curriculum).forEach(function (k) {
       if (parseInt(k, 10) < n) out = out.concat(AIYA.data.curriculum[k]);
+    });
+    return out;
+  };
+
+  /** N화까지 화면에 나온 모든 자모 (카드 + 함께 소개된 것). 사용 가능 여부의 기준. */
+  AIYA.data.available = function (n) {
+    var out = AIYA.data.taught(n);
+    Object.keys(AIYA.data.introduced).forEach(function (k) {
+      if (parseInt(k, 10) <= n) out = out.concat(AIYA.data.introduced[k]);
     });
     return out;
   };

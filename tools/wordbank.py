@@ -54,13 +54,57 @@ BY_JUNG: dict[str, dict[str, str | None]] = {
 }
 
 
+# 첫 자리 자음별 낱말 (기초 자음·쌍자음 단원용).
+# 이 단원은 **받침을 아직 안 배운 시점**이라 받침 없는 낱말만 쓴다.
+BY_CHO: dict[str, dict[str, str | None]] = {
+    "ㄱ": {"가수": "🎤", "가위": "✂️", "고기": "🍖", "구두": "👞"},
+    "ㄴ": {"나비": "🦋", "누나": "👧", "나무": "🌳"},
+    "ㄷ": {"두유": "🥛", "도시": "🏙️", "다리": "🦵"},
+    "ㄹ": {"라디오": "📻", "리모컨": None},
+    "ㅁ": {"모자": "👒", "머리": "💇", "무": "🥬", "머루": "🍇"},
+    "ㅂ": {"버스": "🚌", "바나나": "🍌", "비": "🌧️", "바다": "🌊"},
+    "ㅅ": {"소리": "🔊", "소": "🐄", "시소": "🛝", "수도": "🚰"},
+    "ㅈ": {"자유": "🕊️", "지도": "🗺️", "주사기": "💉"},
+    "ㅊ": {"차": "🚗", "치마": "👗", "초": "🕯️"},
+    "ㅋ": {"코": "👃", "카드": "🃏", "코드": None},
+    "ㅌ": {"토마토": "🍅", "타조": "🦩", "토끼": None},
+    "ㅍ": {"피자": "🍕", "포도": "🍇", "파": "🧅"},
+    "ㅎ": {"휴지": "🧻", "하마": "🦛", "호수": "🏞️"},
+    # 쌍자음 — 받침 없는 낱말이 많지 않아 회차 낱말 위주로 둔다
+    "ㄲ": {"꼬리": "🐕", "꾀": None},
+    "ㄸ": {"딸기": "🍓", "따오기": None},
+    "ㅃ": {"뽀뽀": "😘", "빠나나": None},
+    "ㅆ": {"씨": "🌱", "싸다": None},
+    "ㅉ": {"짜다": "🧂", "찌개": "🍲"},
+}
+
+# 모음만으로(첫 자리는 ㅇ) 되는 낱말 — 기초 모음 단원(1~7화)용.
+# 이 시점에는 자음을 하나도 안 배웠으므로 이런 낱말밖에 쓸 수 없다.
+BY_JUNG_BASIC: dict[str, dict[str, str | None]] = {
+    "ㅏ": {"아이": "👶", "아야": None},
+    "ㅑ": {"야유": None},
+    "ㅓ": {"어이": None},
+    "ㅕ": {"여우": "🦊", "여유": None},
+    "ㅗ": {"오이": "🥒", "오요": None},
+    "ㅛ": {"요요": "🪀", "요가": "🧘"},
+    "ㅜ": {"우유": "🥛", "우이": None},
+    "ㅠ": {"유아": None},
+    "ㅡ": {"으": None},
+    "ㅣ": {"이": "🦷", "아이": "👶"},
+}
+
+
 def pic(word: str) -> str | None:
     """낱말의 이모지. 없으면 None."""
-    for table in (BY_JONG, BY_JUNG):
+    for table in (BY_JONG, BY_JUNG, BY_CHO, BY_JUNG_BASIC):
         for group in table.values():
             if word in group:
                 return group[word]
     return None
+
+
+def words_for_cho(cho: str) -> list[str]:
+    return list(BY_CHO.get(cho, {}).keys())
 
 
 def words_for_jong(jong: str) -> list[str]:
@@ -68,12 +112,13 @@ def words_for_jong(jong: str) -> list[str]:
 
 
 def words_for_jung(jung: str) -> list[str]:
-    return list(BY_JUNG.get(jung, {}).keys())
+    """모음별 낱말. 기초 모음(1~7화)은 ㅇ + 모음 낱말만 쓸 수 있으므로 그걸 먼저 준다."""
+    return list(BY_JUNG_BASIC.get(jung, {}).keys()) + list(BY_JUNG.get(jung, {}).keys())
 
 
 def all_words() -> list[str]:
     out: list[str] = []
-    for table in (BY_JONG, BY_JUNG):
+    for table in (BY_JONG, BY_JUNG, BY_CHO, BY_JUNG_BASIC):
         for group in table.values():
             out.extend(group.keys())
     return out

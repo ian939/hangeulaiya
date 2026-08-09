@@ -20,6 +20,10 @@
   "jamo": {
     "new": [
       "받침 ㅅ"
+    ],
+    "seen": [
+      "ㅇ",
+      "ㅗ"
     ]
   },
   "targetWords": [
@@ -486,6 +490,16 @@
         },
         {
           "order": 5,
+          "at": 465,
+          "caption": "받침 시옷 을 찾았어요.",
+          "pic": {
+            "kind": "scene",
+            "sceneKind": "place",
+            "jamo": "ㅅ"
+          }
+        },
+        {
+          "order": 6,
           "at": 525,
           "caption": "자판기에 넣으니 옷 이 나왔어요!",
           "pic": {
@@ -494,7 +508,7 @@
           }
         },
         {
-          "order": 6,
+          "order": 7,
           "at": 593,
           "caption": "할아버지와 '옷' 을 소리 내어 읽었어요.",
           "pic": {

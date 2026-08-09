@@ -296,4 +296,151 @@ CLUSTER = [
          extra=["없다", "값"]),
 ]
 
-ALL_SPECS = BATCHIM + VOWEL + CLUSTER
+# ── 기초 모음 단원 1~7화 ─────────────────────────────────────
+# 자막을 읽고 확인한 것:
+#   이 단원에서도 **자음(대부분 ㅇ)만 장소·물건에서 찾아오고, 모음은 장소 없이
+#   자음에 붙는 합체 연출**이다. 그래서 모음 hunts 의 place 는 None 이다.
+#   1화는 시리즈 도입부라 포맷이 다르다 — 소환 장면이 없고(용사가 스스로 나타난다),
+#   자판기가 처음 소개되며, 끝의 이야기 순서 정리 컷이 없다.
+#   천지·개벽은 1~7화에도 나오지 않는다.
+VOWEL_BASIC = [
+    dict(ep=1, word="아이야", jamo="ㅏ", position="jung", cards=["ㅏ", "ㅣ", "ㅑ", "ㅇ"],
+         situation="훈민이와 정음이가 처음 만난 한글 용사들의 이름을 적어 두고 싶었어요.",
+         problem="아, 이, 야 라는 이름을 어떻게 쓰는지 몰랐어요.",
+         hunts=[("ㅇ", "cho", "우유", 303), ("ㅏ", "jung", None, 334),
+                ("ㅣ", "jung", None, 377), ("ㅑ", "jung", None, 436)],
+         vending="한글용사 아이야", situation_at=216, problem_at=229,
+         vending_at=543, grandpa_at=551,
+         quiz=("첫소리", ["아이", "아기", "어부"], "어부", 688),
+         extra=["아이", "이"], intro=True),
+
+    dict(ep=2, word="오이", jamo="ㅗ", position="jung",
+         situation="훈민이와 정음이가 가게 놀이를 하며 할아버지가 좋아하는 오이를 팔기로 했어요.",
+         problem="오이를 다 먹어 버렸어요. '오이' 를 쓸 줄 몰랐어요.",
+         hunts=[("ㅇ", "cho", "오징어", 400), ("ㅗ", "jung", None, 425),
+                ("ㅣ", "jung", None, 479)],
+         vending="오이", situation_at=92, problem_at=306, vending_at=566, grandpa_at=601,
+         quiz=("첫소리", ["오이", "오리", "요리"], "요리", 680),
+         extra=["오이", "아이"]),
+
+    dict(ep=3, word="어디", jamo="ㅓ", position="jung",
+         situation="할아버지가 물건을 자꾸 찾으셔서 물건을 담아 두는 상자를 만들었어요.",
+         problem="상자에 이름표를 붙이려는데 '어디' 를 쓸 줄 몰랐어요.",
+         hunts=[("ㅇ", "cho", None, 424), ("ㅓ", "jung", None, 469),
+                ("ㄷ", "cho", "다리", 565), ("ㅣ", "jung", None, 583)],
+         vending="이름표", situation_at=91, problem_at=313, vending_at=627, grandpa_at=665,
+         quiz=("첫소리", ["어디", "어제", "여기"], "여기", 791),
+         extra=["아이", "오이"], uncertain=["첫 이응을 찾은 장소"]),
+
+    dict(ep=4, word="여우", jamo="ㅕ", position="jung", cards=["ㅕ", "ㅜ"],
+         situation="정음이가 종이로 여우를 접어 주고, 여우랑 숨바꼭질 놀이를 했어요.",
+         problem="진짜 여우가 궁금했어요. '여우' 를 쓸 줄 몰랐어요.",
+         hunts=[("ㅇ", "cho", "야구공", 407), ("ㅕ", "jung", None, 422),
+                ("ㅜ", "jung", None, 509)],
+         vending="여우", situation_at=98, problem_at=292, vending_at=564, grandpa_at=592,
+         quiz=("첫소리", ["여우", "여행", "야구"], "야구", 692),
+         extra=["여우", "아이"], uncertain=["퀴즈 낱말"]),
+
+    dict(ep=5, word="우유", jamo="ㅠ", position="jung",
+         situation="훈민이와 정음이가 빵가게 놀이를 하며 손님에게 우유를 따라 주었어요.",
+         problem="우유가 다 없어졌어요. '우유' 를 쓸 줄 몰랐어요.",
+         hunts=[("ㅇ", "cho", "어항", 400), ("ㅜ", "jung", None, 440),
+                ("ㅠ", "jung", None, 507)],
+         vending="우유", situation_at=83, problem_at=295, vending_at=547, grandpa_at=588,
+         quiz=("첫소리", ["우유", "우산", "유리"], "유리", 679),
+         extra=["우유", "오이"]),
+
+    dict(ep=6, word="요가", jamo="ㅛ", position="jung",
+         situation="훈민이와 정음이가 요가 교실을 열고 할아버지를 손님으로 불렀어요.",
+         problem="간판에 '요가' 를 써야 하는데 쓸 줄 몰랐어요.",
+         hunts=[("ㅇ", "cho", "요요", 357), ("ㅛ", "jung", None, 371),
+                ("ㄱ", "cho", "기린", 451), ("ㅏ", "jung", None, 515)],
+         vending="요가 간판", situation_at=164, problem_at=236, vending_at=558, grandpa_at=573,
+         quiz=("첫소리", ["요가", "요정", "야호"], "야호", 686),
+         extra=["요가", "요요"]),
+
+    dict(ep=7, word="으", jamo="ㅡ", position="jung",
+         situation="훈민이와 정음이가 무섭고 재미있는 이야기를 직접 만들어 들려주었어요.",
+         problem="이야기 제목 '으' 를 쓰려는데 쓸 줄 몰랐어요.",
+         hunts=[("ㅇ", "cho", "아기", 494), ("ㅡ", "jung", None, 520)],
+         vending="동화책", situation_at=99, problem_at=372, vending_at=559, grandpa_at=604,
+         quiz=None, extra=["으"], uncertain=["퀴즈 낱말과 정답"]),
+]
+
+# ── 기초 자음 단원 8~20화 ────────────────────────────────────
+# 자막을 읽고 확인한 것:
+#   이 단원은 **자음 전용 탐색**이다. 음절마다 "○의 문을 찾자" 하고 이동해서
+#   그 자음으로 시작하는 사물·동물에게서 자음을 얻는다 (꽃게-ㄱ, 나무늘보-ㄴ,
+#   도마뱀-ㄷ, 라면-ㄹ, 문-ㅁ, 바구니-ㅂ, 상어-ㅅ …).
+#   모음은 장소 탐색 없이 "○이 아를 만나 가" 로 용사가 즉시 붙여 준다.
+#   그래서 모음 hunts 의 place 는 None 이다.
+#   받침은 아직 안 배운 시점이라 낱말이 전부 받침 없는 두세 글자다.
+CONSONANT = [
+    dict(ep=8, word="가수", jamo="ㄱ", position="cho",
+         situation="훈민이와 정음이가 노래를 부르며 진짜 가수처럼 무대에 서고 싶었어요.",
+         problem="진짜 가수를 만나려고 한글 카드를 만들려는데 '가수' 를 쓸 줄 몰랐어요.",
+         hunts=[("ㄱ", "cho", "꽃게", 336), ("ㅏ", "jung", None, 362),
+                ("ㅅ", "cho", "산", 454), ("ㅜ", "jung", None, 475)],
+         vending="콘서트 표", situation_at=103, problem_at=219,
+         vending_at=512, grandpa_at=589,
+         quiz=("첫소리", ["가수", "가지", "나비"], "나비", 747),
+         extra=["가수", "가위", "고기"]),
+
+    dict(ep=9, word="나비", jamo="ㄴ", position="cho",
+         situation="훈민이와 정음이가 노란 나비를 보고 함께 놀고 싶었어요.",
+         problem="나비가 날아가 버렸어요. '나비' 를 쓸 줄 몰랐어요.",
+         hunts=[("ㄴ", "cho", "나무늘보", 341), ("ㅏ", "jung", None, 370),
+                ("ㅂ", "cho", "봉투", 430), ("ㅣ", "jung", None, 444)],
+         vending="나비", situation_at=132, problem_at=222, vending_at=478, grandpa_at=517,
+         quiz=("첫소리", ["나비", "나무", "다리"], "다리", 683),
+         extra=["나비", "나무", "누나"]),
+
+    dict(ep=10, word="두유", jamo="ㄷ", position="cho",
+         situation="훈민이와 정음이가 콩국물에 우유를 섞어 두유를 만들었어요.",
+         problem="냉장고에 넣고 이름표를 붙이려는데 '두유' 를 쓸 줄 몰랐어요.",
+         hunts=[("ㄷ", "cho", "도마뱀", 392), ("ㅜ", "jung", None, 423),
+                ("ㅇ", "cho", "양배추", 482), ("ㅠ", "jung", None, 512)],
+         vending="두유 이름표", situation_at=128, problem_at=279,
+         vending_at=564, grandpa_at=602,
+         quiz=("첫소리", ["두유", "두부", "루비"], "루비", 726),
+         extra=["두유", "두부", "우유"]),
+
+    dict(ep=11, word="라디오", jamo="ㄹ", position="cho",
+         situation="훈민이와 정음이가 할아버지 라디오를 돌려 보고 자기들도 갖고 싶었어요.",
+         problem="라디오는 할아버지 물건이라 돌려놓아야 했어요. '라디오' 를 쓸 줄 몰랐어요.",
+         hunts=[("ㄹ", "cho", "라면", 294), ("ㅏ", "jung", None, 318),
+                ("ㄷ", "cho", "다리미", 377), ("ㅣ", "jung", None, 402),
+                ("ㅇ", "cho", "아침 해", 457), ("ㅗ", "jung", None, 474)],
+         vending="라디오", situation_at=110, problem_at=196, vending_at=508, grandpa_at=536,
+         quiz=("첫소리", ["라디오", "마스크", "라일락"], "마스크", 709),
+         extra=["라디오", "라면"], uncertain=["ㅇ 을 찾은 장소"]),
+
+    dict(ep=12, word="모자", jamo="ㅁ", position="cho",
+         situation="훈민이와 정음이가 할아버지 모자를 쓰고 마술사 놀이를 했어요.",
+         problem="마술로 나온 물총에 모자가 젖었어요. '모자' 를 쓸 줄 몰랐어요.",
+         hunts=[("ㅁ", "cho", "문", 340), ("ㅗ", "jung", None, 364),
+                ("ㅈ", "cho", "잠자리", 429), ("ㅏ", "jung", None, 484)],
+         vending="새 모자", situation_at=148, problem_at=236, vending_at=518, grandpa_at=546,
+         quiz=None, extra=["모자", "머리", "무"], uncertain=["퀴즈 낱말"]),
+
+    dict(ep=13, word="버스", jamo="ㅂ", position="cho",
+         situation="훈민이와 정음이가 탈 수 있는 버스를 만들어 손님을 태웠어요.",
+         problem="버스에 이름표를 달려는데 '버스' 를 쓸 줄 몰랐어요.",
+         hunts=[("ㅂ", "cho", "바구니", 352), ("ㅓ", "jung", None, 380),
+                ("ㅅ", "cho", "수박", 443), ("ㅡ", "jung", None, 462)],
+         vending="버스 이름표", situation_at=106, problem_at=246,
+         vending_at=499, grandpa_at=532,
+         quiz=("첫소리", ["머리", "버스", "버섯"], "머리", 691),
+         extra=["버스", "바나나", "바다"], uncertain=["퀴즈 세 번째 낱말"]),
+
+    dict(ep=14, word="소리", jamo="ㅅ", position="cho",
+         situation="훈민이와 정음이가 흉내 낸 소리를 듣고 맞히는 놀이를 했어요.",
+         problem="부스럭부스럭 소리가 났어요. '소리' 를 쓸 줄 몰랐어요.",
+         hunts=[("ㅅ", "cho", "상어", 346), ("ㅗ", "jung", None, 390),
+                ("ㄹ", "cho", "리본", 462), ("ㅣ", "jung", None, 494)],
+         vending="과자", situation_at=126, problem_at=267, vending_at=534, grandpa_at=560,
+         quiz=("첫소리", ["조개", "소리", "소금"], "조개", 701),
+         extra=["소리", "소", "시소"]),
+]
+
+ALL_SPECS = VOWEL_BASIC + CONSONANT + BATCHIM + VOWEL + CLUSTER

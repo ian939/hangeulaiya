@@ -41,11 +41,50 @@ CURRICULUM: dict[int, list[str]] = {
 }
 
 
+def introduced_by_ep() -> dict[int, set[str]]:
+    """회차마다 **함께 소개되는** 자모.
+
+    방송은 오늘의 자모만 다루지 않는다. 목표 낱말을 만들려면 다른 자모도
+    필요하고, 그건 용사가 그 회차에서 찾아오며 이름을 불러 소개한다.
+      3화 「어디」 — 오늘은 모음 ㅓ 인데 ㄷ 을 '다리' 에서 찾아온다
+      8화 「가수」 — 오늘은 자음 ㄱ 인데 ㅅ 을 '산' 에서 찾아온다
+    그래서 '아직 안 배운 글자를 쓰지 않는다' 규칙의 기준은 카드 배정표가
+    아니라 여기까지 합친 것이어야 한다. 카드(앨범)는 여전히 CURRICULUM 만 따른다.
+
+    data/common/cards.js 의 introduced 와 같은 내용이어야 한다.
+    """
+    out: dict[int, set[str]] = {}
+    for s in ALL_SPECS:
+        seen = set()
+        for j, pos, _place, _at in s["hunts"]:
+            if pos == "jong":
+                seen.add("받침 " + j)          # 받침 자리는 카드 이름이 다르다
+            elif pos in ("cho", "jung"):
+                seen.update(H.parts(j))
+        # 목표 낱말에 실제로 쓰인 자모도 그 회차에서 소개된다
+        for ch in s["word"]:
+            d = H.decompose(ch)
+            if d:
+                seen.update(H.parts(d[0]))
+                seen.update(H.parts(d[1]))
+                if d[2]:
+                    seen.add("받침 " + d[2])
+        out[s["ep"]] = seen
+    return out
+
+
+INTRODUCED = introduced_by_ep()
+
+
 def allowed_cards(ep: int) -> set[str]:
+    """그 회차 시점에 쓸 수 있는 자모 (카드 + 그때까지 소개된 것)."""
     out: set[str] = set()
     for n, cards in CURRICULUM.items():
         if n <= ep:
             out.update(cards)
+    for n, seen in INTRODUCED.items():
+        if n <= ep:
+            out.update(seen)
     return out
 
 
@@ -297,6 +336,133 @@ def gen_sound_batchim(s, ep, jong):
             "courses": ["short", "full"], "shortCount": 3, "items": items}
 
 
+def gen_sound_cho(s, ep, cho):
+    """기초·쌍자음 회차. 첫소리를 가려 듣는 것이 핵심이다.
+
+    받침 회차와 겨냥이 다르다. 받침은 '끝에서 막히는 소리' 를 듣는 것이고,
+    여기는 '첫소리가 무엇인가' 다. 그래서 같은 모음에 첫 자음만 바꿔 대비시킨다.
+    """
+    word = s["word"]
+    syl = next((c for c in word if H.decompose(c) and H.decompose(c)[0] == cho), word[0])
+    d = H.decompose(syl)
+    items = []
+
+    # 첫소리가 있는지부터 가린다.
+    # 8화 시점에는 배운 자음이 ㄱ 하나뿐이라 자음끼리 대비시킬 수가 없다.
+    # 그때 쓸 수 있는 대비는 '첫소리가 있는 글자 vs 모음만 있는 글자'(가 / 아) 이고,
+    # 첫 자음을 배우는 첫 문항으로는 이게 오히려 맞다.
+    if cho != "ㅇ":
+        bare = H.compose("ㅇ", d[1], d[2])
+        if bare and bare != syl:
+            items.append({
+                "say": syl, "prompt": "잘 듣고 같은 글자를 골라요",
+                "hint": "첫소리가 들리나요?",
+                "options": [{"label": syl, "correct": True},
+                            {"label": bare, "relation": "noOnset",
+                             "why": "첫소리가 없는 글자예요. 다시 들어볼까?"}],
+            })
+            items.append({
+                "say": bare, "prompt": "잘 듣고 같은 글자를 골라요",
+                "options": [{"label": bare, "correct": True},
+                            {"label": syl, "relation": "noOnset"}],
+            })
+
+    # 첫소리 대비 — 모음을 고정하고 첫 자음만 바꾼다
+    conf = [(o, r) for o, r in VISUAL.get(cho, [])
+            if o in allowed_cards(ep) and o != cho]
+    opts = [{"label": syl, "correct": True}]
+    for other, rel in conf[:2]:
+        alt = H.compose(other, H.decompose(syl)[1], H.decompose(syl)[2])
+        if alt and alt != syl:
+            opts.append({"label": alt, "relation": rel})
+    if len(opts) >= 2:
+        items.append({
+            "say": syl, "prompt": "잘 듣고 같은 글자를 골라요",
+            "hint": "첫소리가 무엇인지 들어 보세요",
+            "options": opts,
+        })
+
+    # 자모 이름으로도 한 번 (카드 이름을 익힌다)
+    name_opts = [{"label": cho, "correct": True}]
+    for other, rel in conf[:2]:
+        name_opts.append({"label": other, "relation": rel})
+    if len(name_opts) >= 2:
+        items.append({
+            "say": H.name(cho), "prompt": "이 소리는 어떤 글자일까요?",
+            "options": name_opts,
+        })
+
+    # 쌍자음이면 홀자음과의 대비가 이 단원의 학습 내용이다
+    if cho in H.CLUSTER:
+        single = H.CLUSTER[cho][0]
+        alt = H.compose(single, H.decompose(syl)[1], H.decompose(syl)[2])
+        if alt and alt != syl:
+            items.append({
+                "say": syl,
+                "prompt": "된소리를 잘 듣고 골라요",
+                "hint": "목에 힘을 주고 세게 내는 소리예요",
+                "options": [{"label": syl, "correct": True},
+                            {"label": alt, "relation": "tensePair",
+                             "why": "이건 약한 소리예요. 더 세게 내는 소리를 찾아요."}],
+                "after": H.name(cho) + " 는 " + H.name(single) + " 보다 세게 내는 소리예요.",
+            })
+
+    if s.get("quiz"):
+        kind, words, answer, at = s["quiz"]
+        items.append({
+            "say": ", ".join(words) + ". " + kind + "가 다른 낱말은 무엇인가요?",
+            "prompt": kind + "가 다른 낱말은 무엇인가요?",
+            "at": at,
+            "options": [{"label": w, "correct": w == answer,
+                         **({} if w == answer else {"relation": "stopSwap"})}
+                        for w in words],
+        })
+
+    return {"type": "sound", "id": "B", "title": "소리 듣고 고르기",
+            "courses": ["short", "full"], "shortCount": 3, "items": items}
+
+
+def gen_sound_vowel_basic(s, ep, vowel):
+    """기초 모음 회차. 모음끼리 가려 듣는 것이 핵심이다."""
+    word = s["word"]
+    syl = next((c for c in word if H.decompose(c) and H.decompose(c)[1] == vowel), word[0])
+    items = []
+
+    conf = [(o, r) for o, r in VISUAL.get(vowel, [])
+            if o in allowed_cards(ep) and o != vowel]
+
+    items.append({
+        "say": H.name(vowel), "prompt": "잘 듣고 같은 글자를 골라요",
+        "hint": "입 모양을 따라 해 보세요",
+        "options": [{"label": vowel, "correct": True}] +
+                   [{"label": o, "relation": r} for o, r in conf[:2]],
+    })
+
+    opts = [{"label": syl, "correct": True}]
+    for other, rel in conf[:2]:
+        alt = H.with_jung(syl, other)
+        if alt and alt != syl:
+            opts.append({"label": alt, "relation": rel})
+    if len(opts) >= 2:
+        items.append({
+            "say": syl, "prompt": "잘 듣고 같은 글자를 골라요", "options": opts,
+        })
+
+    if s.get("quiz"):
+        kind, words, answer, at = s["quiz"]
+        items.append({
+            "say": ", ".join(words) + ". " + kind + "가 다른 낱말은 무엇인가요?",
+            "prompt": kind + "가 다른 낱말은 무엇인가요?",
+            "at": at,
+            "options": [{"label": w, "correct": w == answer,
+                         **({} if w == answer else {"relation": "oneVowelDiff"})}
+                        for w in words],
+        })
+
+    return {"type": "sound", "id": "B", "title": "소리 듣고 고르기",
+            "courses": ["short", "full"], "shortCount": 3, "items": items}
+
+
 def gen_sound_vowel(s, ep, vowel):
     """복합 모음 회차. 합치기(ㅏ+ㅣ=ㅐ)가 학습의 핵심이다."""
     word = s["word"]
@@ -405,6 +571,34 @@ def gen_letterhunt(s, ep, target, position):
         "missHint": "이건 " + H.name(target) + " 이 아니에요. 모양을 다시 보세요.",
     }]
 
+    # 첫 자리 자음 회차 — 그 자음으로 시작하는 글자 골라내기
+    if position == "cho":
+        hits, seen = [], set()
+        for w in [word] + s.get("extra", []) + WB.words_for_cho(target):
+            if not word_ok(w, ep):
+                continue
+            for ch in w:
+                d = H.decompose(ch)
+                if d and d[0] == target and ch not in seen:
+                    seen.add(ch)
+                    hits.append(ch)
+        if len(hits) >= 2:
+            cells = [{"ch": c, "hit": True} for c in hits[:4]]
+            for other, rel in VISUAL.get(target, [])[:3]:
+                if other not in allowed_cards(ep):
+                    continue
+                for c in hits[:2]:
+                    d = H.decompose(c)
+                    alt = H.compose(other, d[1], d[2])
+                    if alt and alt != c:
+                        cells.append({"ch": alt, "relation": rel})
+            boards.append({
+                "cols": 4, "showTarget": False, "target": target, "position": "cho",
+                "prompt": H.name(target) + " 으로 시작하는 글자를 모두 찾아 눌러 보세요",
+                "cells": cells[:12],
+                "missHint": "첫소리가 " + H.name(target) + " 인 글자를 찾아요.",
+            })
+
     # 음절 모드 — 그 받침이 있는 글자만 고르기
     if position == "jong":
         idx = H.jong_index(word)
@@ -444,27 +638,42 @@ def gen_letterhunt(s, ep, target, position):
 def gen_jamobuild(s, ep, target, position):
     word = s["word"]
     items = []
-    idx = H.jong_index(word) if position == "jong" else 0
 
-    # 목표 자모가 든 음절 하나부터
-    syl = word[idx] if position == "jong" else next(
-        (c for c in word if H.decompose(c) and H.decompose(c)[1] == target), word[0])
+    # 목표 자모가 든 음절을 찾는다
+    if position == "jong":
+        syl = word[H.jong_index(word)]
+    elif position == "cho":
+        syl = next((c for c in word if H.decompose(c) and H.decompose(c)[0] == target), word[0])
+    else:
+        syl = next((c for c in word if H.decompose(c) and H.decompose(c)[1] == target), word[0])
+
     # 낱말에 쓰인 자모는 디코이로 쓰면 안 된다 (같은 타일이 정답과 오답으로 겹친다)
     used = jamo_in(word)
     decoys = [{"jamo": d["jamo"], "relation": d["relation"]}
               for d in visual_distractors(target, ep, 3, exclude=used)]
-    items.append({
-        "target": syl, "locked": ["cho"], "at": s.get("vending_at"),
-        "prompt": "첫 자음은 넣어 두었어요. 나머지를 채워 주세요!",
-        "decoys": decoys,
-    })
+
+    # 목표가 첫 자음이면 그 칸을 잠그면 안 된다 — 그게 배울 자리다.
+    if position == "cho":
+        first = {"target": syl, "at": s.get("vending_at"),
+                 "prompt": "첫 자음을 찾아 넣어 보세요!", "decoys": decoys}
+    else:
+        first = {"target": syl, "locked": ["cho"], "at": s.get("vending_at"),
+                 "prompt": "첫 자음은 넣어 두었어요. 나머지를 채워 주세요!",
+                 "decoys": decoys}
+    items.append(first)
 
     # 낱말 전체
-    if len(word) > 1:
+    if len(word) > 1 and position != "cho":
         locked = [f"{i}:cho" for i in range(len(word))]
         items.append({
             "target": word, "locked": locked,
             "prompt": "'" + word + "' 전체를 만들어 보세요. 첫 자음은 넣어 두었어요.",
+            "decoys": decoys[:2],
+        })
+    elif len(word) > 1:
+        items.append({
+            "target": word,
+            "prompt": "'" + word + "' 전체를 만들어 보세요.",
             "decoys": decoys[:2],
         })
     else:
@@ -517,8 +726,47 @@ def gen_chunji(s, ep, target, position):
                     "tray": [{"jamo": p, "relation": "clusterPart"}
                              for p in H.CLUSTER[target]],
                 })
+    elif position == "cho":
+        # 첫 자리 자음 회차 — 첫소리를 닮은 다른 자음으로 바꿔 놓는다.
+        # 아직 배운 자음이 적은 초반에는 ㅇ(첫소리 없음)으로 바꾸는 것이
+        # 유일하게 가능한 대비이고, 실제로도 좋은 문항이 된다.
+        syl = next((c for c in word if H.decompose(c) and H.decompose(c)[0] == target), word[0])
+        i = word.index(syl)
+        conf = [(o, r) for o, r in VISUAL.get(target, []) if o in allowed_cards(ep)]
+        if target != "ㅇ":
+            conf = [("ㅇ", "noOnset")] + conf
+        for other, rel in conf[:2]:
+            d = H.decompose(syl)
+            alt = H.compose(other, d[1], d[2])
+            if not alt or alt == syl:
+                continue
+            items.append({
+                "target": word, "broken": word[:i] + alt + word[i + 1:],
+                "prompt": alt + word[i + 1:] + "? 소리 내어 읽어 보고 첫소리를 고쳐 주세요.",
+                "tray": [{"jamo": o, "relation": r} for o, r in conf[:3]],
+            })
+            if len(items) >= 2:
+                break
+
+    elif not s.get("merge"):
+        # 기초 모음 회차 — 모음을 닮은 다른 모음으로 바꿔 놓는다
+        syl = next((c for c in word if H.decompose(c) and H.decompose(c)[1] == target), word[0])
+        i = word.index(syl)
+        conf = [(o, r) for o, r in VISUAL.get(target, []) if o in allowed_cards(ep)]
+        for other, rel in conf[:2]:
+            alt = H.with_jung(syl, other)
+            if not alt or alt == syl:
+                continue
+            items.append({
+                "target": word, "broken": word[:i] + alt + word[i + 1:],
+                "prompt": alt + word[i + 1:] + "? 모음이 바뀌었어요. 고쳐 주세요.",
+                "tray": [{"jamo": o, "relation": r} for o, r in conf[:3]],
+            })
+            if len(items) >= 2:
+                break
+
     else:
-        # 모음 회차 — 목표 모음을 부품 모음으로 바꿔 놓는다
+        # 복합 모음 회차 — 목표 모음을 부품 모음으로 바꿔 놓는다
         left = s["merge"][0]
         syl = next((c for c in word if H.decompose(c) and H.decompose(c)[1] == target), word[0])
         i = word.index(syl)
@@ -548,7 +796,9 @@ def gen_chunji(s, ep, target, position):
 def gen_match(s, ep, target, position):
     word = s["word"]
     pool = [word] + [w for w in s.get("extra", []) if w != word]
-    pool += WB.words_for_jong(target) if position == "jong" else WB.words_for_jung(target)
+    pool += {"jong": WB.words_for_jong,
+             "cho": WB.words_for_cho,
+             "jung": WB.words_for_jung}[position](target)
 
     seen, pairs = set(), []
     for w in pool:
@@ -572,7 +822,7 @@ def gen_match(s, ep, target, position):
             if len(pairs) >= 4:
                 break
 
-    label = ("받침 " + H.name(target)) if position == "jong" else H.name(target)
+    label = H.label(target, position)
     return {"type": "match", "id": "G", "title": "낱말과 그림",
             "courses": ["full"],
             "prompt": label + " 낱말과 그림을 이어 보세요",
@@ -596,19 +846,37 @@ def gen_writing(s, ep, target, position):
         items.append({"target": syl, "kind": "syllable",
                       "prompt": "이제 '" + syl + "' 을 따라 써 보세요",
                       "note": "받침이 들어가면서 위의 글자가 조금 눌려요. 방금 쓴 것과 비교해 보세요!"})
-    else:
+    elif position == "cho":
+        syl = next((c for c in word if H.decompose(c) and H.decompose(c)[0] == target), word[0])
+        items.append({"target": syl, "kind": "syllable",
+                      "prompt": "'" + syl + "' 을 따라 써 보세요",
+                      "note": "첫 자음을 먼저 쓰고 모음을 붙여요."})
+    elif s.get("merge"):
         syl = next((c for c in word if H.decompose(c) and H.decompose(c)[1] == target), word[0])
         items.append({"target": syl, "kind": "syllable",
                       "prompt": "'" + syl + "' 을 따라 써 보세요",
                       "note": H.name(s["merge"][0]) + " 와 " + H.name(s["merge"][1]) +
                               " 가 만나 " + H.name(target) + " 가 돼요."})
+    else:
+        syl = next((c for c in word if H.decompose(c) and H.decompose(c)[1] == target), word[0])
+        items.append({"target": syl, "kind": "syllable",
+                      "prompt": "'" + syl + "' 을 따라 써 보세요",
+                      "note": "ㅇ 을 먼저 쓰고 모음을 붙여요."})
 
     if len(word) > 1:
         items.append({"target": word, "kind": "word",
                       "prompt": "'" + word + "' 을 따라 써 보세요",
                       "note": "글자 크기를 같게 써 보세요."})
 
-    tol = 0.17 if ep < 35 else (0.16 if ep < 51 else 0.15)
+    # 처음 배우는 아이에게는 너그럽게, 뒤로 갈수록 조금씩 엄격하게
+    if ep <= 20:
+        tol = 0.20          # 기초 모음·자음 — 획을 처음 그어 보는 단계
+    elif ep < 35:
+        tol = 0.17
+    elif ep < 51:
+        tol = 0.16
+    else:
+        tol = 0.15
     return {"type": "writing", "id": "E", "title": "한글 쓰기",
             "courses": ["short", "full"], "shortCount": 1,
             "toleranceEm": tol, "passScore": 0.57, "items": items}
@@ -623,7 +891,10 @@ def gen_sequence(s):
 
     add(s["situation_at"], s["situation"], scene(None, kind="situation"))
     add(s["problem_at"], s["problem"], scene(None, kind="problem"))
-    add(s["problem_at"] + 30, "'한글용사 아이야!' 하고 불렀어요.", scene(None, kind="summon"))
+    # 1화는 소환 장면이 없다 — 용사들이 스스로 나타나 자기소개를 한다
+    add(s["problem_at"] + 30,
+        "한글용사들이 나타났어요!" if s.get("intro") else "'한글용사 아이야!' 하고 불렀어요.",
+        scene(None, kind="summon"))
 
     for j, pos, place, at in s["hunts"]:
         if pos == "merge":
@@ -634,6 +905,13 @@ def gen_sequence(s):
         elif place:
             add(at, place + " 에서 " + H.label(j, pos) + " 을 찾았어요.",
                 scene(place, jamo=j, position=pos))
+        elif pos == "jung":
+            # 기초 단원에서는 모음을 장소에서 찾지 않는다 — 용사가 붙여 준다
+            add(at, H.name(j) + " 용사가 " + H.name(j) + " 를 붙여 주었어요.",
+                scene(None, jamo=j, kind="merge"))
+        else:
+            add(at, H.label(j, pos) + " 을 찾았어요.",
+                scene(None, jamo=j, kind="place"))
 
     result = s.get("vending") or "선물"
     add(s["vending_at"], "자판기에 넣으니 " + result + " 이 나왔어요!",
@@ -653,8 +931,9 @@ def gen_sequence(s):
 def build(s, index_by_ep):
     ep = s["ep"]
     card = s["jamo"]
-    position = "jong" if card.startswith("받침") else "jung"
     target = card.replace("받침 ", "")
+    # 목표 자모가 글자의 어느 자리를 배우는 것인지. 명세가 지정하면 그걸 쓴다.
+    position = s.get("position") or ("jong" if card.startswith("받침") else "jung")
     meta = index_by_ep.get(ep, {})
 
     if position == "jong" and target in H.CLUSTER and s.get("keep"):
@@ -663,9 +942,15 @@ def build(s, index_by_ep):
     elif position == "jong":
         sound = gen_sound_batchim(s, ep, target)
         focus = "받침 " + target
-    else:
+    elif position == "cho":
+        sound = gen_sound_cho(s, ep, target)
+        focus = ("쌍자음 " if target in H.CLUSTER else "자음 ") + target
+    elif s.get("merge"):
         sound = gen_sound_vowel(s, ep, target)
         focus = "모음 " + target + " — " + s["merge"][0] + " + " + s["merge"][1]
+    else:
+        sound = gen_sound_vowel_basic(s, ep, target)
+        focus = "모음 " + target
 
     activities = [
         gen_story_quiz(s), sound,
@@ -679,14 +964,18 @@ def build(s, index_by_ep):
     activities = [a for a in activities if a.get("items") or a.get("boards")
                   or a.get("pairs") or a.get("cuts")]
 
+    # 1화처럼 한 회차에서 여러 자모를 배우는 경우가 있다
+    cards = s.get("cards") or [card]
     data = {
         "episode": ep, "title": s["word"],
         "videoId": meta.get("videoId", ""),
         "objective": meta.get("objectiveText", "").strip()[:60],
         "focus": focus,
-        "jamo": {"new": [card]},
+        # new = 카드로 주는 자모, seen = 이 회차에서 함께 소개된 자모
+        "jamo": {"new": cards,
+                 "seen": sorted(INTRODUCED.get(ep, set()) - set(cards))},
         "targetWords": [s["word"]],
-        "rewards": {"cards": [card]},
+        "rewards": {"cards": cards},
         "activities": activities,
     }
     if s.get("say"):
