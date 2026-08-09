@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="상자로 집을 만들었지만 문이 없어요">
+  <rect width="400" height="300" fill="#f0f4ff"/>
+  <rect y="240" width="400" height="60" fill="#e2e7f2"/>
+  <!-- 상자집 -->
+  <rect x="96" y="110" width="208" height="130" fill="#dfa96b" stroke="#b8823f" stroke-width="5"/>
+  <path d="M86 110l114-58 114 58z" fill="#c68f52" stroke="#b8823f" stroke-width="5"/>
+  <path d="M96 150h208M96 196h208" stroke="#c08a4a" stroke-width="3"/>
+  <!-- 문이 없는 빈 벽 + 물음표 -->
+  <rect x="164" y="152" width="72" height="88" rx="4" fill="#c98f52" stroke="#a97434" stroke-width="4" stroke-dasharray="10 8"/>
+  <text x="200" y="216" font-family="sans-serif" font-size="56" font-weight="900" fill="#8a5a2a" text-anchor="middle">?</text>
+  <text x="200" y="282" font-family="sans-serif" font-size="19" font-weight="700" fill="#5a648a" text-anchor="middle">문이 없어요. 문을 만들자!</text>
+</svg>

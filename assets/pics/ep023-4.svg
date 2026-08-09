@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="쓰레받기에서 받침 디귿을 찾았어요">
+  <rect width="400" height="300" fill="#f2f4ee"/>
+  <rect y="248" width="400" height="52" fill="#dfe3d8"/>
+  <!-- 쓰레받기 -->
+  <path d="M104 156h192l-22 92H126z" fill="#6fbf8f" stroke="#3f8f63" stroke-width="5"/>
+  <path d="M104 156h192v-16H104z" fill="#8fd4aa" stroke="#3f8f63" stroke-width="5"/>
+  <rect x="286" y="96" width="18" height="66" rx="8" fill="#5a648a" transform="rotate(16 295 129)"/>
+  <path d="M140 200h120" stroke="#3f8f63" stroke-width="4" opacity="0.6"/>
+  <!-- 찾은 받침 디귿 -->
+  <g transform="translate(200 96)">
+    <rect x="-40" y="-34" width="80" height="68" rx="10" fill="#fff" stroke="#2e9e6b" stroke-width="6"/>
+    <path d="M-17-15h34" stroke="#2e9e6b" stroke-width="8" stroke-linecap="round"/>
+    <path d="M-17-15v30h34" stroke="#2e9e6b" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="0" y="-40" font-family="sans-serif" font-size="15" font-weight="700" fill="#2e9e6b" text-anchor="middle">받침</text>
+  </g>
+  <text x="200" y="286" font-family="sans-serif" font-size="18" font-weight="700" fill="#3f5a48" text-anchor="middle">쓰레받기에서 받침 ㄷ 을 찾았어요</text>
+</svg>

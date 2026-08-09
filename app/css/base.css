@@ -1,0 +1,358 @@
+/* 색·간격 토큰과 기본 레이아웃.
+ * 태블릿 터치 기준: 손가락으로 누를 것은 최소 64px, 끌 타일은 88px 이상. */
+
+:root {
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --ink: #1b2340;
+  --ink-soft: #5a648a;
+  --line: #e2e7f2;
+
+  --brand: #3f63d8;
+  --brand-dark: #2b47a8;
+  --brand-soft: #e8eeff;
+  --accent: #ff7043;
+  --good: #2e9e6b;
+  --good-soft: #e2f6ec;
+
+  --hero-a: #e04b4b;
+  --hero-i: #2f9bd8;
+  --hero-ya: #f0a02a;
+
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 24px;
+
+  --tap: 64px;
+  --tile: 92px;
+
+  --pad: 16px;
+  --gap: 12px;
+
+  --shadow: 0 2px 8px rgba(27, 35, 64, 0.08);
+  --shadow-lift: 0 8px 24px rgba(27, 35, 64, 0.18);
+
+  --font: "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  overscroll-behavior: none;
+}
+
+#app {
+  min-height: 100%;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+           env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.screen {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: var(--pad) var(--pad) 48px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+/* ---------- 상단 바 ---------- */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  min-height: var(--tap);
+}
+
+.topbar__back {
+  flex: 0 0 auto;
+  width: var(--tap);
+  height: var(--tap);
+  border: none;
+  border-radius: var(--r-md);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  font-size: 26px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.topbar__title {
+  flex: 1;
+  margin: 0;
+  font-size: clamp(20px, 3.4vw, 28px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.topbar__right { flex: 0 0 auto; }
+
+/* ---------- 카드 ---------- */
+
+.card {
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow);
+  padding: clamp(14px, 2.4vw, 22px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.card__title {
+  margin: 0;
+  font-size: clamp(17px, 2.6vw, 21px);
+  font-weight: 800;
+}
+
+.card__note { margin: 0; color: var(--ink-soft); font-size: 15px; line-height: 1.55; }
+
+.card__warn {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: var(--r-sm);
+  background: #fff5e8;
+  color: #8a5316;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ---------- 버튼 ---------- */
+
+.btn {
+  min-height: var(--tap);
+  padding: 0 clamp(18px, 3vw, 28px);
+  border: 2px solid transparent;
+  border-radius: var(--r-md);
+  font-family: inherit;
+  font-size: clamp(16px, 2.3vw, 19px);
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.08s ease, background 0.15s ease;
+  touch-action: manipulation;
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn--primary { background: var(--brand); color: #fff; }
+.btn--primary:hover { background: var(--brand-dark); }
+
+.btn--ghost {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line);
+}
+.btn--ghost:hover { background: var(--brand-soft); border-color: var(--brand); }
+
+.btn--big { min-height: 76px; font-size: clamp(18px, 2.6vw, 22px); }
+
+.row { display: flex; gap: var(--gap); align-items: center; }
+.row--wrap { flex-wrap: wrap; }
+
+/* ---------- 홈 ---------- */
+
+.home__head { padding: 8px 4px 0; }
+.home__title { margin: 0; font-size: clamp(26px, 5vw, 40px); font-weight: 900; letter-spacing: -0.02em; }
+.home__sub { margin: 6px 0 0; color: var(--ink-soft); font-size: 16px; }
+
+.epgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--gap);
+}
+
+.epcard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 150px;
+  padding: 18px;
+  border: none;
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.15s ease;
+}
+.epcard:active { transform: scale(0.98); }
+.epcard:hover { box-shadow: var(--shadow-lift); }
+
+.epcard__no { font-size: 14px; font-weight: 700; color: var(--brand); }
+.epcard__word { font-size: clamp(28px, 4vw, 36px); font-weight: 900; letter-spacing: -0.02em; }
+.epcard__goal { flex: 1; font-size: 14px; color: var(--ink-soft); line-height: 1.45; }
+.epcard__stars { font-size: 15px; font-weight: 700; color: var(--accent); }
+
+.home__foot { display: flex; gap: var(--gap); flex-wrap: wrap; padding-top: 4px; }
+
+/* ---------- 진행 표시 ---------- */
+
+.progress { display: flex; align-items: center; gap: var(--gap); padding: 0 4px; }
+.progress__dots { display: flex; gap: 6px; flex: 1; flex-wrap: wrap; }
+.dot { width: 12px; height: 12px; border-radius: 50%; background: var(--line); }
+.dot--done { background: var(--good); }
+.dot--now { background: var(--brand); transform: scale(1.35); }
+.progress__text { font-size: 14px; font-weight: 700; color: var(--ink-soft); }
+
+/* ---------- 영상 ---------- */
+
+.embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: #000;
+}
+.embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* ---------- 칩 ---------- */
+
+.chip {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.chip--mute { background: #fff0e6; color: #a4551f; }
+
+/* ---------- 보상 ---------- */
+
+.screen--reward { min-height: 70vh; justify-content: center; }
+.reward {
+  text-align: center;
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow);
+  padding: clamp(24px, 5vw, 48px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+}
+.reward__title { margin: 0; font-size: clamp(28px, 5vw, 42px); font-weight: 900; }
+.reward__stars { margin: 0; font-size: clamp(24px, 4vw, 34px); font-weight: 800; color: var(--accent); }
+.reward__label { margin: 0; font-size: 15px; color: var(--ink-soft); font-weight: 700; }
+.reward__note { margin: 0; color: var(--ink-soft); }
+
+/* 한글 카드 — 자모를 가운데에 얹은 가로형 카드.
+ *
+ * 배경은 두 겹이다. 방송 카드 도안이 있으면 그걸 쓰고, 없으면 아래 그라디언트가
+ * 그대로 보인다. 도안은 저작물이라 공개 저장소에 넣지 않으므로(.gitignore),
+ * 도안 없이도 카드로 읽히게 대체 배경을 제대로 만들어 두었다.
+ * 배경 이미지 층이 실패해도 다음 층은 정상적으로 그려진다.
+ */
+.hangulcard {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  width: 168px;
+  aspect-ratio: 1.42 / 1;
+  border-radius: var(--r-sm);
+  background-color: #fff8e2;
+  background-image:
+    url("../../assets/pics/card-face.webp"),
+    radial-gradient(circle at 50% 40%, #fffdf4 0%, #ffeeb4 58%, #f4c34e 100%);
+  background-size: cover;
+  background-position: center;
+  box-shadow: var(--shadow), inset 0 0 0 3px rgba(212, 67, 47, 0.5);
+  color: #8a1c1c;
+  /* 도안 아래쪽 로고 띠를 피해 가운데 영역에 글자를 놓는다 */
+  padding-bottom: 15%;
+}
+
+/* '받침 ㄱ' 은 작은 라벨 + 큰 자모로 나눈다 — 초성 ㄱ 카드와 헷갈리지 않게 */
+.cardface__tag {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #b3341f;
+}
+.cardface__glyph {
+  font-size: 52px;
+  font-weight: 900;
+  line-height: 1.02;
+  /* 크림색 배경 위에서 또렷하게 */
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9), 0 0 6px rgba(255, 255, 255, 0.7);
+}
+
+/* 새로 얻은 카드는 살짝 뒤집히며 등장한다 */
+@keyframes cardflip {
+  from { transform: rotateY(90deg) scale(0.85); opacity: 0; }
+  to   { transform: rotateY(0deg) scale(1); opacity: 1; }
+}
+.reward .hangulcard { animation: cardflip 0.55s ease-out both; }
+
+/* ---------- 앨범 ---------- */
+
+.album {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(122px, 1fr));
+  gap: var(--gap);
+}
+
+/* 아직 못 모은 칸은 카드 뒷면을 흐리게 — "뒤집혀 있는 카드"로 읽힌다.
+   빈 회색 칸보다 모으고 싶게 만든다.
+   도안이 없으면 아래 그라디언트가 뒷면 역할을 한다. */
+.albumslot {
+  aspect-ratio: 1.42 / 1;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-sm);
+  background-color: #e9ecf4;
+  background-image:
+    url("../../assets/pics/card-back.webp"),
+    linear-gradient(150deg, #cfd6e6 0%, #e9ecf4 55%, #c9d1e3 100%);
+  background-size: cover;
+  background-position: center;
+  font-size: 26px;
+  color: rgba(90, 100, 138, 0.85);
+  filter: grayscale(0.7) opacity(0.62);
+}
+.albumslot--has {
+  background-color: #fff8e2;
+  background-image:
+    url("../../assets/pics/card-face.webp"),
+    radial-gradient(circle at 50% 40%, #fffdf4 0%, #ffeeb4 58%, #f4c34e 100%);
+  background-position: center;
+  filter: none;
+  box-shadow: var(--shadow), inset 0 0 0 3px rgba(212, 67, 47, 0.5);
+  color: #8a1c1c;
+}
+.albumslot__face {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding-bottom: 15%;   /* 도안 아래쪽 로고 띠를 피한다 */
+}
+.albumslot__face .cardface__glyph { font-size: 38px; }
+.albumslot__face .cardface__tag { font-size: 11px; }
+
+/* ---------- 부모 화면 ---------- */
+
+.plainlist { margin: 0; padding-left: 20px; line-height: 1.7; font-size: 15px; }
+.writing { margin: 0; text-align: center; }
+.writing img {
+  width: 120px; height: auto; border-radius: var(--r-sm);
+  border: 1px solid var(--line); background: #fff;
+}
+.writing figcaption { font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
+
+.empty { color: var(--ink-soft); }

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="등대에서 디귿을 찾았어요">
+  <rect width="400" height="300" fill="#1f2c4a"/>
+  <circle cx="330" cy="52" r="20" fill="#f5f0d8"/>
+  <!-- 바다 -->
+  <path d="M0 250h400v50H0z" fill="#2b4470"/>
+  <path d="M0 250c40-10 60 10 100 0s60 10 100 0 60 10 100 0 60 10 100 0" stroke="#4a6ea8" stroke-width="5" fill="none"/>
+  <!-- 등대 -->
+  <path d="M164 252l14-140h44l14 140z" fill="#f5f0e4" stroke="#c9c3b0" stroke-width="4"/>
+  <path d="M170 200h60M167 168h66" stroke="#e75757" stroke-width="16"/>
+  <rect x="172" y="86" width="56" height="28" rx="4" fill="#5a648a"/>
+  <path d="M176 86l24-22 24 22z" fill="#e75757"/>
+  <!-- 빛 -->
+  <path d="M172 100L60 66v68z" fill="#ffe9a8" opacity="0.5"/>
+  <path d="M228 100l112-34v68z" fill="#ffe9a8" opacity="0.5"/>
+  <!-- 찾은 디귿 -->
+  <g transform="translate(200 190)">
+    <rect x="-38" y="-32" width="76" height="64" rx="10" fill="#fff" stroke="#2e9e6b" stroke-width="6"/>
+    <path d="M-16-14h32" stroke="#2e9e6b" stroke-width="8" stroke-linecap="round"/>
+    <path d="M-16-14v28h32" stroke="#2e9e6b" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="200" y="288" font-family="sans-serif" font-size="19" font-weight="700" fill="#dfe9ff" text-anchor="middle">등대에서 ㄷ 을 찾았어요</text>
+</svg>

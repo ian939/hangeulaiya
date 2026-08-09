@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="국수에서 받침 기역을 찾았어요">
+  <rect width="400" height="300" fill="#fff6e6"/>
+  <!-- 국수 그릇 -->
+  <path d="M92 150h216c0 62-48 96-108 96S92 212 92 150z" fill="#ffffff" stroke="#d8c39c" stroke-width="5"/>
+  <ellipse cx="200" cy="150" rx="108" ry="18" fill="#f5e3bd"/>
+  <path d="M140 148c8-26 22-40 30-58M172 146c4-30 14-44 18-62M204 146c0-30 6-46 8-64M236 148c-4-28-2-44-4-62" stroke="#f0c86a" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <ellipse cx="252" cy="164" rx="22" ry="12" fill="#ffe9a8" stroke="#e0b954" stroke-width="3"/>
+  <!-- 찾은 받침 기역 -->
+  <g transform="translate(200 88)">
+    <rect x="-44" y="-34" width="88" height="68" rx="12" fill="#fff" stroke="#2e9e6b" stroke-width="6"/>
+    <path d="M-24-14h44l-12 30" stroke="#2e9e6b" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="200" y="282" font-family="sans-serif" font-size="19" font-weight="700" fill="#7a5a2a" text-anchor="middle">국수에서 받침 ㄱ 을 찾았어요</text>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="낙타가 마음이 아파요">
+  <rect width="400" height="300" fill="#fdf1d8"/>
+  <!-- 사막 -->
+  <path d="M0 214c60-24 120 10 190-8s150-22 210 6v88H0z" fill="#f0d49a"/>
+  <circle cx="330" cy="62" r="30" fill="#ffd66b"/>
+  <!-- 낙타 -->
+  <path d="M120 214v-40c0-16 12-26 26-26 8-16 26-16 34 0 10-18 30-18 40 0 14 2 22 12 22 26v40" fill="#c98f52"/>
+  <rect x="118" y="208" width="16" height="46" rx="6" fill="#b57c43"/>
+  <rect x="150" y="208" width="16" height="46" rx="6" fill="#b57c43"/>
+  <rect x="196" y="208" width="16" height="46" rx="6" fill="#b57c43"/>
+  <rect x="226" y="208" width="16" height="46" rx="6" fill="#b57c43"/>
+  <path d="M242 176c18-6 30-22 30-40 0-10 12-12 16-4 6 12 4 34-10 46-8 8-22 12-36 12z" fill="#c98f52"/>
+  <circle cx="266" cy="140" r="4" fill="#3b2a17"/>
+  <path d="M258 158c6 4 14 4 20 0" stroke="#3b2a17" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- 금이 간 하트 -->
+  <path d="M92 92c0-14 20-22 28-8 8-14 28-6 28 8 0 18-28 34-28 34S92 110 92 92z" fill="#e75757"/>
+  <path d="M120 84l-8 16 12 8-8 18" stroke="#fff" stroke-width="4" fill="none" stroke-linejoin="round"/>
+  <text x="200" y="286" font-family="sans-serif" font-size="20" font-weight="700" fill="#7a5a2a" text-anchor="middle">마음이 아파요</text>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="자판기에서 문패가 나왔어요">
+  <rect width="400" height="300" fill="#eef2ff"/>
+  <rect x="40" y="30" width="146" height="240" rx="14" fill="#5b8def" stroke="#3f63d8" stroke-width="5"/>
+  <rect x="56" y="48" width="114" height="118" rx="8" fill="#dfe9ff"/>
+  <text x="113" y="126" font-family="sans-serif" font-size="52" font-weight="900" fill="#2b3a67" text-anchor="middle">문</text>
+  <rect x="56" y="180" width="114" height="28" rx="6" fill="#2b3a67"/>
+  <rect x="56" y="218" width="114" height="40" rx="6" fill="#1b2340"/>
+  <!-- 문패 -->
+  <g transform="translate(292 150)">
+    <rect x="-70" y="-50" width="140" height="100" rx="10" fill="#c68f52" stroke="#8a5a2a" stroke-width="6"/>
+    <rect x="-58" y="-38" width="116" height="76" rx="6" fill="#f5e3c8"/>
+    <text x="0" y="26" font-family="sans-serif" font-size="60" font-weight="900" fill="#5a3a14" text-anchor="middle">문</text>
+    <circle cx="0" cy="-58" r="6" fill="#8a5a2a"/>
+  </g>
+  <path d="M300 62l5 14 14 5-14 5-5 14-5-14-14-5 14-5z" fill="#ffd66b"/>
+  <text x="292" y="248" font-family="sans-serif" font-size="18" font-weight="700" fill="#2b3a67" text-anchor="middle">문패가 나왔어요!</text>
+</svg>

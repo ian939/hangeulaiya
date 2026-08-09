@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="손에서 받침 니은을 찾았어요">
+  <rect width="400" height="300" fill="#fdefe6"/>
+  <!-- 손 -->
+  <path d="M148 262v-58c-10 4-22-2-22-14 0-10 8-16 18-16h18v-84c0-12 8-20 18-20s18 8 18 20v70h10v-84c0-12 8-20 18-20s18 8 18 20v84h10v-64c0-12 8-20 18-20s18 8 18 20v112c0 30-22 54-52 54z" fill="#ffd3ab" stroke="#e0a97a" stroke-width="4" stroke-linejoin="round"/>
+  <!-- 찾은 받침 니은 -->
+  <g transform="translate(200 116)">
+    <rect x="-40" y="-34" width="80" height="68" rx="10" fill="#fff" stroke="#2e9e6b" stroke-width="6"/>
+    <path d="M-18-16v32h36" stroke="#2e9e6b" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="200" y="288" font-family="sans-serif" font-size="19" font-weight="700" fill="#8a5a2a" text-anchor="middle">손에서 받침 ㄴ 을 찾았어요</text>
+</svg>

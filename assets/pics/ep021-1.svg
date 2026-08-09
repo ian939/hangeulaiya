@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="정음병원과 훈민약국">
+  <rect width="400" height="300" fill="#eaf2ff"/>
+  <!-- 병원 -->
+  <rect x="26" y="96" width="150" height="150" rx="10" fill="#ffffff" stroke="#c3d3f0" stroke-width="4"/>
+  <rect x="26" y="70" width="150" height="34" rx="8" fill="#5b8def"/>
+  <text x="101" y="94" font-family="sans-serif" font-size="20" font-weight="700" fill="#fff" text-anchor="middle">정음병원</text>
+  <path d="M88 140h26v18h18v26h-18v18H88v-18H70v-26h18z" fill="#e75757"/>
+  <rect x="86" y="206" width="30" height="40" fill="#c3d3f0"/>
+  <!-- 약국 -->
+  <rect x="224" y="96" width="150" height="150" rx="10" fill="#ffffff" stroke="#c3d3f0" stroke-width="4"/>
+  <rect x="224" y="70" width="150" height="34" rx="8" fill="#2e9e6b"/>
+  <text x="299" y="94" font-family="sans-serif" font-size="20" font-weight="700" fill="#fff" text-anchor="middle">훈민약국</text>
+  <ellipse cx="299" cy="164" rx="40" ry="26" fill="#ffd66b" stroke="#e0a92e" stroke-width="3"/>
+  <path d="M259 164a40 26 0 0 1 80 0z" fill="#ff8a5c"/>
+  <rect x="284" y="206" width="30" height="40" fill="#c3d3f0"/>
+  <!-- 화살표 -->
+  <path d="M186 176h26m0 0-9-9m9 9-9 9" stroke="#5a648a" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <rect y="246" width="400" height="54" fill="#d8e6c8"/>
+</svg>

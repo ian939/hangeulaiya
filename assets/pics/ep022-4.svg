@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="모자에서 미음을 찾았어요">
+  <rect width="400" height="300" fill="#e9f6ee"/>
+  <!-- 모자 -->
+  <ellipse cx="200" cy="210" rx="130" ry="34" fill="#5b8def"/>
+  <path d="M126 210c0-58 12-96 74-96s74 38 74 96z" fill="#3f63d8"/>
+  <path d="M126 178h148" stroke="#2b47a8" stroke-width="14"/>
+  <ellipse cx="200" cy="210" rx="130" ry="34" fill="none" stroke="#2b47a8" stroke-width="4"/>
+  <!-- 찾은 미음 -->
+  <g transform="translate(200 148)">
+    <rect x="-40" y="-40" width="80" height="80" rx="10" fill="#fff" stroke="#2e9e6b" stroke-width="6"/>
+    <rect x="-20" y="-20" width="40" height="40" fill="none" stroke="#2e9e6b" stroke-width="9" stroke-linejoin="round"/>
+  </g>
+  <text x="200" y="276" font-family="sans-serif" font-size="20" font-weight="700" fill="#2b3a67" text-anchor="middle">모자에서 ㅁ 을 찾았어요</text>
+</svg>

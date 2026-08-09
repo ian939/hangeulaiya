@@ -1,0 +1,391 @@
+/* 활동 화면 공통 부품 — 선택지 카드, 타일, 슬롯, 따라쓰기. */
+
+.stage { display: flex; flex-direction: column; gap: var(--gap); }
+
+/* ---------- 문제 프롬프트 ---------- */
+
+.prompt {
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  padding: 14px 16px;
+  border-radius: var(--r-md);
+  background: var(--brand-soft);
+}
+
+.prompt__text {
+  flex: 1;
+  margin: 0;
+  font-size: clamp(18px, 2.8vw, 24px);
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.prompt__speak {
+  flex: 0 0 auto;
+  width: 56px; height: 56px;
+  border: none; border-radius: 50%;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  font-size: 24px; cursor: pointer;
+}
+
+.prompt__big {
+  font-size: clamp(56px, 13vw, 120px);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-align: center;
+  margin: 4px 0;
+  line-height: 1.1;
+}
+
+/* ---------- 낱자 그리기 ----------
+   ㄱ ㅜ ㅗ ㅡ 를 글꼴로 찍으면 자모마다 잉크가 em 박스 안에서 놓이는 높이가
+   달라 어떤 건 아래로 처져 보이고 잘리기도 한다. 그래서 획 데이터(glyphs.js)를
+   SVG 로 그린다. viewBox 가 정규화되어 있으니 어느 칸에서든 가운데에 같은
+   크기로 놓인다. preserveAspectRatio 기본값이 비율을 지켜 준다.
+
+   크기는 절대 위치로 칸을 꽉 채우게 하고, width/height 를 명시한다.
+   - grid·flex 항목으로 두고 height:100% 만 주면 백분율 높이가 해소되지 않아
+     SVG 가 안 보인다.
+   - 절대 위치로 두고 width/height 를 auto 로 남기면, SVG 는 viewBox 에서 나온
+     고유 비율을 가진 대체 요소라서 브라우저가 inset 대신 그 비율을 우선해
+     정사각형으로 부풀린다 (낮고 넓은 받침 칸에서 아래로 삐져나온다).
+   그래서 둘 다 명시한다. 글자 주변 여백은 render.js 가 viewBox 안쪽에서 준다. */
+.jamo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  overflow: visible;
+}
+
+.glyphtext { line-height: 1; }
+
+/* 찾을 낱자를 크게 보여주는 자리 */
+.prompt__bigjamo {
+  position: relative;
+  width: clamp(84px, 16vw, 132px);
+  height: clamp(84px, 16vw, 132px);
+  margin: 4px auto;
+  color: var(--ink);
+}
+
+/* ---------- 선택지 ---------- */
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--gap);
+}
+.options--two { grid-template-columns: repeat(2, 1fr); }
+.options--jamo { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
+
+.option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 132px;
+  padding: 16px 12px;
+  border: 3px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.08s ease, border-color 0.15s ease, opacity 0.3s ease;
+}
+.option:active { transform: scale(0.97); }
+.option:hover { border-color: var(--brand); }
+
+.option__label {
+  position: relative;
+  font-size: clamp(20px, 3vw, 30px);
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+}
+.option--jamo .option__label { font-size: clamp(40px, 8vw, 72px); font-weight: 900; }
+
+/* 낱자 선택지는 SVG 라서 칸 크기를 직접 준다 */
+.option__label--jamo {
+  width: clamp(52px, 10vw, 84px);
+  height: clamp(52px, 10vw, 84px);
+}
+
+.option--right { border-color: var(--good); background: var(--good-soft); }
+.option--dim { opacity: 0.32; pointer-events: none; }
+.option--reveal { border-color: var(--good); box-shadow: 0 0 0 4px var(--good-soft); }
+
+.pic { display: grid; place-items: center; line-height: 1; }
+.pic--emoji { font-size: clamp(44px, 9vw, 72px); }
+.pic--text { font-size: clamp(40px, 8vw, 68px); font-weight: 900; }
+.pic--svg, .pic--thumb { width: 100%; max-width: 200px; height: auto; border-radius: var(--r-sm); }
+.pic--empty { min-height: 48px; }
+
+/* ---------- 피드백 ---------- */
+
+.feedback {
+  margin: 0;
+  min-height: 30px;
+  font-size: clamp(16px, 2.4vw, 20px);
+  font-weight: 700;
+  color: var(--brand-dark);
+}
+.feedback--good { color: var(--good); }
+
+/* ---------- 자판기 (조립) ---------- */
+
+.vending {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  padding: 20px 16px;
+  border-radius: var(--r-lg);
+  background: linear-gradient(180deg, #eef2ff, #ffffff);
+  border: 3px solid var(--brand-soft);
+}
+
+.slots { display: flex; gap: var(--gap); flex-wrap: wrap; justify-content: center; }
+
+.syllable {
+  position: relative;
+  width: clamp(150px, 30vw, 208px);
+  aspect-ratio: 1;
+  border-radius: var(--r-md);
+  background: var(--surface);
+  border: 3px dashed var(--line);
+  display: grid;
+}
+.syllable--done { border-style: solid; border-color: var(--good); background: var(--good-soft); }
+
+/* 완성 글자 실루엣. 기본은 숨긴다 — 글자를 읽을 수 있는 아이에게 답을 그대로
+   보여주면 조립 활동이 무의미해진다. 여러 번 막혔을 때만 --show 로 켠다. */
+.syllable__ghost {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: clamp(88px, 20vw, 130px);
+  font-weight: 900;
+  color: rgba(27, 35, 64, 0.07);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.syllable--hint .syllable__ghost { opacity: 1; }
+
+/* 초성/중성/종성 칸을 실제 글자 배치대로 놓는다 */
+.syllable__grid { position: absolute; inset: 8%; display: grid; gap: 4px; }
+.syllable__grid--vertical { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
+.syllable__grid--vertical-jong { grid-template-columns: 1fr 1fr; grid-template-rows: 1.5fr 1fr; }
+.syllable__grid--horizontal { grid-template-columns: 1fr; grid-template-rows: 1.2fr 1fr; }
+.syllable__grid--horizontal-jong { grid-template-columns: 1fr; grid-template-rows: 1fr 0.8fr 1fr; }
+
+.syllable__grid--vertical-jong .slot--cho { grid-area: 1 / 1; }
+.syllable__grid--vertical-jong .slot--jung { grid-area: 1 / 2; }
+.syllable__grid--vertical-jong .slot--jong { grid-area: 2 / 1 / 3 / 3; }
+
+.slot {
+  position: relative;                 /* .jamo 가 inset 으로 자리를 잡는다 */
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-sm);
+  /* 불투명하게 둔다. 반투명이면 뒤의 완성 글자가 비쳐 두 겹으로 보인다. */
+  background: #f4f7ff;
+  border: 3px dashed rgba(63, 99, 216, 0.35);
+  font-size: clamp(28px, 6.5vw, 52px);
+  font-weight: 900;
+  color: var(--ink);
+  min-height: 40px;
+}
+.slot--filled { background: var(--brand-soft); border-style: solid; border-color: var(--brand); }
+.slot--locked { background: #e6eaf4; border: 3px solid var(--line); color: var(--ink-soft); }
+.slot--target { border-color: var(--accent); background: #fff3ec; }
+.slot--wrong { animation: shake 0.4s ease; }
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.tray {
+  display: flex;
+  gap: var(--gap);
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.tile {
+  position: relative;
+  width: var(--tile);
+  height: var(--tile);
+  display: grid;
+  place-items: center;
+  border: 3px solid var(--brand);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  font-size: clamp(36px, 7vw, 52px);
+  font-weight: 900;
+  color: var(--brand-dark);
+  font-family: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 0.08s ease, opacity 0.2s ease;
+}
+.tile:active { transform: scale(0.94); }
+.tile--used { opacity: 0.25; pointer-events: none; }
+.tile--picked { border-color: var(--accent); box-shadow: 0 0 0 4px #ffe6db; transform: translateY(-4px); }
+
+/* ---------- 글자 찾기 ---------- */
+
+/* 판이 화면 폭을 다 쓰면 칸이 300px 씩 커져 세로로 한참 늘어난다.
+   손가락으로 누르기 좋은 크기(약 120~140px)로 묶어 두고 가운데에 놓는다. */
+.hunt {
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: repeat(var(--hunt-cols, 4), 1fr);
+  width: 100%;
+  max-width: calc(var(--hunt-cols, 4) * 140px);
+  margin: 0 auto;
+}
+
+.huntcell {
+  position: relative;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 3px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  font-size: clamp(30px, 7vw, 52px);
+  font-weight: 900;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.08s ease;
+  color: var(--ink);
+}
+.huntcell:active { transform: scale(0.95); }
+.huntcell--found { border-color: var(--good); background: var(--good-soft); color: var(--good); }
+.huntcell--miss { animation: shake 0.4s ease; }
+
+/* ---------- 낱말·그림 잇기 ---------- */
+
+/* 2열 격자에 낱말·그림을 번갈아 넣는다. grid-auto-rows 로 같은 행의 높이를
+   묶어 두어서, 그림이 글자보다 커도 두 열이 어긋나지 않는다. */
+.matchboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: minmax(104px, auto);
+  gap: var(--gap);
+  align-items: stretch;
+}
+
+.matchitem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 12px;
+  border: 3px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.matchitem__word {
+  font-size: clamp(22px, 4vw, 34px);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+/* 그림은 칸 높이에 맞춰 줄인다. 이모지가 칸을 밀어 키우지 않게 한다. */
+.matchitem__pic { max-height: 76px; }
+.matchitem__pic.pic--emoji { font-size: clamp(38px, 7vw, 58px); }
+.matchitem__pic.pic--svg, .matchitem__pic.pic--thumb { max-width: 130px; height: auto; }
+.matchitem--picked { border-color: var(--accent); background: #fff3ec; }
+.matchitem--done { border-color: var(--good); background: var(--good-soft); opacity: 0.6; pointer-events: none; }
+
+/* ---------- 이야기 순서 ---------- */
+
+.seqstrip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: var(--gap);
+}
+
+.seqcut {
+  border: 3px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: center;
+}
+.seqcut--picked { border-color: var(--accent); background: #fff3ec; }
+.seqcut--placed { border-color: var(--good); background: var(--good-soft); }
+.seqcut__order {
+  align-self: center;
+  min-width: 34px; height: 34px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--brand); color: #fff;
+  font-weight: 900; font-size: 17px;
+}
+.seqcut__img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--r-sm); background: #eef1f8; }
+.seqcut__cap { font-size: 14px; line-height: 1.45; color: var(--ink); }
+
+/* ---------- 따라쓰기 ---------- */
+
+.tracer { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+
+.tracer__canvas {
+  width: 100%;
+  max-width: 360px;
+  background: var(--surface);
+  border-radius: var(--r-md);
+  border: 3px solid var(--line);
+  touch-action: none;          /* Safari 가 캔버스에서 스크롤·확대하지 못하게 */
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: crosshair;
+}
+.tracer--word .tracer__canvas { max-width: min(100%, 720px); }
+
+.tracer__hud { display: flex; gap: var(--gap); font-size: 15px; font-weight: 700; color: var(--ink-soft); }
+.tracer__count { color: var(--brand); }
+.tracer__coach { margin: 0; min-height: 26px; font-size: 17px; font-weight: 700; color: var(--accent); }
+.tracer__actions { display: flex; gap: var(--gap); }
+.tracer__actions .btn { min-height: 52px; font-size: 16px; padding: 0 18px; }
+
+/* ---------- 다시보기 링크 ---------- */
+
+.replay {
+  align-self: flex-start;
+  min-height: 48px;
+  padding: 0 16px;
+  border-radius: var(--r-md);
+  border: 2px solid var(--line);
+  background: var(--surface);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--brand-dark);
+  cursor: pointer;
+}
+
+/* ---------- 넘어가기 ---------- */
+
+.skiprow { display: flex; justify-content: flex-end; }
+.skiprow .btn { min-height: 48px; font-size: 15px; }

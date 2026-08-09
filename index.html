@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>아이야 한글놀이</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="description" content="한글용사 아이야를 보고 놀면서 받침을 익히는 태블릿 학습 놀이">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="아이야 한글놀이">
+<meta name="theme-color" content="#3f63d8">
+<link rel="apple-touch-icon" href="assets/pics/icon.svg">
+<link rel="icon" href="assets/pics/icon.svg" type="image/svg+xml">
+
+<link rel="stylesheet" href="app/css/base.css">
+<link rel="stylesheet" href="app/css/activities.css">
+</head>
+<body>
+
+<div id="app">
+  <div class="screen"><p class="empty">불러오는 중…</p></div>
+</div>
+
+<!-- ── 순서가 중요하다. ns.js 가 가장 먼저, 회차 데이터가 가장 나중. ──
+     각 파일은 스스로 등록만 하는 IIFE 라서, 파일 사이에 최상위 참조가 없다.
+     그래서 새 파일을 넣을 때 순서를 크게 고민하지 않아도 된다. -->
+
+<!-- 기반 -->
+<script src="app/js/core/ns.js"></script>
+<script src="app/js/core/dom.js"></script>
+<script src="app/js/core/store.js"></script>
+
+<!-- 한글 -->
+<script src="app/js/hangul/jamo.js"></script>
+<script src="app/js/hangul/names.js"></script>
+<script src="app/js/hangul/glyphs.js"></script>
+<script src="app/js/hangul/layout.js"></script>
+<script src="app/js/hangul/render.js"></script>
+
+<!-- 음성 -->
+<script src="app/js/audio/speak.js"></script>
+<script src="data/common/voicebank.js"></script>
+
+<!-- 쓰기 -->
+<script src="app/js/trace/polyline.js"></script>
+<script src="app/js/trace/score.js"></script>
+<script src="app/js/trace/tracer.js"></script>
+
+<!-- 활동 -->
+<script src="app/js/activities/_base.js"></script>
+<script src="app/js/activities/choice.js"></script>
+<script src="app/js/activities/letterhunt.js"></script>
+<script src="app/js/activities/jamobuild.js"></script>
+<script src="app/js/activities/match.js"></script>
+<script src="app/js/activities/writing.js"></script>
+<script src="app/js/activities/sequence.js"></script>
+
+<!-- 공용 데이터 -->
+<script src="data/common/cards.js"></script>
+
+<!-- 회차 데이터 — 새 회차를 만들면 여기에 한 줄 추가한다 -->
+<script src="data/episodes/ep021.js"></script>
+<script src="data/episodes/ep022.js"></script>
+<script src="data/episodes/ep023.js"></script>
+
+<!-- 개발용 자체 점검 (#/selftest) -->
+<script src="app/js/dev/selftest.js"></script>
+
+<!-- 마지막에 셸이 부팅한다 -->
+<script src="app/js/core/shell.js"></script>
+
+</body>
+</html>
