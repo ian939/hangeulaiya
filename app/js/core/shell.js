@@ -22,6 +22,7 @@
     var parts = raw.split('/').filter(Boolean);
     if (!parts.length) return { screen: 'home' };
     if (parts[0] === 'ep') return { screen: 'episode', epKey: parts[1], sub: parts[2] };
+    if (parts[0] === 'level') return { screen: 'level', levelId: parts[1] };
     if (parts[0] === 'parent') return { screen: 'parent' };
     if (parts[0] === 'album') return { screen: 'album' };
     if (parts[0] === 'selftest') return { screen: 'selftest' };
@@ -38,6 +39,7 @@
     var r = parseHash();
     switch (r.screen) {
       case 'episode': return screenEpisode(r.epKey, r.sub);
+      case 'level': return screenLevel(r.levelId);
       case 'parent': return screenParent();
       case 'album': return screenAlbum();
       case 'selftest': return screenSelfTest();
@@ -61,31 +63,74 @@
 
   // ---------- 홈 ----------
 
+  /** 회차 카드 하나. */
+  function episodeCard(k) {
+    var ep = AIYA.episodes[k];
+    var saved = AIYA.store.ep(k);
+    var stars = AIYA.store.episodeStars(k);
+    return h('button.epcard' + (saved.done ? '.epcard--done' : ''), {
+      type: 'button',
+      onclick: function () { AIYA.audio.unlock(); go('#/ep/' + k); }
+    },
+      h('span.epcard__no', ep.episode + '화'),
+      h('span.epcard__word', ep.title),
+      h('span.epcard__goal', ep.focus || ep.objective || ''),
+      h('span.epcard__stars',
+        saved.done ? '✅ ⭐ ' + stars : (stars ? '⭐ ' + stars : '시작하기'))
+    );
+  }
+
+  /**
+   * 홈 — 난이도 단계를 고른다.
+   *
+   * 35편을 한 화면에 늘어놓으면 처음 오는 아이도, 이어서 하는 아이도
+   * 어디를 눌러야 하는지 알기 어렵다. 단계를 먼저 고르게 하면
+   * "한글을 처음 배워요" 로 시작할 수도, 하던 단계로 바로 갈 수도 있다.
+   */
   function screenHome() {
     session = null;
-    var keys = Object.keys(AIYA.episodes).sort();
 
-    var cards = keys.map(function (k) {
-      var ep = AIYA.episodes[k];
-      var saved = AIYA.store.ep(k);
-      var stars = AIYA.store.episodeStars(k);
-      return h('button.epcard', {
+    var tiles = AIYA.data.levels.map(function (lv) {
+      var keys = AIYA.data.episodesOfLevel(lv.id);
+
+      /* 아직 안 만든 단계는 숨기지 않고 '준비 중' 으로 보여준다.
+       * 숨기면 단계 번호가 3, 5, 6 처럼 띄어 보여서 고장난 것처럼 읽힌다. */
+      if (!keys.length) {
+        return h('div.levelcard.levelcard--soon',
+          h('span.levelcard__step', lv.order + '단계'),
+          h('span.levelcard__emoji', lv.emoji),
+          h('span.levelcard__label', lv.label),
+          h('span.levelcard__hint', lv.hint),
+          h('span.levelcard__meta', '준비 중')
+        );
+      }
+
+      var done = keys.filter(function (k) { return AIYA.store.ep(k).done; }).length;
+      var stars = keys.reduce(function (s, k) { return s + AIYA.store.episodeStars(k); }, 0);
+      var pct = Math.round(done / keys.length * 100);
+
+      return h('button.levelcard' + (done === keys.length ? '.levelcard--done' : ''), {
         type: 'button',
-        onclick: function () { AIYA.audio.unlock(); go('#/ep/' + k); }
+        onclick: function () { AIYA.audio.unlock(); go('#/level/' + lv.id); }
       },
-        h('span.epcard__no', ep.episode + '화'),
-        h('span.epcard__word', ep.title),
-        h('span.epcard__goal', ep.focus || ep.objective || ''),
-        h('span.epcard__stars', saved.done ? '⭐ ' + stars : (stars ? '⭐ ' + stars : '시작하기'))
+        h('span.levelcard__step', lv.order + '단계'),
+        h('span.levelcard__emoji', lv.emoji),
+        h('span.levelcard__label', lv.label),
+        h('span.levelcard__hint', lv.hint),
+        h('span.levelcard__bar', h('span.levelcard__fill', { style: { width: pct + '%' } })),
+        h('span.levelcard__meta',
+          keys.length + '편' + (done ? ' · ' + done + '편 완료' : '') +
+          (stars ? ' · ⭐ ' + stars : ''))
       );
-    });
+    }).filter(Boolean);
 
     render(h('div.screen.screen--home',
       h('header.home__head',
         h('h1.home__title', '아이야 한글놀이'),
-        h('p.home__sub', '한글용사 아이야를 보고, 놀면서 받침을 익혀요')
+        h('p.home__sub', '한글용사 아이야를 보고, 놀면서 한글을 익혀요'),
+        h('p.home__pick', '어디부터 할까요?')
       ),
-      h('div.epgrid', cards.length ? cards : h('p.empty', '회차 데이터가 없습니다.')),
+      h('div.levelgrid', tiles.length ? tiles : h('p.empty', '회차 데이터가 없습니다.')),
       h('div.home__foot',
         h('button.btn.btn--ghost', {
           type: 'button', onclick: function () { go('#/album'); }
@@ -93,6 +138,37 @@
         h('button.btn.btn--ghost', {
           type: 'button', onclick: function () { go('#/parent'); }
         }, '👪 부모님')
+      )
+    ));
+  }
+
+  /** 한 단계의 회차 목록. */
+  function screenLevel(levelId) {
+    session = null;
+    var lv = AIYA.data.levels.filter(function (l) { return l.id === levelId; })[0];
+    if (!lv) return screenHome();
+
+    var keys = AIYA.data.episodesOfLevel(lv.id);
+    var order = AIYA.data.levels.filter(function (l) {
+      return AIYA.data.episodesOfLevel(l.id).length;
+    });
+    var pos = order.map(function (l) { return l.id; }).indexOf(lv.id);
+
+    render(h('div.screen',
+      topbar(lv.emoji + ' ' + lv.label, '#/'),
+      h('p.level__desc', lv.desc),
+      h('div.epgrid', keys.length
+        ? keys.map(episodeCard)
+        : h('p.empty', '이 단계는 아직 준비 중이에요.')),
+      h('div.row.row--wrap.level__nav',
+        pos > 0 ? h('button.btn.btn--ghost', {
+          type: 'button',
+          onclick: function () { go('#/level/' + order[pos - 1].id); }
+        }, '← ' + order[pos - 1].label) : null,
+        pos < order.length - 1 ? h('button.btn.btn--ghost', {
+          type: 'button',
+          onclick: function () { go('#/level/' + order[pos + 1].id); }
+        }, order[pos + 1].label + ' →') : null
       )
     ));
   }
@@ -108,24 +184,12 @@
     if (sub === 'reward') return screenReward();
 
     var watched = AIYA.store.watchedToday(epKey);
+    var lv = AIYA.data.levelOf(ep.episode);
 
     render(h('div.screen.screen--episode',
-      topbar(ep.episode + '화 ' + ep.title, '#/'),
+      topbar(ep.episode + '화 ' + ep.title, lv ? '#/level/' + lv.id : '#/'),
 
-      h('section.card.card--video',
-        h('h2.card__title', '① 먼저 영상을 봐요'),
-        h('p.card__note', ep.focus || ''),
-        youtubeEmbed(ep.videoId),
-        h('div.row',
-          h('button.btn.btn--primary', {
-            type: 'button',
-            onclick: function () {
-              AIYA.store.markWatched(epKey);
-              screenEpisode(epKey);
-            }
-          }, watched ? '✅ 오늘 봤어요' : '다 봤어요!')
-        )
-      ),
+      videoSection(ep, epKey, watched),
 
       h('section.card',
         h('h2.card__title', '② 놀이를 골라요'),
@@ -144,15 +208,73 @@
     ));
   }
 
+  /**
+   * 유튜브 임베드.
+   *
+   * youtube-nocookie.com 을 쓰지 않는 이유: 그 도메인은 **일부러 로그인 쿠키를
+   * 쓰지 않는다.** 그래서 유튜브 프리미엄을 구독해도 임베드가 그걸 알 수 없고
+   * 광고가 그대로 나온다. youtube.com 으로 열면 브라우저에 로그인된 계정을
+   * 볼 수 있어 프리미엄이 적용될 여지가 생긴다.
+   *
+   * 다만 사파리는 기본으로 제3자 쿠키를 막기 때문에(ITP) 임베드가 로그인을
+   * 못 보는 경우가 많다. 광고를 확실히 없애려면 **로그인된 유튜브 앱에서 열어야**
+   * 한다. 그래서 앱으로 여는 버튼을 따로 둔다 (부모 설정에서 기본으로 바꿀 수 있다).
+   */
   function youtubeEmbed(videoId, startAt) {
     if (!videoId) return h('p.card__warn', '영상 주소가 없습니다.');
-    var src = 'https://www.youtube-nocookie.com/embed/' + videoId +
-      '?rel=0&playsinline=1&hl=ko' + (startAt ? '&start=' + startAt : '');
+    var src = 'https://www.youtube.com/embed/' + videoId +
+      '?rel=0&playsinline=1&hl=ko&modestbranding=1' + (startAt ? '&start=' + startAt : '');
     return h('div.embed', h('iframe', {
       src: src, title: '한글용사 아이야', loading: 'lazy',
       allow: 'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture',
       allowfullscreen: true, frameborder: '0'
     }));
+  }
+
+  /** 유튜브 앱(또는 유튜브 사이트)에서 열기. 로그인된 앱이면 프리미엄이 적용된다. */
+  function youtubeLink(videoId, startAt) {
+    return 'https://www.youtube.com/watch?v=' + videoId +
+      (startAt ? '&t=' + Math.floor(startAt) + 's' : '');
+  }
+
+  function openInYoutube(videoId, startAt) {
+    window.open(youtubeLink(videoId, startAt), '_blank', 'noopener');
+  }
+
+  /** 영상 보기 칸. 부모 설정에 따라 앱으로 열기를 기본으로 둘 수 있다. */
+  function videoSection(ep, epKey, watched) {
+    var inApp = AIYA.store.setting('openInApp');
+
+    function watchedBtn() {
+      return h('button.btn.btn--primary', {
+        type: 'button',
+        onclick: function () {
+          AIYA.store.markWatched(epKey);
+          screenEpisode(epKey);
+        }
+      }, watched ? '✅ 오늘 봤어요' : '다 봤어요!');
+    }
+
+    var appBtn = h('button.btn' + (inApp ? '.btn--primary.btn--big' : '.btn--ghost'), {
+      type: 'button',
+      onclick: function () { openInYoutube(ep.videoId); }
+    }, '▶ 유튜브 앱에서 보기');
+
+    return h('section.card.card--video',
+      h('h2.card__title', '① 먼저 영상을 봐요'),
+      h('p.card__note', ep.focus || ''),
+      inApp
+        ? h('div.stage',
+            h('p.card__note',
+              '유튜브 앱에서 열립니다. 앱에 프리미엄 계정으로 로그인되어 있으면 광고가 나오지 않아요.'),
+            h('div.row.row--wrap', appBtn, watchedBtn()))
+        : h('div.stage',
+            youtubeEmbed(ep.videoId),
+            h('div.row.row--wrap', watchedBtn(), appBtn),
+            h('p.card__note',
+              '광고가 나오면 "유튜브 앱에서 보기" 로 열어 주세요. ' +
+              '부모님 화면에서 앱으로 열기를 기본으로 바꿀 수 있어요.'))
+    );
   }
 
   function topbar(title, backHash) {
@@ -365,8 +487,35 @@
       }
     });
 
+    var inApp = AIYA.store.setting('openInApp');
+
     render(h('div.screen',
       topbar('부모님 화면', '#/'),
+
+      h('section.card',
+        h('h2.card__title', '영상과 광고'),
+        h('p.card__note',
+          '유튜브 프리미엄을 구독하고 계시면, 로그인된 유튜브 앱에서 영상을 열면 ' +
+          '광고가 나오지 않습니다. 앱 안에 넣은 영상 창은 사파리가 제3자 쿠키를 막기 때문에 ' +
+          '로그인·프리미엄을 인식하지 못하는 경우가 많습니다.'),
+        h('label.toggle',
+          h('input', {
+            type: 'checkbox', checked: inApp,
+            onchange: function (e) {
+              AIYA.store.setting('openInApp', !!e.target.checked);
+              route();
+            }
+          }),
+          h('span', '영상을 유튜브 앱에서 열기')
+        ),
+        h('p.card__note',
+          inApp
+            ? '켜져 있습니다. 회차를 고르면 "유튜브 앱에서 보기" 버튼이 먼저 나옵니다.'
+            : '꺼져 있습니다. 앱 안에서 바로 재생하고, 광고가 나오면 앱으로 열 수 있습니다.'),
+        h('p.card__note',
+          '아이패드에서 처음 한 번은 유튜브 앱에 프리미엄 계정으로 로그인해 두세요. ' +
+          '가족 요금제라면 아이 계정이 아니라 부모님 계정으로 로그인해야 광고가 빠집니다.')
+      ),
 
       h('section.card',
         h('h2.card__title', '진도'),

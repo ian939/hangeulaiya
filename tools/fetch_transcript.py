@@ -15,8 +15,12 @@ from __future__ import annotations
 import json
 import re
 import sys
+import time
 
 from _common import DATA, WORK
+
+# 요청 사이 간격(초). 몰아서 받으면 유튜브가 IP 를 막는다.
+GAP = 6
 
 
 def fetch(video_id: str) -> list[dict]:
@@ -32,6 +36,28 @@ def fetch(video_id: str) -> list[dict]:
         {"start": round(s["start"], 2), "dur": round(s["duration"], 2), "text": s["text"]}
         for s in track.fetch().to_raw_data()
     ]
+
+
+def fetch_polite(video_id: str, tries: int = 5) -> list[dict]:
+    """차단을 만나면 기다렸다 다시 시도한다.
+
+    한 번에 수십 편을 몰아 받으면 유튜브가 IP 를 막는다(IpBlocked).
+    그러면 그 뒤 요청이 전부 실패해서 아무것도 못 받는다. 그래서
+      - 요청 사이에 간격을 두고
+      - 막히면 점점 길게 기다렸다 다시 시도한다.
+    """
+    delay = 20
+    for attempt in range(1, tries + 1):
+        try:
+            return fetch(video_id)
+        except Exception as exc:
+            blocked = "Blocked" in type(exc).__name__ or "blocking requests" in str(exc)
+            if not blocked or attempt == tries:
+                raise
+            print(f"      차단됨 — {delay}초 기다린 뒤 다시 시도 ({attempt}/{tries - 1})")
+            time.sleep(delay)
+            delay = min(delay * 2, 300)
+    return []
 
 
 def mmss(seconds: float) -> str:
@@ -87,11 +113,25 @@ def main(argv: list[str]) -> int:
     outdir = WORK / "transcripts"
     outdir.mkdir(parents=True, exist_ok=True)
 
+    todo = []
     for e in episodes:
+        stem = outdir / f"ep{e['ep']:03d}.txt"
+        if stem.exists() and stem.stat().st_size > 200:
+            print(f"[{e['ep']:03d}화 {e['word']}] 이미 있음 — 건너뜀")
+        else:
+            todo.append(e)
+
+    print(f"받을 회차 {len(todo)}편 (요청 간격 {GAP}초)\n")
+    failed = []
+
+    for i, e in enumerate(todo):
+        if i:
+            time.sleep(GAP)
         try:
-            segments = fetch(e["video_id"])
+            segments = fetch_polite(e["video_id"])
         except Exception as exc:  # noqa: BLE001 - 어떤 실패든 회차 단위로 넘어간다
-            print(f"[{e['ep']:03d}화] 실패: {type(exc).__name__}: {exc}")
+            print(f"[{e['ep']:03d}화] 실패: {type(exc).__name__}")
+            failed.append(e["ep"])
             continue
 
         stem = outdir / f"ep{e['ep']:03d}"
@@ -105,6 +145,11 @@ def main(argv: list[str]) -> int:
         stem.with_suffix(".txt").write_text("\n".join(lines), encoding="utf-8")
         print(f"[{e['ep']:03d}화 {e['word']}] 세그먼트 {len(segments)}개 → {stem.name}.txt")
 
+    if failed:
+        print(f"\n실패 {len(failed)}편: {failed}")
+        print("잠시 뒤 같은 명령을 다시 실행하면 못 받은 것만 이어서 받습니다.")
+        return 1
+    print("\n모두 받았습니다.")
     return 0
 
 

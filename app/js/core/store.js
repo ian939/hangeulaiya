@@ -9,9 +9,16 @@
   var KEY = 'aiya.progress.v1';
   var writeTimer = null;
 
+  /* 부모가 정하는 설정.
+   * openInApp — 영상을 유튜브 앱에서 열지. 프리미엄 계정으로 로그인된 앱에서
+   *   열면 광고가 나오지 않는다. 사파리 안 임베드는 제3자 쿠키가 막혀 있어
+   *   로그인·프리미엄이 인식되지 않는 경우가 많다. */
+  var DEFAULT_SETTINGS = { openInApp: false };
+
   function blank() {
     return {
       version: 1,
+      settings: Object.assign({}, DEFAULT_SETTINGS),
       episodes: {},   // "021": { activities: {id: {stars, attempts, at}}, done, watchedAt, course }
       cards: {},      // "받침 ㄱ": 1
       badges: [],
@@ -29,7 +36,10 @@
       if (!raw) return blank();
       var parsed = JSON.parse(raw);
       if (!parsed || parsed.version !== 1) return blank();
-      return Object.assign(blank(), parsed);
+      var merged = Object.assign(blank(), parsed);
+      // 예전에 저장된 진도에는 settings 가 없다. 기본값을 채워 준다.
+      merged.settings = Object.assign({}, DEFAULT_SETTINGS, parsed.settings || {});
+      return merged;
     } catch (e) {
       AIYA.warn('진도를 읽지 못했습니다. 새로 시작합니다.', e);
       return blank();
@@ -150,8 +160,16 @@
     flush();
   }
 
+  function setting(key, value) {
+    if (value === undefined) return state.settings[key];
+    state.settings[key] = value;
+    save();
+    return value;
+  }
+
   AIYA.store = {
     get state() { return state; },
+    setting: setting,
     ep: ep,
     recordActivity: recordActivity,
     recordConfusion: recordConfusion,
