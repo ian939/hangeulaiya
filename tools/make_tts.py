@@ -59,10 +59,17 @@ def voice_key(text: str) -> str:
 
 # ── 회차 데이터에서 발화 문구 뽑기 ──────────────────────────────────
 # 회차 파일은 JS 라서 파싱하지 않고, 발화로 쓰이는 키의 문자열만 정규식으로 모은다.
+#
+# 키가 따옴표에 싸인 경우와 그렇지 않은 경우를 **둘 다** 받아야 한다.
+#   손으로 쓴 회차            prompt: '...'
+#   gen_episodes.py 가 만든 회차  "prompt": "..."   (JSON 출력)
+# 처음엔 따옴표 없는 쪽만 찾아서 생성된 회차의 문구를 전부 놓쳤다.
 SPEECH_KEYS = ("q", "say", "prompt", "hint", "after", "why", "caption", "note", "label")
 KEY_RE = re.compile(
-    r"\b(" + "|".join(SPEECH_KEYS) + r")\s*:\s*(['\"])((?:\\.|(?!\2).)*)\2"
+    r"[\"']?\b(" + "|".join(SPEECH_KEYS) + r")\b[\"']?\s*:\s*([\"'])((?:\\.|(?!\2).)*)\2"
 )
+# 낱말 자체도 읽어준다 (자판기·사라진 글자 활동)
+WORD_RE = re.compile(r"[\"']?\b(target|broken)\b[\"']?\s*:\s*([\"'])([^\"']+)\2")
 
 # 활동 엔진이 직접 말하는 고정 문구들 (회차 데이터에 없다)
 FIXED_LINES = [
@@ -103,12 +110,15 @@ def collect_lines() -> list[str]:
             if text and not text.endswith(".svg"):
                 lines.append(text)
 
-        # 자판기·사라진받침의 목표 낱말과 망가진 낱말도 읽어준다
-        for key in ("target", "broken"):
-            for m in re.finditer(rf"\b{key}\s*:\s*'([^']+)'", src):
-                lines.append(m.group(1))
-                lines.append(f"{m.group(1)} 완성!")
-                lines.append(f"{m.group(1)}? 다시 해 볼까?")
+        # 자판기·사라진 글자의 목표 낱말과 망가진 낱말도 읽어준다.
+        # 낱자(ㄱ, ㅄ …)는 건너뛴다 — TTS 가 낱자만으로는 소리를 못 만들고,
+        # 낱자는 어차피 이름(비읍시옷)으로 읽어주기 때문이다.
+        for _, _, word in WORD_RE.findall(src):
+            if all("ㄱ" <= c <= "ㆎ" for c in word):
+                continue
+            lines.append(word)
+            lines.append(f"{word} 완성!")
+            lines.append(f"{word}? 다시 해 볼까?")
 
     lines.extend(FIXED_LINES)
 

@@ -93,9 +93,47 @@
           src: 'https://i.ytimg.com/vi/' + ref.value + '/' + (ref.frame || 'hqdefault') + '.jpg',
           alt: ref.label || '', loading: 'lazy', draggable: false
         });
+      case 'scene':
+        return scenePic(ref, cls);
       default:
         return h('div', { className: cls + ' pic--empty' }, ref.value || '');
     }
+  }
+
+  /**
+   * 이야기 순서 컷의 장면 카드.
+   *
+   * 회차마다 삽화를 6장씩 그리면 32편에 192장이 된다. 그런데 이 시리즈의
+   * 이야기 골격은 늘 같다 — 상황 → 막힘 → 소환 → 장소에서 자모 찾기 →
+   * 자판기 → 발음 연습. 달라지는 건 **장소와 찾은 자모**뿐이다.
+   * 그래서 장면을 데이터로 조립한다. 장소 이모지 + 찾은 자모 배지 조합이면
+   * 아이가 "아, 국수에서 받침 기역 찾은 장면" 이라고 알아본다.
+   */
+  var SCENE_MARK = {
+    situation: '🙂', problem: '❓', summon: '📣',
+    merge: '➕', vending: '🎁', grandpa: '👴', place: '🔍'
+  };
+
+  function scenePic(ref, cls) {
+    var kind = ref.sceneKind || 'place';
+    var mark = ref.emoji || SCENE_MARK[kind] || '🔍';
+
+    var body = [h('span.scene__mark', mark)];
+    if (ref.place && !ref.emoji) {
+      // 이모지가 없는 장소는 이름을 글자로 보여준다 (읽기 연습도 된다)
+      body = [h('span.scene__place', ref.place)];
+    } else if (ref.place) {
+      body.push(h('span.scene__name', ref.place));
+    }
+
+    var el = h('div', { className: cls + ' pic--scene scene--' + kind }, body);
+    if (ref.jamo) {
+      el.appendChild(h('span.scene__jamo',
+        AIYA.hangul && AIYA.hangul.glyphNode
+          ? AIYA.hangul.glyphNode(ref.jamo, { position: ref.position })
+          : ref.jamo));
+    }
+    return el;
   }
 
   /**

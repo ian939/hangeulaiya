@@ -344,6 +344,57 @@
   font-weight: 900; font-size: 17px;
 }
 .seqcut__img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--r-sm); background: #eef1f8; }
+
+/* ---------- 장면 카드 ----------
+   회차마다 삽화를 그리는 대신 장소 이모지 + 찾은 자모로 조립한다.
+   달라지는 건 장소와 자모뿐이라, 이 조합만으로 아이가 장면을 알아본다. */
+.pic--scene {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  gap: 2px;
+  border-radius: var(--r-sm);
+  background: linear-gradient(160deg, #eef2ff, #f8faff);
+  overflow: hidden;
+}
+.scene__mark { font-size: clamp(34px, 7vw, 52px); line-height: 1; }
+.scene__place {
+  font-size: clamp(17px, 3vw, 23px);
+  font-weight: 800;
+  color: var(--brand-dark);
+  text-align: center;
+  padding: 0 8px;
+}
+.scene__name {
+  position: absolute;
+  bottom: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+/* 찾은 자모 배지 */
+.scene__jamo {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 32%;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  background: #fff;
+  border: 2px solid var(--good);
+  color: var(--good);
+  box-shadow: var(--shadow);
+}
+
+/* 이야기 단계별로 배경을 살짝 달리해 순서 감각을 돕는다 */
+.scene--situation { background: linear-gradient(160deg, #eaf6ee, #f7fdf9); }
+.scene--problem   { background: linear-gradient(160deg, #fff3e6, #fffaf3); }
+.scene--summon    { background: linear-gradient(160deg, #ffeaea, #fff6f6); }
+.scene--merge     { background: linear-gradient(160deg, #f3ecff, #fbf8ff); }
+.scene--vending   { background: linear-gradient(160deg, #e8eeff, #f6f9ff); }
+.scene--grandpa   { background: linear-gradient(160deg, #f4f1e6, #fbfaf4); }
 .seqcut__cap { font-size: 14px; line-height: 1.45; color: var(--ink); }
 
 /* ---------- 따라쓰기 ---------- */
