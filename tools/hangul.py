@@ -74,6 +74,50 @@ def label(j: str, position: str = "") -> str:
     return ("받침 " + name(j)) if position == "jong" else name(j)
 
 
+# ── 조사 고르기 ──────────────────────────────────────────────
+# 생성한 문구를 아이가 소리로 듣는다. "'자다' 과 '짜다'" 처럼 조사가 어긋나면
+# 그대로 읽혀서 이상하게 들린다. 앞말의 끝소리를 보고 골라 준다.
+# 자모 이름으로 끝나는 경우도 있어(쌍지읒, 아) 이름을 먼저 풀어 본다.
+
+def _ends_with_consonant(word: str) -> bool:
+    w = (word or "").strip().strip("'\"”’」』 ")
+    if not w:
+        return False
+    ch = w[-1]
+    if is_syllable(ch):
+        return bool(decompose(ch)[2])
+    # 낱자 자체로 끝나면 그 이름의 끝소리를 본다 (ㅈ → 지읒 → 받침 있음)
+    if ch in NAMES:
+        nm = NAMES[ch]
+        return bool(decompose(nm[-1])[2]) if is_syllable(nm[-1]) else False
+    return False
+
+
+def eun(word: str) -> str:
+    """은 / 는"""
+    return "은" if _ends_with_consonant(word) else "는"
+
+
+def eul(word: str) -> str:
+    """을 / 를"""
+    return "을" if _ends_with_consonant(word) else "를"
+
+
+def ee(word: str) -> str:
+    """이 / 가"""
+    return "이" if _ends_with_consonant(word) else "가"
+
+
+def wa(word: str) -> str:
+    """와 / 과"""
+    return "과" if _ends_with_consonant(word) else "와"
+
+
+def euro(word: str) -> str:
+    """으로 / 로"""
+    return "으로" if _ends_with_consonant(word) else "로"
+
+
 def jong_index(word: str) -> int | None:
     """받침이 있는 첫 음절의 위치."""
     for i, ch in enumerate(word):

@@ -46,7 +46,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "치읓 은 어디에서 찾았나요?",
+          "q": "치읓은 어디에서 찾았나요?",
           "at": 305,
           "options": [
             {
@@ -79,7 +79,7 @@
           ]
         },
         {
-          "q": "기역 은 어디에서 찾았나요?",
+          "q": "기역은 어디에서 찾았나요?",
           "at": 504,
           "options": [
             {
@@ -141,7 +141,7 @@
         {
           "say": "외",
           "prompt": "잘 듣고 같은 글자를 골라요",
-          "hint": "오 와 이 가 만나면 외 가 돼요",
+          "hint": "오와 이가 만나면 외가 돼요",
           "options": [
             {
               "label": "ㅚ",
@@ -222,7 +222,7 @@
           "position": "jung",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "외 을 모두 찾아 눌러 보세요",
+          "prompt": "외를 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅙ",
@@ -235,7 +235,7 @@
               "count": 3
             }
           ],
-          "missHint": "이건 외 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 외가 아니에요. 모양을 다시 보세요."
         }
       ]
     },
@@ -290,7 +290,7 @@
         {
           "target": "최고",
           "broken": "초고",
-          "prompt": "모음이 반쪽만 남았어요! 외 로 고쳐 주세요.",
+          "prompt": "모음이 반쪽만 남았어요! 외로 고쳐 주세요.",
           "tray": [
             {
               "jamo": "ㅗ",
@@ -358,13 +358,13 @@
           "target": "ㅚ",
           "kind": "jamo",
           "position": "jung",
-          "prompt": "외 을 따라 써 보세요"
+          "prompt": "외를 따라 써 보세요"
         },
         {
           "target": "최",
           "kind": "syllable",
           "prompt": "'최' 을 따라 써 보세요",
-          "note": "오 와 이 가 만나 외 가 돼요."
+          "note": "오와 이가 만나 외가 돼요."
         },
         {
           "target": "최고",
@@ -415,7 +415,7 @@
         {
           "order": 4,
           "at": 305,
-          "caption": "철봉 에서 치읓 을 찾았어요.",
+          "caption": "철봉 에서 치읓을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -428,7 +428,7 @@
         {
           "order": 5,
           "at": 326,
-          "caption": "오 와 이 가 만나 외 가 되었어요.",
+          "caption": "오와 이가 만나 외가 되었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -438,7 +438,7 @@
         {
           "order": 6,
           "at": 504,
-          "caption": "골짜기 에서 기역 을 찾았어요.",
+          "caption": "골짜기 에서 기역을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -451,7 +451,7 @@
         {
           "order": 7,
           "at": 563,
-          "caption": "자판기에 넣으니 이름표 이 나왔어요!",
+          "caption": "자판기에 넣으니 이름표가 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

@@ -44,7 +44,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "이응 은 어디에서 찾았나요?",
+          "q": "이응은 어디에서 찾았나요?",
           "at": 400,
           "options": [
             {
@@ -171,7 +171,7 @@
           "position": "jung",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "유 을 모두 찾아 눌러 보세요",
+          "prompt": "유를 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅜ",
@@ -179,7 +179,7 @@
               "count": 3
             }
           ],
-          "missHint": "이건 유 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 유가 아니에요. 모양을 다시 보세요."
         }
       ]
     },
@@ -280,7 +280,7 @@
           "target": "ㅠ",
           "kind": "jamo",
           "position": "jung",
-          "prompt": "유 을 따라 써 보세요"
+          "prompt": "유를 따라 써 보세요"
         },
         {
           "target": "유",
@@ -337,7 +337,7 @@
         {
           "order": 4,
           "at": 400,
-          "caption": "어항 에서 이응 을 찾았어요.",
+          "caption": "어항 에서 이응을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -349,7 +349,7 @@
         {
           "order": 5,
           "at": 440,
-          "caption": "우 용사가 우 를 붙여 주었어요.",
+          "caption": "우 용사가 우를 붙여 주었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -359,7 +359,7 @@
         {
           "order": 6,
           "at": 507,
-          "caption": "유 용사가 유 를 붙여 주었어요.",
+          "caption": "유 용사가 유를 붙여 주었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -369,7 +369,7 @@
         {
           "order": 7,
           "at": 547,
-          "caption": "자판기에 넣으니 우유 이 나왔어요!",
+          "caption": "자판기에 넣으니 우유가 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

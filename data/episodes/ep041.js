@@ -45,7 +45,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "이응 은 어디에서 찾았나요?",
+          "q": "이응은 어디에서 찾았나요?",
           "at": 359,
           "options": [
             {
@@ -115,7 +115,7 @@
         {
           "say": "얘",
           "prompt": "잘 듣고 같은 글자를 골라요",
-          "hint": "야 와 이 가 만나면 얘 가 돼요",
+          "hint": "야와 이가 만나면 얘가 돼요",
           "options": [
             {
               "label": "ㅒ",
@@ -196,7 +196,7 @@
           "position": "jung",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "얘 을 모두 찾아 눌러 보세요",
+          "prompt": "얘를 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅐ",
@@ -209,7 +209,7 @@
               "count": 3
             }
           ],
-          "missHint": "이건 얘 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 얘가 아니에요. 모양을 다시 보세요."
         }
       ]
     },
@@ -268,7 +268,7 @@
         {
           "target": "얘",
           "broken": "야",
-          "prompt": "모음이 반쪽만 남았어요! 얘 로 고쳐 주세요.",
+          "prompt": "모음이 반쪽만 남았어요! 얘로 고쳐 주세요.",
           "tray": [
             {
               "jamo": "ㅑ",
@@ -336,13 +336,13 @@
           "target": "ㅒ",
           "kind": "jamo",
           "position": "jung",
-          "prompt": "얘 을 따라 써 보세요"
+          "prompt": "얘를 따라 써 보세요"
         },
         {
           "target": "얘",
           "kind": "syllable",
           "prompt": "'얘' 을 따라 써 보세요",
-          "note": "야 와 이 가 만나 얘 가 돼요."
+          "note": "야와 이가 만나 얘가 돼요."
         }
       ]
     },
@@ -387,7 +387,7 @@
         {
           "order": 4,
           "at": 359,
-          "caption": "올챙이 에서 이응 을 찾았어요.",
+          "caption": "올챙이 에서 이응을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -400,7 +400,7 @@
         {
           "order": 5,
           "at": 391,
-          "caption": "야 와 이 가 만나 얘 가 되었어요.",
+          "caption": "야와 이가 만나 얘가 되었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -410,7 +410,7 @@
         {
           "order": 6,
           "at": 511,
-          "caption": "자판기에 넣으니 친구들 이 나왔어요!",
+          "caption": "자판기에 넣으니 친구들이 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

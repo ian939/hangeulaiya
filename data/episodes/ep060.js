@@ -46,7 +46,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "이응 은 어디에서 찾았나요?",
+          "q": "이응은 어디에서 찾았나요?",
           "at": 394,
           "options": [
             {
@@ -79,7 +79,7 @@
           ]
         },
         {
-          "q": "받침 비읍시옷 은 어디에서 찾았나요?",
+          "q": "받침 비읍시옷은 어디에서 찾았나요?",
           "at": 582,
           "options": [
             {
@@ -199,7 +199,7 @@
           "position": "jong",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "받침 비읍시옷 을 모두 찾아 눌러 보세요",
+          "prompt": "받침 비읍시옷을 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅂ",
@@ -212,14 +212,14 @@
               "count": 3
             }
           ],
-          "missHint": "이건 비읍시옷 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 비읍시옷이 아니에요. 모양을 다시 보세요."
         },
         {
           "cols": 4,
           "showTarget": false,
           "target": "ㅄ",
           "position": "jong",
-          "prompt": "받침 비읍시옷 이 있는 글자를 모두 찾아 눌러 보세요",
+          "prompt": "받침 비읍시옷이 있는 글자를 모두 찾아 눌러 보세요",
           "cells": [
             {
               "ch": "없",
@@ -364,7 +364,7 @@
           "target": "ㅄ",
           "kind": "jamo",
           "position": "jong",
-          "prompt": "받침 비읍시옷 을 따라 써 보세요"
+          "prompt": "받침 비읍시옷을 따라 써 보세요"
         },
         {
           "target": "어",
@@ -427,7 +427,7 @@
         {
           "order": 4,
           "at": 394,
-          "caption": "앵무새 에서 이응 을 찾았어요.",
+          "caption": "앵무새 에서 이응을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -440,7 +440,7 @@
         {
           "order": 5,
           "at": 582,
-          "caption": "밥상 에서 받침 비읍시옷 을 찾았어요.",
+          "caption": "밥상 에서 받침 비읍시옷을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -453,7 +453,7 @@
         {
           "order": 6,
           "at": 661,
-          "caption": "자판기에 넣으니 마술 보자기 이 나왔어요!",
+          "caption": "자판기에 넣으니 마술 보자기가 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

@@ -441,6 +441,129 @@ CONSONANT = [
          vending="과자", situation_at=126, problem_at=267, vending_at=534, grandpa_at=560,
          quiz=("첫소리", ["조개", "소리", "소금"], "조개", 701),
          extra=["소리", "소", "시소"]),
+
+    dict(ep=15, word="자유", jamo="ㅈ", position="cho",
+         situation="훈민이와 정음이가 밖에서 자유롭게 놀며 블록으로 공룡과 자동차를 만들었어요.",
+         problem="방 앞에 '자유' 라고 써 붙이고 싶은데 쓸 줄 몰랐어요.",
+         hunts=[("ㅈ", "cho", "자전거", 302), ("ㅏ", "jung", None, 364),
+                ("ㅇ", "cho", "옹달샘", 419), ("ㅠ", "jung", None, 447)],
+         vending="예쁜 종이", situation_at=110, problem_at=184,
+         vending_at=488, grandpa_at=549,
+         quiz=("끝소리", ["자유", "자두", "두유"], "자두", 697),
+         extra=["자유", "지도", "주사기"], uncertain=["퀴즈 종류(끝소리로 추정)"]),
+
+    dict(ep=16, word="차", jamo="ㅊ", position="cho",
+         situation="훈민이와 정음이가 장난감 차를 굴리며 신호등과 터널이 있는 찻길을 만들었어요.",
+         problem="'차' 라고 쓰고 싶은데 쓸 줄 몰랐어요.",
+         hunts=[("ㅊ", "cho", "침팬지", 421), ("ㅏ", "jung", None, 471)],
+         vending="커다란 차", situation_at=105, problem_at=322,
+         vending_at=503, grandpa_at=553,
+         quiz=("끝소리", ["그림자", "자동차", "기차"], "그림자", 671),
+         extra=["차", "치마", "초"], uncertain=["퀴즈 종류(끝소리로 추정)"]),
+
+    dict(ep=17, word="코", jamo="ㅋ", position="cho",
+         situation="훈민이와 정음이가 코로 동물 흉내를 내고 무슨 동물인지 맞히는 놀이를 했어요.",
+         problem="코끼리 코를 갖고 싶었어요. '코' 를 쓸 줄 몰랐어요.",
+         hunts=[("ㅋ", "cho", "케이크", 432), ("ㅗ", "jung", None, 478)],
+         vending="코끼리 코", situation_at=109, problem_at=300,
+         vending_at=508, grandpa_at=552,
+         quiz=("첫소리", ["코코아", "고구마", "코알라"], "고구마", 667),
+         extra=["코", "카드"]),
+
+    dict(ep=18, word="토마토", jamo="ㅌ", position="cho",
+         situation="훈민이와 정음이가 심어 둔 토마토가 주렁주렁 열려 톡톡 따 보았어요.",
+         problem="밭에 '토마토' 라고 이름표를 쓰려는데 쓸 줄 몰랐어요.",
+         hunts=[("ㅌ", "cho", "태권도", 319), ("ㅗ", "jung", None, 342),
+                ("ㅁ", "cho", "묵", 413), ("ㅏ", "jung", None, 439)],
+         vending="토마토 이름표", situation_at=116, problem_at=204,
+         vending_at=481, grandpa_at=530,
+         quiz=("첫소리", ["도자기", "토마토", "토요일"], "도자기", 692),
+         extra=["토마토", "타조"], uncertain=["ㅁ 을 얻은 장소(묵/무 중 불확실)"]),
+
+    dict(ep=19, word="피자", jamo="ㅍ", position="cho",
+         situation="훈민이와 정음이가 빵 위에 소스와 치즈를 올려 피자를 만들었어요.",
+         problem="둘이 다 먹어 버려서 할아버지께 드릴 피자 재료가 없었어요.",
+         hunts=[("ㅍ", "cho", "폭포", 355), ("ㅣ", "jung", None, 375),
+                ("ㅈ", "cho", "자라", 456), ("ㅏ", "jung", None, 479)],
+         vending="피자 한 판", situation_at=109, problem_at=234,
+         vending_at=515, grandpa_at=535,
+         quiz=("끝소리", ["주차", "피자", "모자"], "주차", 712),
+         extra=["피자", "포도", "파"]),
+
+    dict(ep=20, word="휴지", jamo="ㅎ", position="cho",
+         situation="훈민이와 정음이가 한글용사 흉내를 내며 놀다 휴지를 길게 풀어 길을 만들었어요.",
+         problem="휴지를 다 써 버려서 할아버지께 드릴 휴지가 없었어요.",
+         hunts=[("ㅎ", "cho", "황소", 393), ("ㅠ", "jung", None, 413),
+                ("ㅈ", "cho", "조개", 488), ("ㅣ", "jung", None, 511)],
+         vending="깨끗한 휴지", situation_at=138, problem_at=275,
+         vending_at=547, grandpa_at=587,
+         quiz=("끝소리", ["휴지", "가지", "김치"], "김치", 699),
+         extra=["휴지", "하마", "호수"], uncertain=["퀴즈 종류(끝소리로 추정)"]),
 ]
 
-ALL_SPECS = VOWEL_BASIC + CONSONANT + BATCHIM + VOWEL + CLUSTER
+# ── 쌍자음 단원 35~39화 ──────────────────────────────────────
+# 자막을 읽고 확인한 것:
+#   1. **쌍자음은 전부 '한 덩어리' 로 등장한다.** 5회차 모두 홀자음 둘을 붙이는
+#      연출(ㄱ+ㄱ=ㄲ)이 없다. 매번 "쌍○○의 문을 찾자" 하고 사물 글자에서
+#      쌍자음을 통째로 가져온다. 그래서 자음 합성 활동은 이 단원에 근거가 없다.
+#   2. 홀소리/된소리 대비는 **퀴즈 안에서만** 나온다. 별도 대비 장면이 없다.
+#      그중 진짜 최소대립쌍은 39화 자다/짜다 뿐이고, 나머지(굼벵이/꿈나라,
+#      붕어빵/뿡뿡이, 시장/씨앗)는 첫소리만 다른 게 아니다. 생성기가 검사해서
+#      진짜 최소대립쌍만 문항으로 쓴다.
+#   3. 받침이 있는 회차(35 ㅁ, 36 ㄱ, 37 ㅇ)는 초·중성을 만든 뒤 **받침을 찾으러
+#      한 번 더 원정을 나간다.** 그 직전에 "꿍/꿀/꿈" 처럼 받침만 바꿔 읽는
+#      낱말 회전 연출이 들어가는데, 글자 찾기 문항의 좋은 재료다(extra 에 넣었다).
+#   4. 이 단원은 21~34화 뒤라 받침을 이미 배운 시점이다.
+DOUBLE = [
+    dict(ep=35, word="꿈", jamo="ㄲ", position="cho",
+         situation="정음이가 낮잠을 자다 달콤한 꿈을 꾸었어요. 훈민이도 그런 꿈을 꾸고 싶었어요.",
+         problem="다시 꿈을 꾸려면 '꿈' 을 써야 하는데 쓸 줄 몰랐어요.",
+         hunts=[("ㄲ", "cho", "신발끈", 281), ("ㅜ", "jung", None, 323),
+                ("ㅁ", "jong", "구름", 439)],
+         vending="꿈", situation_at=112, problem_at=189, vending_at=491, grandpa_at=565,
+         quiz=("첫소리", ["꿈나라", "굼벵이", "꿈동산"], "굼벵이", 666),
+         tense_pairs=[("굼벵이", "꿈나라")],
+         extra=["꿈", "꿀", "꿍", "꾹"], uncertain=["쌍기역을 찾은 장소"]),
+
+    dict(ep=36, word="딱지", jamo="ㄸ", position="cho",
+         situation="훈민이와 정음이가 직접 접은 딱지로 딱지치기를 했어요.",
+         problem="할아버지를 이길 딱지가 필요한데 '딱지' 를 쓸 줄 몰랐어요.",
+         hunts=[("ㄸ", "cho", "떡", 285), ("ㅏ", "jung", None, 315),
+                ("ㄱ", "jong", "바둑", 407), ("ㅈ", "cho", "제비", 483),
+                ("ㅣ", "jung", None, 494)],
+         vending="아이야 딱지", situation_at=104, problem_at=193,
+         vending_at=585, grandpa_at=598,
+         quiz=("끝소리", ["꿀떡", "팥떡", "더덕"], "더덕", 703),
+         extra=["딱지", "땅", "땀", "딱"]),
+
+    dict(ep=37, word="뿡", jamo="ㅃ", position="cho",
+         situation="훈민이와 정음이가 방귀 소리를 듣고 서로 상대가 뀌었다고 다퉜어요.",
+         problem="소리의 주인을 찾으려는데 '뿡' 은 너무 어려운 글자였어요.",
+         hunts=[("ㅃ", "cho", "빨래", 268), ("ㅜ", "jung", None, 310),
+                ("ㅇ", "jong", "사탕", 430)],
+         vending="뿡뿡이", situation_at=114, problem_at=163, vending_at=493, grandpa_at=567,
+         quiz=("첫소리", ["뿡뿡이", "붕어빵", "뿡순이"], "붕어빵", 675),
+         tense_pairs=[("붕어빵", "뿡뿡이")],
+         extra=["뿡", "뿔", "뿐", "뽕"]),
+
+    dict(ep=38, word="씨", jamo="ㅆ", position="cho",
+         situation="훈민이와 정음이가 수박을 먹으며 누가 씨를 더 많이 뱉었는지 세어 봤어요.",
+         problem="씨를 심으려는데 씨가 없어졌어요. '씨' 를 쓸 줄 몰랐어요.",
+         hunts=[("ㅆ", "cho", "새싹", 451), ("ㅣ", "jung", None, 455)],
+         vending="수박씨", situation_at=103, problem_at=287, vending_at=516, grandpa_at=526,
+         quiz=("첫소리", ["씨앗", "씨름", "시장"], "시장", 621),
+         tense_pairs=[("시장", "씨앗")],
+         extra=["씨", "씨앗", "싹"], uncertain=["초성·중성 결합 시각"]),
+
+    dict(ep=39, word="짜다", jamo="ㅉ", position="cho",
+         situation="정음이가 김을 자꾸 먹어서 훈민이가 옆에서 말렸어요.",
+         problem="김이 너무 짰어요. '짜다' 를 쓸 줄 몰랐어요.",
+         hunts=[("ㅉ", "cho", "짜장면", 335), ("ㅏ", "jung", None, 379),
+                ("ㄷ", "cho", "다람쥐", 471), ("ㅏ", "jung", None, 499)],
+         vending="밥", situation_at=108, problem_at=202, vending_at=550, grandpa_at=597,
+         quiz=("첫소리", ["자다", "짜다", "짜증"], "자다", 714),
+         tense_pairs=[("자다", "짜다")],   # 이 단원에서 유일한 진짜 최소대립쌍
+         extra=["짜다", "짜증", "찌개"]),
+]
+
+ALL_SPECS = VOWEL_BASIC + CONSONANT + BATCHIM + DOUBLE + VOWEL + CLUSTER

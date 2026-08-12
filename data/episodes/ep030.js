@@ -44,7 +44,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "비읍 은 어디에서 찾았나요?",
+          "q": "비읍은 어디에서 찾았나요?",
           "at": 340,
           "options": [
             {
@@ -77,7 +77,7 @@
           ]
         },
         {
-          "q": "받침 치읓 은 어디에서 찾았나요?",
+          "q": "받침 치읓은 어디에서 찾았나요?",
           "at": 482,
           "options": [
             {
@@ -241,7 +241,7 @@
           "position": "jong",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "받침 치읓 을 모두 찾아 눌러 보세요",
+          "prompt": "받침 치읓을 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅈ",
@@ -259,14 +259,14 @@
               "count": 3
             }
           ],
-          "missHint": "이건 치읓 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 치읓이 아니에요. 모양을 다시 보세요."
         },
         {
           "cols": 4,
           "showTarget": false,
           "target": "ㅊ",
           "position": "jong",
-          "prompt": "받침 치읓 이 있는 글자를 모두 찾아 눌러 보세요",
+          "prompt": "받침 치읓이 있는 글자를 모두 찾아 눌러 보세요",
           "cells": [
             {
               "ch": "빛",
@@ -440,7 +440,7 @@
           "target": "ㅊ",
           "kind": "jamo",
           "position": "jong",
-          "prompt": "받침 치읓 을 따라 써 보세요"
+          "prompt": "받침 치읓을 따라 써 보세요"
         },
         {
           "target": "비",
@@ -497,7 +497,7 @@
         {
           "order": 4,
           "at": 340,
-          "caption": "빗 에서 비읍 을 찾았어요.",
+          "caption": "빗 에서 비읍을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -510,7 +510,7 @@
         {
           "order": 5,
           "at": 482,
-          "caption": "윷 에서 받침 치읓 을 찾았어요.",
+          "caption": "윷 에서 받침 치읓을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -523,7 +523,7 @@
         {
           "order": 6,
           "at": 543,
-          "caption": "자판기에 넣으니 손전등 이 나왔어요!",
+          "caption": "자판기에 넣으니 손전등이 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

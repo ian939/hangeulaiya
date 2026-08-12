@@ -45,7 +45,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "히읗 은 어디에서 찾았나요?",
+          "q": "히읗은 어디에서 찾았나요?",
           "at": 295,
           "options": [
             {
@@ -115,7 +115,7 @@
         {
           "say": "와",
           "prompt": "잘 듣고 같은 글자를 골라요",
-          "hint": "오 와 아 가 만나면 와 가 돼요",
+          "hint": "오와 아가 만나면 와가 돼요",
           "options": [
             {
               "label": "ㅘ",
@@ -192,7 +192,7 @@
           "position": "jung",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "와 을 모두 찾아 눌러 보세요",
+          "prompt": "와를 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅗ",
@@ -200,7 +200,7 @@
               "count": 3
             }
           ],
-          "missHint": "이건 와 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 와가 아니에요. 모양을 다시 보세요."
         }
       ]
     },
@@ -251,7 +251,7 @@
         {
           "target": "화",
           "broken": "호",
-          "prompt": "모음이 반쪽만 남았어요! 와 로 고쳐 주세요.",
+          "prompt": "모음이 반쪽만 남았어요! 와로 고쳐 주세요.",
           "tray": [
             {
               "jamo": "ㅗ",
@@ -319,13 +319,13 @@
           "target": "ㅘ",
           "kind": "jamo",
           "position": "jung",
-          "prompt": "와 을 따라 써 보세요"
+          "prompt": "와를 따라 써 보세요"
         },
         {
           "target": "화",
           "kind": "syllable",
           "prompt": "'화' 을 따라 써 보세요",
-          "note": "오 와 아 가 만나 와 가 돼요."
+          "note": "오와 아가 만나 와가 돼요."
         }
       ]
     },
@@ -370,7 +370,7 @@
         {
           "order": 4,
           "at": 295,
-          "caption": "홍시 에서 히읗 을 찾았어요.",
+          "caption": "홍시 에서 히읗을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -383,7 +383,7 @@
         {
           "order": 5,
           "at": 307,
-          "caption": "오 와 아 가 만나 와 가 되었어요.",
+          "caption": "오와 아가 만나 와가 되었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -393,7 +393,7 @@
         {
           "order": 6,
           "at": 443,
-          "caption": "자판기에 넣으니 편지지 이 나왔어요!",
+          "caption": "자판기에 넣으니 편지지가 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

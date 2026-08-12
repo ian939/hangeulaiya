@@ -45,7 +45,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "미음 은 어디에서 찾았나요?",
+          "q": "미음은 어디에서 찾았나요?",
           "at": 401,
           "options": [
             {
@@ -173,7 +173,7 @@
           "position": "jong",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "받침 니은히읗 을 모두 찾아 눌러 보세요",
+          "prompt": "받침 니은히읗을 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㄴ",
@@ -186,14 +186,14 @@
               "count": 3
             }
           ],
-          "missHint": "이건 니은히읗 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 니은히읗이 아니에요. 모양을 다시 보세요."
         },
         {
           "cols": 4,
           "showTarget": false,
           "target": "ㄶ",
           "position": "jong",
-          "prompt": "받침 니은히읗 이 있는 글자를 모두 찾아 눌러 보세요",
+          "prompt": "받침 니은히읗이 있는 글자를 모두 찾아 눌러 보세요",
           "cells": [
             {
               "ch": "많",
@@ -333,7 +333,7 @@
           "target": "ㄶ",
           "kind": "jamo",
           "position": "jong",
-          "prompt": "받침 니은히읗 을 따라 써 보세요"
+          "prompt": "받침 니은히읗을 따라 써 보세요"
         },
         {
           "target": "마",
@@ -396,7 +396,7 @@
         {
           "order": 4,
           "at": 401,
-          "caption": "메주 에서 미음 을 찾았어요.",
+          "caption": "메주 에서 미음을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -409,7 +409,7 @@
         {
           "order": 5,
           "at": 558,
-          "caption": "받침 니은히읗 을 찾았어요.",
+          "caption": "받침 니은히읗을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -419,7 +419,7 @@
         {
           "order": 6,
           "at": 627,
-          "caption": "자판기에 넣으니 과자 상자 이 나왔어요!",
+          "caption": "자판기에 넣으니 과자 상자가 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

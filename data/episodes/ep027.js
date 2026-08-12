@@ -46,7 +46,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "이응 은 어디에서 찾았나요?",
+          "q": "이응은 어디에서 찾았나요?",
           "at": 337,
           "options": [
             {
@@ -214,7 +214,7 @@
           "position": "jong",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "받침 시옷 을 모두 찾아 눌러 보세요",
+          "prompt": "받침 시옷을 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅈ",
@@ -232,14 +232,14 @@
               "count": 3
             }
           ],
-          "missHint": "이건 시옷 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 시옷이 아니에요. 모양을 다시 보세요."
         },
         {
           "cols": 4,
           "showTarget": false,
           "target": "ㅅ",
           "position": "jong",
-          "prompt": "받침 시옷 이 있는 글자를 모두 찾아 눌러 보세요",
+          "prompt": "받침 시옷이 있는 글자를 모두 찾아 눌러 보세요",
           "cells": [
             {
               "ch": "옷",
@@ -421,7 +421,7 @@
           "target": "ㅅ",
           "kind": "jamo",
           "position": "jong",
-          "prompt": "받침 시옷 을 따라 써 보세요"
+          "prompt": "받침 시옷을 따라 써 보세요"
         },
         {
           "target": "오",
@@ -478,7 +478,7 @@
         {
           "order": 4,
           "at": 337,
-          "caption": "울타리 에서 이응 을 찾았어요.",
+          "caption": "울타리 에서 이응을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -491,7 +491,7 @@
         {
           "order": 5,
           "at": 465,
-          "caption": "받침 시옷 을 찾았어요.",
+          "caption": "받침 시옷을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -501,7 +501,7 @@
         {
           "order": 6,
           "at": 525,
-          "caption": "자판기에 넣으니 옷 이 나왔어요!",
+          "caption": "자판기에 넣으니 옷이 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

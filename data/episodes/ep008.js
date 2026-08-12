@@ -45,7 +45,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "기역 은 어디에서 찾았나요?",
+          "q": "기역은 어디에서 찾았나요?",
           "at": 336,
           "options": [
             {
@@ -76,7 +76,7 @@
           ]
         },
         {
-          "q": "시옷 은 어디에서 찾았나요?",
+          "q": "시옷은 어디에서 찾았나요?",
           "at": 454,
           "options": [
             {
@@ -228,7 +228,7 @@
           "position": "cho",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "기역 을 모두 찾아 눌러 보세요",
+          "prompt": "기역을 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㄷ",
@@ -236,14 +236,14 @@
               "count": 3
             }
           ],
-          "missHint": "이건 기역 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 기역이 아니에요. 모양을 다시 보세요."
         },
         {
           "cols": 4,
           "showTarget": false,
           "target": "ㄱ",
           "position": "cho",
-          "prompt": "기역 으로 시작하는 글자를 모두 찾아 눌러 보세요",
+          "prompt": "기역으로 시작하는 글자를 모두 찾아 눌러 보세요",
           "cells": [
             {
               "ch": "가",
@@ -390,7 +390,7 @@
           "target": "ㄱ",
           "kind": "jamo",
           "position": "cho",
-          "prompt": "기역 을 따라 써 보세요"
+          "prompt": "기역을 따라 써 보세요"
         },
         {
           "target": "가",
@@ -447,7 +447,7 @@
         {
           "order": 4,
           "at": 336,
-          "caption": "꽃게 에서 기역 을 찾았어요.",
+          "caption": "꽃게 에서 기역을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -459,7 +459,7 @@
         {
           "order": 5,
           "at": 362,
-          "caption": "아 용사가 아 를 붙여 주었어요.",
+          "caption": "아 용사가 아를 붙여 주었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -469,7 +469,7 @@
         {
           "order": 6,
           "at": 454,
-          "caption": "산 에서 시옷 을 찾았어요.",
+          "caption": "산 에서 시옷을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -481,7 +481,7 @@
         {
           "order": 7,
           "at": 475,
-          "caption": "우 용사가 우 를 붙여 주었어요.",
+          "caption": "우 용사가 우를 붙여 주었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -491,7 +491,7 @@
         {
           "order": 8,
           "at": 512,
-          "caption": "자판기에 넣으니 콘서트 표 이 나왔어요!",
+          "caption": "자판기에 넣으니 콘서트 표가 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

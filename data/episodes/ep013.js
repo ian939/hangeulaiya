@@ -47,7 +47,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "비읍 은 어디에서 찾았나요?",
+          "q": "비읍은 어디에서 찾았나요?",
           "at": 352,
           "options": [
             {
@@ -78,7 +78,7 @@
           ]
         },
         {
-          "q": "시옷 은 어디에서 찾았나요?",
+          "q": "시옷은 어디에서 찾았나요?",
           "at": 443,
           "options": [
             {
@@ -238,7 +238,7 @@
           "position": "cho",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "비읍 을 모두 찾아 눌러 보세요",
+          "prompt": "비읍을 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅁ",
@@ -251,14 +251,14 @@
               "count": 3
             }
           ],
-          "missHint": "이건 비읍 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 비읍이 아니에요. 모양을 다시 보세요."
         },
         {
           "cols": 4,
           "showTarget": false,
           "target": "ㅂ",
           "position": "cho",
-          "prompt": "비읍 으로 시작하는 글자를 모두 찾아 눌러 보세요",
+          "prompt": "비읍으로 시작하는 글자를 모두 찾아 눌러 보세요",
           "cells": [
             {
               "ch": "버",
@@ -425,7 +425,7 @@
           "target": "ㅂ",
           "kind": "jamo",
           "position": "cho",
-          "prompt": "비읍 을 따라 써 보세요"
+          "prompt": "비읍을 따라 써 보세요"
         },
         {
           "target": "버",
@@ -482,7 +482,7 @@
         {
           "order": 4,
           "at": 352,
-          "caption": "바구니 에서 비읍 을 찾았어요.",
+          "caption": "바구니 에서 비읍을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -494,7 +494,7 @@
         {
           "order": 5,
           "at": 380,
-          "caption": "어 용사가 어 를 붙여 주었어요.",
+          "caption": "어 용사가 어를 붙여 주었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -504,7 +504,7 @@
         {
           "order": 6,
           "at": 443,
-          "caption": "수박 에서 시옷 을 찾았어요.",
+          "caption": "수박 에서 시옷을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -516,7 +516,7 @@
         {
           "order": 7,
           "at": 462,
-          "caption": "으 용사가 으 를 붙여 주었어요.",
+          "caption": "으 용사가 으를 붙여 주었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -526,7 +526,7 @@
         {
           "order": 8,
           "at": 499,
-          "caption": "자판기에 넣으니 버스 이름표 이 나왔어요!",
+          "caption": "자판기에 넣으니 버스 이름표가 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

@@ -50,7 +50,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "이응 은 어디에서 찾았나요?",
+          "q": "이응은 어디에서 찾았나요?",
           "at": 233,
           "options": [
             {
@@ -84,7 +84,7 @@
           ]
         },
         {
-          "q": "받침 리을 은 어디에서 찾았나요?",
+          "q": "받침 리을은 어디에서 찾았나요?",
           "at": 508,
           "options": [
             {
@@ -155,7 +155,7 @@
         {
           "say": "웨",
           "prompt": "잘 듣고 같은 글자를 골라요",
-          "hint": "우 와 애 가 만나면 웨 가 돼요",
+          "hint": "우와 애가 만나면 웨가 돼요",
           "options": [
             {
               "label": "ㅞ",
@@ -236,7 +236,7 @@
           "position": "jung",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "웨 을 모두 찾아 눌러 보세요",
+          "prompt": "웨를 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅝ",
@@ -249,7 +249,7 @@
               "count": 3
             }
           ],
-          "missHint": "이건 웨 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 웨가 아니에요. 모양을 다시 보세요."
         }
       ]
     },
@@ -312,7 +312,7 @@
         {
           "target": "웬일",
           "broken": "운일",
-          "prompt": "모음이 반쪽만 남았어요! 웨 로 고쳐 주세요.",
+          "prompt": "모음이 반쪽만 남았어요! 웨로 고쳐 주세요.",
           "tray": [
             {
               "jamo": "ㅜ",
@@ -380,13 +380,13 @@
           "target": "ㅞ",
           "kind": "jamo",
           "position": "jung",
-          "prompt": "웨 을 따라 써 보세요"
+          "prompt": "웨를 따라 써 보세요"
         },
         {
           "target": "웬",
           "kind": "syllable",
           "prompt": "'웬' 을 따라 써 보세요",
-          "note": "우 와 애 가 만나 웨 가 돼요."
+          "note": "우와 애가 만나 웨가 돼요."
         },
         {
           "target": "웬일",
@@ -437,7 +437,7 @@
         {
           "order": 4,
           "at": 233,
-          "caption": "안경 에서 이응 을 찾았어요.",
+          "caption": "안경 에서 이응을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -450,7 +450,7 @@
         {
           "order": 5,
           "at": 259,
-          "caption": "우 와 애 가 만나 웨 가 되었어요.",
+          "caption": "우와 애가 만나 웨가 되었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -460,7 +460,7 @@
         {
           "order": 6,
           "at": 453,
-          "caption": "논 에서 받침 니은 을 찾았어요.",
+          "caption": "논 에서 받침 니은을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -473,7 +473,7 @@
         {
           "order": 7,
           "at": 508,
-          "caption": "과일 에서 받침 리을 을 찾았어요.",
+          "caption": "과일 에서 받침 리을을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -486,7 +486,7 @@
         {
           "order": 8,
           "at": 570,
-          "caption": "자판기에 넣으니 선물 이 나왔어요!",
+          "caption": "자판기에 넣으니 선물이 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

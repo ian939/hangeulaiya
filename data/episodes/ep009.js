@@ -45,7 +45,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "니은 은 어디에서 찾았나요?",
+          "q": "니은은 어디에서 찾았나요?",
           "at": 341,
           "options": [
             {
@@ -76,7 +76,7 @@
           ]
         },
         {
-          "q": "비읍 은 어디에서 찾았나요?",
+          "q": "비읍은 어디에서 찾았나요?",
           "at": 430,
           "options": [
             {
@@ -232,7 +232,7 @@
           "position": "cho",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "니은 을 모두 찾아 눌러 보세요",
+          "prompt": "니은을 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㄱ",
@@ -245,14 +245,14 @@
               "count": 3
             }
           ],
-          "missHint": "이건 니은 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 니은이 아니에요. 모양을 다시 보세요."
         },
         {
           "cols": 4,
           "showTarget": false,
           "target": "ㄴ",
           "position": "cho",
-          "prompt": "니은 으로 시작하는 글자를 모두 찾아 눌러 보세요",
+          "prompt": "니은으로 시작하는 글자를 모두 찾아 눌러 보세요",
           "cells": [
             {
               "ch": "나",
@@ -415,7 +415,7 @@
           "target": "ㄴ",
           "kind": "jamo",
           "position": "cho",
-          "prompt": "니은 을 따라 써 보세요"
+          "prompt": "니은을 따라 써 보세요"
         },
         {
           "target": "나",
@@ -472,7 +472,7 @@
         {
           "order": 4,
           "at": 341,
-          "caption": "나무늘보 에서 니은 을 찾았어요.",
+          "caption": "나무늘보 에서 니은을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -484,7 +484,7 @@
         {
           "order": 5,
           "at": 370,
-          "caption": "아 용사가 아 를 붙여 주었어요.",
+          "caption": "아 용사가 아를 붙여 주었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -494,7 +494,7 @@
         {
           "order": 6,
           "at": 430,
-          "caption": "봉투 에서 비읍 을 찾았어요.",
+          "caption": "봉투 에서 비읍을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -506,7 +506,7 @@
         {
           "order": 7,
           "at": 444,
-          "caption": "이 용사가 이 를 붙여 주었어요.",
+          "caption": "이 용사가 이를 붙여 주었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -516,7 +516,7 @@
         {
           "order": 8,
           "at": 478,
-          "caption": "자판기에 넣으니 나비 이 나왔어요!",
+          "caption": "자판기에 넣으니 나비가 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

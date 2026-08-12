@@ -47,7 +47,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "이응 은 어디에서 찾았나요?",
+          "q": "이응은 어디에서 찾았나요?",
           "at": 303,
           "options": [
             {
@@ -186,7 +186,7 @@
           "position": "jung",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "아 을 모두 찾아 눌러 보세요",
+          "prompt": "아를 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅑ",
@@ -199,7 +199,7 @@
               "count": 3
             }
           ],
-          "missHint": "이건 아 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 아가 아니에요. 모양을 다시 보세요."
         }
       ]
     },
@@ -323,7 +323,7 @@
           "target": "ㅏ",
           "kind": "jamo",
           "position": "jung",
-          "prompt": "아 을 따라 써 보세요"
+          "prompt": "아를 따라 써 보세요"
         },
         {
           "target": "아",
@@ -380,7 +380,7 @@
         {
           "order": 4,
           "at": 303,
-          "caption": "우유 에서 이응 을 찾았어요.",
+          "caption": "우유 에서 이응을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -392,7 +392,7 @@
         {
           "order": 5,
           "at": 334,
-          "caption": "아 용사가 아 를 붙여 주었어요.",
+          "caption": "아 용사가 아를 붙여 주었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -402,7 +402,7 @@
         {
           "order": 6,
           "at": 377,
-          "caption": "이 용사가 이 를 붙여 주었어요.",
+          "caption": "이 용사가 이를 붙여 주었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -412,7 +412,7 @@
         {
           "order": 7,
           "at": 436,
-          "caption": "야 용사가 야 를 붙여 주었어요.",
+          "caption": "야 용사가 야를 붙여 주었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -422,7 +422,7 @@
         {
           "order": 8,
           "at": 543,
-          "caption": "자판기에 넣으니 한글용사 아이야 이 나왔어요!",
+          "caption": "자판기에 넣으니 한글용사 아이야가 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

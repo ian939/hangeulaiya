@@ -44,7 +44,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "이응 은 어디에서 찾았나요?",
+          "q": "이응은 어디에서 찾았나요?",
           "at": 400,
           "options": [
             {
@@ -171,7 +171,7 @@
           "position": "jung",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "오 을 모두 찾아 눌러 보세요",
+          "prompt": "오를 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅏ",
@@ -179,7 +179,7 @@
               "count": 3
             }
           ],
-          "missHint": "이건 오 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 오가 아니에요. 모양을 다시 보세요."
         }
       ]
     },
@@ -287,7 +287,7 @@
           "target": "ㅗ",
           "kind": "jamo",
           "position": "jung",
-          "prompt": "오 을 따라 써 보세요"
+          "prompt": "오를 따라 써 보세요"
         },
         {
           "target": "오",
@@ -344,7 +344,7 @@
         {
           "order": 4,
           "at": 400,
-          "caption": "오징어 에서 이응 을 찾았어요.",
+          "caption": "오징어 에서 이응을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -356,7 +356,7 @@
         {
           "order": 5,
           "at": 425,
-          "caption": "오 용사가 오 를 붙여 주었어요.",
+          "caption": "오 용사가 오를 붙여 주었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -366,7 +366,7 @@
         {
           "order": 6,
           "at": 479,
-          "caption": "이 용사가 이 를 붙여 주었어요.",
+          "caption": "이 용사가 이를 붙여 주었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -376,7 +376,7 @@
         {
           "order": 7,
           "at": 566,
-          "caption": "자판기에 넣으니 오이 이 나왔어요!",
+          "caption": "자판기에 넣으니 오이가 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

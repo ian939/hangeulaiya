@@ -44,7 +44,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "디귿 은 어디에서 찾았나요?",
+          "q": "디귿은 어디에서 찾았나요?",
           "at": 343,
           "options": [
             {
@@ -168,22 +168,27 @@
           "position": "jong",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "받침 쌍기역 을 모두 찾아 눌러 보세요",
+          "prompt": "받침 쌍기역을 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㄱ",
-              "relation": "clusterPart",
+              "relation": "tensePair",
+              "count": 3
+            },
+            {
+              "jamo": "ㅋ",
+              "relation": "strokeAdd",
               "count": 3
             }
           ],
-          "missHint": "이건 쌍기역 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 쌍기역이 아니에요. 모양을 다시 보세요."
         },
         {
           "cols": 4,
           "showTarget": false,
           "target": "ㄲ",
           "position": "jong",
-          "prompt": "받침 쌍기역 이 있는 글자를 모두 찾아 눌러 보세요",
+          "prompt": "받침 쌍기역이 있는 글자를 모두 찾아 눌러 보세요",
           "cells": [
             {
               "ch": "닦",
@@ -226,7 +231,11 @@
           "decoys": [
             {
               "jamo": "ㄱ",
-              "relation": "clusterPart"
+              "relation": "tensePair"
+            },
+            {
+              "jamo": "ㅋ",
+              "relation": "strokeAdd"
             }
           ]
         },
@@ -240,7 +249,11 @@
           "decoys": [
             {
               "jamo": "ㄱ",
-              "relation": "clusterPart"
+              "relation": "tensePair"
+            },
+            {
+              "jamo": "ㅋ",
+              "relation": "strokeAdd"
             }
           ]
         }
@@ -320,7 +333,7 @@
           "target": "ㄲ",
           "kind": "jamo",
           "position": "jong",
-          "prompt": "받침 쌍기역 을 따라 써 보세요"
+          "prompt": "받침 쌍기역을 따라 써 보세요"
         },
         {
           "target": "다",
@@ -383,7 +396,7 @@
         {
           "order": 4,
           "at": 343,
-          "caption": "도미노 에서 디귿 을 찾았어요.",
+          "caption": "도미노 에서 디귿을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -396,7 +409,7 @@
         {
           "order": 5,
           "at": 588,
-          "caption": "받침 쌍기역 을 찾았어요.",
+          "caption": "받침 쌍기역을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -406,7 +419,7 @@
         {
           "order": 6,
           "at": 666,
-          "caption": "자판기에 넣으니 기다란 걸레 이 나왔어요!",
+          "caption": "자판기에 넣으니 기다란 걸레가 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

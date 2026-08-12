@@ -141,6 +141,12 @@ VISUAL = {
     "ㅌ": [("ㄷ", "strokeAdd"), ("ㅋ", "shape"), ("ㄹ", "shape")],
     "ㅍ": [("ㅂ", "rotation"), ("ㅁ", "shape"), ("ㅌ", "shape")],
     "ㅎ": [("ㅇ", "strokeAdd"), ("ㅊ", "shape"), ("ㅁ", "shape")],
+    # 된소리 — 홀자음과의 대비가 이 단원의 학습 내용이다
+    "ㄲ": [("ㄱ", "tensePair"), ("ㅋ", "strokeAdd")],
+    "ㄸ": [("ㄷ", "tensePair"), ("ㅌ", "strokeAdd")],
+    "ㅃ": [("ㅂ", "tensePair"), ("ㅍ", "rotation")],
+    "ㅆ": [("ㅅ", "tensePair"), ("ㅈ", "strokeAdd")],
+    "ㅉ": [("ㅈ", "tensePair"), ("ㅊ", "strokeAdd")],
     "ㅏ": [("ㅓ", "mirrorPair"), ("ㅑ", "strokePair"), ("ㅣ", "containment")],
     "ㅓ": [("ㅏ", "mirrorPair"), ("ㅕ", "strokePair"), ("ㅗ", "axisRotation")],
     "ㅗ": [("ㅜ", "mirrorPair"), ("ㅛ", "strokePair"), ("ㅏ", "axisRotation")],
@@ -164,6 +170,27 @@ VISUAL = {
     "ㅟ": [("ㅚ", "mirrorPair"), ("ㅞ", "shape"), ("ㅜ", "containment")],
     "ㅢ": [("ㅡ", "containment"), ("ㅣ", "containment"), ("ㅟ", "shape")],
 }
+
+
+
+# ── 조사 붙이기 ──────────────────────────────────────────────
+# 생성한 문구를 아이가 소리로 듣는다. "'자다' 과 '짜다'" 처럼 조사가 어긋나면
+# 그대로 읽혀서 이상하게 들린다. 앞말의 끝소리를 보고 골라 붙인다.
+
+def with_eun(w):
+    return w + H.eun(w)
+
+
+def with_eul(w):
+    return w + H.eul(w)
+
+
+def with_ee(w):
+    return w + H.ee(w)
+
+
+def with_wa(w):
+    return w + H.wa(w)
 
 
 def jamo_in(word: str) -> set[str]:
@@ -236,7 +263,7 @@ def gen_story_quiz(s):
             filler = "모자" if "모자" not in [x["label"] for x in opts] else "가방"
             opts.append({"label": filler, "pic": scene(filler)})
         items.append({
-            "q": H.label(j, pos) + " 은 어디에서 찾았나요?",
+            "q": with_eun(H.label(j, pos)) + " 어디에서 찾았나요?",
             "at": at, "options": opts,
         })
 
@@ -247,7 +274,7 @@ def gen_story_quiz(s):
         for o in wrong[:2]:
             opts.append({"label": o, "pic": scene(o)})
         items.append({
-            "q": H.label(j, pos) + " 은 어디에서 찾았나요?",
+            "q": with_eun(H.label(j, pos)) + " 어디에서 찾았나요?",
             "at": at, "options": opts,
         })
 
@@ -336,6 +363,23 @@ def gen_sound_batchim(s, ep, jong):
             "courses": ["short", "full"], "shortCount": 3, "items": items}
 
 
+def is_minimal_tense_pair(weak: str, tense: str, tense_cho: str, plain_cho: str) -> bool:
+    """두 낱말이 첫소리(홀자음/된소리)만 다른 진짜 최소대립쌍인가.
+
+    방송 퀴즈에는 굼벵이/꿈나라처럼 첫소리만 다른 게 아닌 쌍도 섞여 있다.
+    그걸 "첫소리 하나로 뜻이 달라져요" 라고 설명하면 거짓을 가르친다.
+    """
+    if len(weak) != len(tense) or not weak:
+        return False
+    dw, dt = H.decompose(weak[0]), H.decompose(tense[0])
+    if not dw or not dt:
+        return False
+    # 첫 글자는 초성만 다르고, 그 초성이 홀자음↔된소리 관계여야 한다
+    if dw[1:] != dt[1:] or dw[0] != plain_cho or dt[0] != tense_cho:
+        return False
+    return weak[1:] == tense[1:]      # 나머지 글자는 같아야 한다
+
+
 def gen_sound_cho(s, ep, cho):
     """기초·쌍자음 회차. 첫소리를 가려 듣는 것이 핵심이다.
 
@@ -395,7 +439,7 @@ def gen_sound_cho(s, ep, cho):
     # 쌍자음이면 홀자음과의 대비가 이 단원의 학습 내용이다
     if cho in H.CLUSTER:
         single = H.CLUSTER[cho][0]
-        alt = H.compose(single, H.decompose(syl)[1], H.decompose(syl)[2])
+        alt = H.compose(single, d[1], d[2])
         if alt and alt != syl:
             items.append({
                 "say": syl,
@@ -404,8 +448,32 @@ def gen_sound_cho(s, ep, cho):
                 "options": [{"label": syl, "correct": True},
                             {"label": alt, "relation": "tensePair",
                              "why": "이건 약한 소리예요. 더 세게 내는 소리를 찾아요."}],
-                "after": H.name(cho) + " 는 " + H.name(single) + " 보다 세게 내는 소리예요.",
+                "after": with_eun(H.name(cho)) + " " + H.name(single) + " 보다 세게 내는 소리예요.",
             })
+
+        # 방송이 보여준 최소대립쌍이 있으면 그게 가장 좋은 문항이다.
+        # 낱말 하나로 뜻이 완전히 달라지는 걸 보여주기 때문이다 (자다 / 짜다).
+        #
+        # 다만 **진짜 최소대립쌍인지 검사한다.** 방송 퀴즈에는 굼벵이/꿈나라처럼
+        # 첫소리만 다른 게 아닌 쌍도 섞여 있고, 그걸 "첫소리 하나로 뜻이 달라져요"
+        # 라고 설명하면 거짓을 가르치게 된다.
+        for pair in s.get("tense_pairs", []):
+            weak, tense = pair
+            if not is_minimal_tense_pair(weak, tense, cho, single):
+                continue
+            if not (word_ok(weak, ep) and word_ok(tense, ep)):
+                continue
+            items.append({
+                "say": tense,
+                "prompt": "잘 듣고 같은 낱말을 골라요",
+                "hint": "첫소리를 세게 내면 다른 낱말이 돼요",
+                "options": [{"label": tense, "correct": True},
+                            {"label": weak, "relation": "tensePair",
+                             "why": "약한 소리로 읽으면 다른 낱말이에요."}],
+                "after": "'" + weak + "'" + H.wa(weak) + " '" + tense + "'" + H.eun(tense)
+                         + " 첫소리 하나로 뜻이 달라져요.",
+            })
+            break
 
     if s.get("quiz"):
         kind, words, answer, at = s["quiz"]
@@ -474,7 +542,8 @@ def gen_sound_vowel(s, ep, vowel):
     items.append({
         "say": H.name(vowel),
         "prompt": "잘 듣고 같은 글자를 골라요",
-        "hint": H.name(left) + " 와 " + H.name(right) + " 가 만나면 " + H.name(vowel) + " 가 돼요",
+        "hint": with_wa(H.name(left)) + " " + with_ee(H.name(right)) + " 만나면 "
+                + with_ee(H.name(vowel)) + " 돼요",
         "options": [{"label": vowel, "correct": True},
                     {"label": left, "relation": "containment",
                      "why": H.name(left) + " 하나만 있는 소리예요."}],
@@ -566,9 +635,9 @@ def gen_letterhunt(s, ep, target, position):
     word = s["word"]
     boards = [{
         "target": target, "position": position, "cols": 4, "targetCount": 4,
-        "prompt": H.label(target, position) + " 을 모두 찾아 눌러 보세요",
+        "prompt": with_eul(H.label(target, position)) + " 모두 찾아 눌러 보세요",
         "distractors": [dict(d, count=3) for d in visual_distractors(target, ep, 4)],
-        "missHint": "이건 " + H.name(target) + " 이 아니에요. 모양을 다시 보세요.",
+        "missHint": "이건 " + with_ee(H.name(target)) + " 아니에요. 모양을 다시 보세요.",
     }]
 
     # 첫 자리 자음 회차 — 그 자음으로 시작하는 글자 골라내기
@@ -594,7 +663,7 @@ def gen_letterhunt(s, ep, target, position):
                         cells.append({"ch": alt, "relation": rel})
             boards.append({
                 "cols": 4, "showTarget": False, "target": target, "position": "cho",
-                "prompt": H.name(target) + " 으로 시작하는 글자를 모두 찾아 눌러 보세요",
+                "prompt": H.name(target) + H.euro(H.name(target)) + " 시작하는 글자를 모두 찾아 눌러 보세요",
                 "cells": cells[:12],
                 "missHint": "첫소리가 " + H.name(target) + " 인 글자를 찾아요.",
             })
@@ -626,7 +695,7 @@ def gen_letterhunt(s, ep, target, position):
                 cells.append({"ch": b, "relation": "noBatchim"})
         boards.append({
             "cols": 4, "showTarget": False, "target": target, "position": "jong",
-            "prompt": "받침 " + H.name(target) + " 이 있는 글자를 모두 찾아 눌러 보세요",
+            "prompt": with_ee("받침 " + H.name(target)) + " 있는 글자를 모두 찾아 눌러 보세요",
             "cells": cells[:12],
             "missHint": "받침이 " + H.name(target) + " 인 글자를 찾아요.",
         })
@@ -774,7 +843,8 @@ def gen_chunji(s, ep, target, position):
         if broken_syl and broken_syl != syl:
             items.append({
                 "target": word, "broken": word[:i] + broken_syl + word[i + 1:],
-                "prompt": "모음이 반쪽만 남았어요! " + H.name(target) + " 로 고쳐 주세요.",
+                "prompt": "모음이 반쪽만 남았어요! " + H.name(target) + H.euro(H.name(target))
+                          + " 고쳐 주세요.",
                 "tray": [{"jamo": left, "relation": "containment"},
                          {"jamo": s["merge"][1], "relation": "containment"}],
             })
@@ -833,7 +903,7 @@ def gen_writing(s, ep, target, position):
     word = s["word"]
     items = [{
         "target": target, "kind": "jamo", "position": position,
-        "prompt": H.label(target, position) + " 을 따라 써 보세요",
+        "prompt": with_eul(H.label(target, position)) + " 따라 써 보세요",
     }]
 
     if position == "jong":
@@ -855,8 +925,8 @@ def gen_writing(s, ep, target, position):
         syl = next((c for c in word if H.decompose(c) and H.decompose(c)[1] == target), word[0])
         items.append({"target": syl, "kind": "syllable",
                       "prompt": "'" + syl + "' 을 따라 써 보세요",
-                      "note": H.name(s["merge"][0]) + " 와 " + H.name(s["merge"][1]) +
-                              " 가 만나 " + H.name(target) + " 가 돼요."})
+                      "note": with_wa(H.name(s["merge"][0])) + " " + with_ee(H.name(s["merge"][1])) +
+                              " 만나 " + with_ee(H.name(target)) + " 돼요."})
     else:
         syl = next((c for c in word if H.decompose(c) and H.decompose(c)[1] == target), word[0])
         items.append({"target": syl, "kind": "syllable",
@@ -899,22 +969,22 @@ def gen_sequence(s):
     for j, pos, place, at in s["hunts"]:
         if pos == "merge":
             left, right = s["merge"]
-            add(at, H.name(left) + " 와 " + H.name(right) + " 가 만나 " +
-                H.name(j) + " 가 되었어요.",
+            add(at, with_wa(H.name(left)) + " " + with_ee(H.name(right)) + " 만나 " +
+                with_ee(H.name(j)) + " 되었어요.",
                 scene(None, jamo=j, kind="merge"))
         elif place:
-            add(at, place + " 에서 " + H.label(j, pos) + " 을 찾았어요.",
+            add(at, place + " 에서 " + with_eul(H.label(j, pos)) + " 찾았어요.",
                 scene(place, jamo=j, position=pos))
         elif pos == "jung":
             # 기초 단원에서는 모음을 장소에서 찾지 않는다 — 용사가 붙여 준다
-            add(at, H.name(j) + " 용사가 " + H.name(j) + " 를 붙여 주었어요.",
+            add(at, H.name(j) + " 용사가 " + with_eul(H.name(j)) + " 붙여 주었어요.",
                 scene(None, jamo=j, kind="merge"))
         else:
-            add(at, H.label(j, pos) + " 을 찾았어요.",
+            add(at, with_eul(H.label(j, pos)) + " 찾았어요.",
                 scene(None, jamo=j, kind="place"))
 
     result = s.get("vending") or "선물"
-    add(s["vending_at"], "자판기에 넣으니 " + result + " 이 나왔어요!",
+    add(s["vending_at"], "자판기에 넣으니 " + with_ee(result) + " 나왔어요!",
         scene(None, kind="vending"))
     add(s["grandpa_at"], "할아버지와 '" + s["word"] + "' 을 소리 내어 읽었어요.",
         scene(None, kind="grandpa"))

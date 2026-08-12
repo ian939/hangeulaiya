@@ -46,7 +46,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "이응 은 어디에서 찾았나요?",
+          "q": "이응은 어디에서 찾았나요?",
           "at": 366,
           "options": [
             {
@@ -79,7 +79,7 @@
           ]
         },
         {
-          "q": "받침 쌍시옷 은 어디에서 찾았나요?",
+          "q": "받침 쌍시옷은 어디에서 찾았나요?",
           "at": 517,
           "options": [
             {
@@ -203,22 +203,27 @@
           "position": "jong",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "받침 쌍시옷 을 모두 찾아 눌러 보세요",
+          "prompt": "받침 쌍시옷을 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅅ",
-              "relation": "clusterPart",
+              "relation": "tensePair",
+              "count": 3
+            },
+            {
+              "jamo": "ㅈ",
+              "relation": "strokeAdd",
               "count": 3
             }
           ],
-          "missHint": "이건 쌍시옷 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 쌍시옷이 아니에요. 모양을 다시 보세요."
         },
         {
           "cols": 4,
           "showTarget": false,
           "target": "ㅆ",
           "position": "jong",
-          "prompt": "받침 쌍시옷 이 있는 글자를 모두 찾아 눌러 보세요",
+          "prompt": "받침 쌍시옷이 있는 글자를 모두 찾아 눌러 보세요",
           "cells": [
             {
               "ch": "있",
@@ -261,7 +266,11 @@
           "decoys": [
             {
               "jamo": "ㅅ",
-              "relation": "clusterPart"
+              "relation": "tensePair"
+            },
+            {
+              "jamo": "ㅈ",
+              "relation": "strokeAdd"
             }
           ]
         },
@@ -275,7 +284,11 @@
           "decoys": [
             {
               "jamo": "ㅅ",
-              "relation": "clusterPart"
+              "relation": "tensePair"
+            },
+            {
+              "jamo": "ㅈ",
+              "relation": "strokeAdd"
             }
           ]
         }
@@ -355,7 +368,7 @@
           "target": "ㅆ",
           "kind": "jamo",
           "position": "jong",
-          "prompt": "받침 쌍시옷 을 따라 써 보세요"
+          "prompt": "받침 쌍시옷을 따라 써 보세요"
         },
         {
           "target": "이",
@@ -418,7 +431,7 @@
         {
           "order": 4,
           "at": 366,
-          "caption": "용 에서 이응 을 찾았어요.",
+          "caption": "용 에서 이응을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -431,7 +444,7 @@
         {
           "order": 5,
           "at": 517,
-          "caption": "쓰레기통 에서 받침 쌍시옷 을 찾았어요.",
+          "caption": "쓰레기통 에서 받침 쌍시옷을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -444,7 +457,7 @@
         {
           "order": 6,
           "at": 584,
-          "caption": "자판기에 넣으니 찾아 주는 도우미 이 나왔어요!",
+          "caption": "자판기에 넣으니 찾아 주는 도우미가 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

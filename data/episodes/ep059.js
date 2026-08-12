@@ -46,7 +46,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "시옷 은 어디에서 찾았나요?",
+          "q": "시옷은 어디에서 찾았나요?",
           "at": 350,
           "options": [
             {
@@ -174,7 +174,7 @@
           "position": "jong",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "받침 리을히읗 을 모두 찾아 눌러 보세요",
+          "prompt": "받침 리을히읗을 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㄹ",
@@ -187,14 +187,14 @@
               "count": 3
             }
           ],
-          "missHint": "이건 리을히읗 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 리을히읗이 아니에요. 모양을 다시 보세요."
         },
         {
           "cols": 4,
           "showTarget": false,
           "target": "ㅀ",
           "position": "jong",
-          "prompt": "받침 리을히읗 이 있는 글자를 모두 찾아 눌러 보세요",
+          "prompt": "받침 리을히읗이 있는 글자를 모두 찾아 눌러 보세요",
           "cells": [
             {
               "ch": "싫",
@@ -342,7 +342,7 @@
           "target": "ㅀ",
           "kind": "jamo",
           "position": "jong",
-          "prompt": "받침 리을히읗 을 따라 써 보세요"
+          "prompt": "받침 리을히읗을 따라 써 보세요"
         },
         {
           "target": "시",
@@ -405,7 +405,7 @@
         {
           "order": 4,
           "at": 350,
-          "caption": "선인장 에서 시옷 을 찾았어요.",
+          "caption": "선인장 에서 시옷을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -418,7 +418,7 @@
         {
           "order": 5,
           "at": 519,
-          "caption": "받침 리을히읗 을 찾았어요.",
+          "caption": "받침 리을히읗을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -428,7 +428,7 @@
         {
           "order": 6,
           "at": 584,
-          "caption": "자판기에 넣으니 용기 이 나왔어요!",
+          "caption": "자판기에 넣으니 용기가 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

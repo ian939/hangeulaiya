@@ -46,7 +46,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "이응 은 어디에서 찾았나요?",
+          "q": "이응은 어디에서 찾았나요?",
           "at": 352,
           "options": [
             {
@@ -79,7 +79,7 @@
           ]
         },
         {
-          "q": "받침 리을 은 어디에서 찾았나요?",
+          "q": "받침 리을은 어디에서 찾았나요?",
           "at": 588,
           "options": [
             {
@@ -141,7 +141,7 @@
         {
           "say": "워",
           "prompt": "잘 듣고 같은 글자를 골라요",
-          "hint": "우 와 어 가 만나면 워 가 돼요",
+          "hint": "우와 어가 만나면 워가 돼요",
           "options": [
             {
               "label": "ㅝ",
@@ -222,7 +222,7 @@
           "position": "jung",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "워 을 모두 찾아 눌러 보세요",
+          "prompt": "워를 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅘ",
@@ -235,7 +235,7 @@
               "count": 3
             }
           ],
-          "missHint": "이건 워 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 워가 아니에요. 모양을 다시 보세요."
         }
       ]
     },
@@ -294,7 +294,7 @@
         {
           "target": "월",
           "broken": "울",
-          "prompt": "모음이 반쪽만 남았어요! 워 로 고쳐 주세요.",
+          "prompt": "모음이 반쪽만 남았어요! 워로 고쳐 주세요.",
           "tray": [
             {
               "jamo": "ㅜ",
@@ -362,13 +362,13 @@
           "target": "ㅝ",
           "kind": "jamo",
           "position": "jung",
-          "prompt": "워 을 따라 써 보세요"
+          "prompt": "워를 따라 써 보세요"
         },
         {
           "target": "월",
           "kind": "syllable",
           "prompt": "'월' 을 따라 써 보세요",
-          "note": "우 와 어 가 만나 워 가 돼요."
+          "note": "우와 어가 만나 워가 돼요."
         }
       ]
     },
@@ -413,7 +413,7 @@
         {
           "order": 4,
           "at": 352,
-          "caption": "아령 에서 이응 을 찾았어요.",
+          "caption": "아령 에서 이응을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -426,7 +426,7 @@
         {
           "order": 5,
           "at": 368,
-          "caption": "우 와 어 가 만나 워 가 되었어요.",
+          "caption": "우와 어가 만나 워가 되었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -436,7 +436,7 @@
         {
           "order": 6,
           "at": 588,
-          "caption": "털실 에서 받침 리을 을 찾았어요.",
+          "caption": "털실 에서 받침 리을을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -449,7 +449,7 @@
         {
           "order": 7,
           "at": 644,
-          "caption": "자판기에 넣으니 초대장 이 나왔어요!",
+          "caption": "자판기에 넣으니 초대장이 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

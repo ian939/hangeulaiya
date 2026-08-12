@@ -47,7 +47,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "이응 은 어디에서 찾았나요?",
+          "q": "이응은 어디에서 찾았나요?",
           "at": 313,
           "options": [
             {
@@ -80,7 +80,7 @@
           ]
         },
         {
-          "q": "지읒 은 어디에서 찾았나요?",
+          "q": "지읒은 어디에서 찾았나요?",
           "at": 518,
           "options": [
             {
@@ -138,7 +138,7 @@
         {
           "say": "의",
           "prompt": "잘 듣고 같은 글자를 골라요",
-          "hint": "으 와 이 가 만나면 의 가 돼요",
+          "hint": "으와 이가 만나면 의가 돼요",
           "options": [
             {
               "label": "ㅢ",
@@ -198,7 +198,7 @@
           "position": "jung",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "의 을 모두 찾아 눌러 보세요",
+          "prompt": "의를 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅡ",
@@ -216,7 +216,7 @@
               "count": 3
             }
           ],
-          "missHint": "이건 의 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 의가 아니에요. 모양을 다시 보세요."
         }
       ]
     },
@@ -283,7 +283,7 @@
         {
           "target": "의자",
           "broken": "으자",
-          "prompt": "모음이 반쪽만 남았어요! 의 로 고쳐 주세요.",
+          "prompt": "모음이 반쪽만 남았어요! 의로 고쳐 주세요.",
           "tray": [
             {
               "jamo": "ㅡ",
@@ -351,13 +351,13 @@
           "target": "ㅢ",
           "kind": "jamo",
           "position": "jung",
-          "prompt": "의 을 따라 써 보세요"
+          "prompt": "의를 따라 써 보세요"
         },
         {
           "target": "의",
           "kind": "syllable",
           "prompt": "'의' 을 따라 써 보세요",
-          "note": "으 와 이 가 만나 의 가 돼요."
+          "note": "으와 이가 만나 의가 돼요."
         },
         {
           "target": "의자",
@@ -408,7 +408,7 @@
         {
           "order": 4,
           "at": 313,
-          "caption": "와플 에서 이응 을 찾았어요.",
+          "caption": "와플 에서 이응을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -421,7 +421,7 @@
         {
           "order": 5,
           "at": 347,
-          "caption": "으 와 이 가 만나 의 가 되었어요.",
+          "caption": "으와 이가 만나 의가 되었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -431,7 +431,7 @@
         {
           "order": 6,
           "at": 518,
-          "caption": "장난감 에서 지읒 을 찾았어요.",
+          "caption": "장난감 에서 지읒을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -444,7 +444,7 @@
         {
           "order": 7,
           "at": 583,
-          "caption": "자판기에 넣으니 의자 이 나왔어요!",
+          "caption": "자판기에 넣으니 의자가 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

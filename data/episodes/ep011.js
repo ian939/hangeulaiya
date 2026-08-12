@@ -49,7 +49,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "리을 은 어디에서 찾았나요?",
+          "q": "리을은 어디에서 찾았나요?",
           "at": 294,
           "options": [
             {
@@ -80,7 +80,7 @@
           ]
         },
         {
-          "q": "이응 은 어디에서 찾았나요?",
+          "q": "이응은 어디에서 찾았나요?",
           "at": 457,
           "options": [
             {
@@ -244,7 +244,7 @@
           "position": "cho",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "리을 을 모두 찾아 눌러 보세요",
+          "prompt": "리을을 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㄷ",
@@ -257,7 +257,7 @@
               "count": 3
             }
           ],
-          "missHint": "이건 리을 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 리을이 아니에요. 모양을 다시 보세요."
         }
       ]
     },
@@ -385,7 +385,7 @@
           "target": "ㄹ",
           "kind": "jamo",
           "position": "cho",
-          "prompt": "리을 을 따라 써 보세요"
+          "prompt": "리을을 따라 써 보세요"
         },
         {
           "target": "라",
@@ -442,7 +442,7 @@
         {
           "order": 4,
           "at": 294,
-          "caption": "라면 에서 리을 을 찾았어요.",
+          "caption": "라면 에서 리을을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -454,7 +454,7 @@
         {
           "order": 5,
           "at": 318,
-          "caption": "아 용사가 아 를 붙여 주었어요.",
+          "caption": "아 용사가 아를 붙여 주었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -464,7 +464,7 @@
         {
           "order": 6,
           "at": 377,
-          "caption": "다리미 에서 디귿 을 찾았어요.",
+          "caption": "다리미 에서 디귿을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -476,7 +476,7 @@
         {
           "order": 7,
           "at": 402,
-          "caption": "이 용사가 이 를 붙여 주었어요.",
+          "caption": "이 용사가 이를 붙여 주었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -486,7 +486,7 @@
         {
           "order": 8,
           "at": 457,
-          "caption": "아침 해 에서 이응 을 찾았어요.",
+          "caption": "아침 해 에서 이응을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -498,7 +498,7 @@
         {
           "order": 9,
           "at": 474,
-          "caption": "오 용사가 오 를 붙여 주었어요.",
+          "caption": "오 용사가 오를 붙여 주었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -508,7 +508,7 @@
         {
           "order": 10,
           "at": 508,
-          "caption": "자판기에 넣으니 라디오 이 나왔어요!",
+          "caption": "자판기에 넣으니 라디오가 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

@@ -48,7 +48,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "기역 은 어디에서 찾았나요?",
+          "q": "기역은 어디에서 찾았나요?",
           "at": 252,
           "options": [
             {
@@ -82,7 +82,7 @@
           ]
         },
         {
-          "q": "받침 니은 은 어디에서 찾았나요?",
+          "q": "받침 니은은 어디에서 찾았나요?",
           "at": 569,
           "options": [
             {
@@ -149,7 +149,7 @@
         {
           "say": "예",
           "prompt": "잘 듣고 같은 글자를 골라요",
-          "hint": "여 와 이 가 만나면 예 가 돼요",
+          "hint": "여와 이가 만나면 예가 돼요",
           "options": [
             {
               "label": "ㅖ",
@@ -230,7 +230,7 @@
           "position": "jung",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "예 을 모두 찾아 눌러 보세요",
+          "prompt": "예를 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅔ",
@@ -248,7 +248,7 @@
               "count": 3
             }
           ],
-          "missHint": "이건 예 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 예가 아니에요. 모양을 다시 보세요."
         }
       ]
     },
@@ -315,7 +315,7 @@
         {
           "target": "계단",
           "broken": "겨단",
-          "prompt": "모음이 반쪽만 남았어요! 예 로 고쳐 주세요.",
+          "prompt": "모음이 반쪽만 남았어요! 예로 고쳐 주세요.",
           "tray": [
             {
               "jamo": "ㅕ",
@@ -383,13 +383,13 @@
           "target": "ㅖ",
           "kind": "jamo",
           "position": "jung",
-          "prompt": "예 을 따라 써 보세요"
+          "prompt": "예를 따라 써 보세요"
         },
         {
           "target": "계",
           "kind": "syllable",
           "prompt": "'계' 을 따라 써 보세요",
-          "note": "여 와 이 가 만나 예 가 돼요."
+          "note": "여와 이가 만나 예가 돼요."
         },
         {
           "target": "계단",
@@ -440,7 +440,7 @@
         {
           "order": 4,
           "at": 252,
-          "caption": "가위 에서 기역 을 찾았어요.",
+          "caption": "가위 에서 기역을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -453,7 +453,7 @@
         {
           "order": 5,
           "at": 269,
-          "caption": "여 와 이 가 만나 예 가 되었어요.",
+          "caption": "여와 이가 만나 예가 되었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -463,7 +463,7 @@
         {
           "order": 6,
           "at": 429,
-          "caption": "돌고래 에서 디귿 을 찾았어요.",
+          "caption": "돌고래 에서 디귿을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -476,7 +476,7 @@
         {
           "order": 7,
           "at": 569,
-          "caption": "신발 에서 받침 니은 을 찾았어요.",
+          "caption": "신발 에서 받침 니은을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -489,7 +489,7 @@
         {
           "order": 8,
           "at": 634,
-          "caption": "자판기에 넣으니 계단 이 나왔어요!",
+          "caption": "자판기에 넣으니 계단이 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

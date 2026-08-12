@@ -45,7 +45,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "기역 은 어디에서 찾았나요?",
+          "q": "기역은 어디에서 찾았나요?",
           "at": 288,
           "options": [
             {
@@ -111,7 +111,7 @@
         {
           "say": "에",
           "prompt": "잘 듣고 같은 글자를 골라요",
-          "hint": "어 와 이 가 만나면 에 가 돼요",
+          "hint": "어와 이가 만나면 에가 돼요",
           "options": [
             {
               "label": "ㅔ",
@@ -192,7 +192,7 @@
           "position": "jung",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "에 을 모두 찾아 눌러 보세요",
+          "prompt": "에를 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅐ",
@@ -205,7 +205,7 @@
               "count": 3
             }
           ],
-          "missHint": "이건 에 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 에가 아니에요. 모양을 다시 보세요."
         }
       ]
     },
@@ -264,7 +264,7 @@
         {
           "target": "게",
           "broken": "거",
-          "prompt": "모음이 반쪽만 남았어요! 에 로 고쳐 주세요.",
+          "prompt": "모음이 반쪽만 남았어요! 에로 고쳐 주세요.",
           "tray": [
             {
               "jamo": "ㅓ",
@@ -335,13 +335,13 @@
           "target": "ㅔ",
           "kind": "jamo",
           "position": "jung",
-          "prompt": "에 을 따라 써 보세요"
+          "prompt": "에를 따라 써 보세요"
         },
         {
           "target": "게",
           "kind": "syllable",
           "prompt": "'게' 을 따라 써 보세요",
-          "note": "어 와 이 가 만나 에 가 돼요."
+          "note": "어와 이가 만나 에가 돼요."
         }
       ]
     },
@@ -386,7 +386,7 @@
         {
           "order": 4,
           "at": 288,
-          "caption": "국기 에서 기역 을 찾았어요.",
+          "caption": "국기 에서 기역을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -399,7 +399,7 @@
         {
           "order": 5,
           "at": 304,
-          "caption": "어 와 이 가 만나 에 가 되었어요.",
+          "caption": "어와 이가 만나 에가 되었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -409,7 +409,7 @@
         {
           "order": 6,
           "at": 419,
-          "caption": "자판기에 넣으니 게 이 나왔어요!",
+          "caption": "자판기에 넣으니 게가 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

@@ -45,7 +45,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "이응 은 어디에서 찾았나요?",
+          "q": "이응은 어디에서 찾았나요?",
           "at": 328,
           "options": [
             {
@@ -173,7 +173,7 @@
           "position": "jong",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "받침 니은지읒 을 모두 찾아 눌러 보세요",
+          "prompt": "받침 니은지읒을 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㄴ",
@@ -186,14 +186,14 @@
               "count": 3
             }
           ],
-          "missHint": "이건 니은지읒 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 니은지읒이 아니에요. 모양을 다시 보세요."
         },
         {
           "cols": 4,
           "showTarget": false,
           "target": "ㄵ",
           "position": "jong",
-          "prompt": "받침 니은지읒 이 있는 글자를 모두 찾아 눌러 보세요",
+          "prompt": "받침 니은지읒이 있는 글자를 모두 찾아 눌러 보세요",
           "cells": [
             {
               "ch": "앉",
@@ -333,7 +333,7 @@
           "target": "ㄵ",
           "kind": "jamo",
           "position": "jong",
-          "prompt": "받침 니은지읒 을 따라 써 보세요"
+          "prompt": "받침 니은지읒을 따라 써 보세요"
         },
         {
           "target": "아",
@@ -396,7 +396,7 @@
         {
           "order": 4,
           "at": 328,
-          "caption": "운동장 에서 이응 을 찾았어요.",
+          "caption": "운동장 에서 이응을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -409,7 +409,7 @@
         {
           "order": 5,
           "at": 565,
-          "caption": "받침 니은지읒 을 찾았어요.",
+          "caption": "받침 니은지읒을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -419,7 +419,7 @@
         {
           "order": 6,
           "at": 642,
-          "caption": "자판기에 넣으니 강아지 간식 이 나왔어요!",
+          "caption": "자판기에 넣으니 강아지 간식이 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

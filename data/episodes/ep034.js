@@ -48,7 +48,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "지읒 은 어디에서 찾았나요?",
+          "q": "지읒은 어디에서 찾았나요?",
           "at": 282,
           "options": [
             {
@@ -82,7 +82,7 @@
           ]
         },
         {
-          "q": "이응 은 어디에서 찾았나요?",
+          "q": "이응은 어디에서 찾았나요?",
           "at": 481,
           "options": [
             {
@@ -214,7 +214,7 @@
           "position": "jong",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "받침 히읗 을 모두 찾아 눌러 보세요",
+          "prompt": "받침 히읗을 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅇ",
@@ -232,14 +232,14 @@
               "count": 3
             }
           ],
-          "missHint": "이건 히읗 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 히읗이 아니에요. 모양을 다시 보세요."
         },
         {
           "cols": 4,
           "showTarget": false,
           "target": "ㅎ",
           "position": "jong",
-          "prompt": "받침 히읗 이 있는 글자를 모두 찾아 눌러 보세요",
+          "prompt": "받침 히읗이 있는 글자를 모두 찾아 눌러 보세요",
           "cells": [
             {
               "ch": "좋",
@@ -393,7 +393,7 @@
           "target": "ㅎ",
           "kind": "jamo",
           "position": "jong",
-          "prompt": "받침 히읗 을 따라 써 보세요"
+          "prompt": "받침 히읗을 따라 써 보세요"
         },
         {
           "target": "조",
@@ -456,7 +456,7 @@
         {
           "order": 4,
           "at": 282,
-          "caption": "장갑 에서 지읒 을 찾았어요.",
+          "caption": "장갑 에서 지읒을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -469,7 +469,7 @@
         {
           "order": 5,
           "at": 398,
-          "caption": "암탉 에서 받침 히읗 을 찾았어요.",
+          "caption": "암탉 에서 받침 히읗을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -482,7 +482,7 @@
         {
           "order": 6,
           "at": 481,
-          "caption": "아몬드 에서 이응 을 찾았어요.",
+          "caption": "아몬드 에서 이응을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -495,7 +495,7 @@
         {
           "order": 7,
           "at": 561,
-          "caption": "자판기에 넣으니 거울 이 나왔어요!",
+          "caption": "자판기에 넣으니 거울이 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

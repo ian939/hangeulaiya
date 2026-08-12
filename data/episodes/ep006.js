@@ -45,7 +45,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "이응 은 어디에서 찾았나요?",
+          "q": "이응은 어디에서 찾았나요?",
           "at": 357,
           "options": [
             {
@@ -76,7 +76,7 @@
           ]
         },
         {
-          "q": "기역 은 어디에서 찾았나요?",
+          "q": "기역은 어디에서 찾았나요?",
           "at": 451,
           "options": [
             {
@@ -206,7 +206,7 @@
           "position": "jung",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "요 을 모두 찾아 눌러 보세요",
+          "prompt": "요를 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅗ",
@@ -219,7 +219,7 @@
               "count": 3
             }
           ],
-          "missHint": "이건 요 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 요가 아니에요. 모양을 다시 보세요."
         }
       ]
     },
@@ -354,7 +354,7 @@
           "target": "ㅛ",
           "kind": "jamo",
           "position": "jung",
-          "prompt": "요 을 따라 써 보세요"
+          "prompt": "요를 따라 써 보세요"
         },
         {
           "target": "요",
@@ -411,7 +411,7 @@
         {
           "order": 4,
           "at": 357,
-          "caption": "요요 에서 이응 을 찾았어요.",
+          "caption": "요요 에서 이응을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -423,7 +423,7 @@
         {
           "order": 5,
           "at": 371,
-          "caption": "요 용사가 요 를 붙여 주었어요.",
+          "caption": "요 용사가 요를 붙여 주었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -433,7 +433,7 @@
         {
           "order": 6,
           "at": 451,
-          "caption": "기린 에서 기역 을 찾았어요.",
+          "caption": "기린 에서 기역을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -445,7 +445,7 @@
         {
           "order": 7,
           "at": 515,
-          "caption": "아 용사가 아 를 붙여 주었어요.",
+          "caption": "아 용사가 아를 붙여 주었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -455,7 +455,7 @@
         {
           "order": 8,
           "at": 558,
-          "caption": "자판기에 넣으니 요가 간판 이 나왔어요!",
+          "caption": "자판기에 넣으니 요가 간판이 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"

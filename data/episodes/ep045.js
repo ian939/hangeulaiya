@@ -48,7 +48,7 @@
       "shortCount": 2,
       "items": [
         {
-          "q": "이응 은 어디에서 찾았나요?",
+          "q": "이응은 어디에서 찾았나요?",
           "at": 315,
           "options": [
             {
@@ -118,7 +118,7 @@
         {
           "say": "왜",
           "prompt": "잘 듣고 같은 글자를 골라요",
-          "hint": "오 와 애 가 만나면 왜 가 돼요",
+          "hint": "오와 애가 만나면 왜가 돼요",
           "options": [
             {
               "label": "ㅙ",
@@ -195,7 +195,7 @@
           "position": "jung",
           "cols": 4,
           "targetCount": 4,
-          "prompt": "왜 을 모두 찾아 눌러 보세요",
+          "prompt": "왜를 모두 찾아 눌러 보세요",
           "distractors": [
             {
               "jamo": "ㅘ",
@@ -203,7 +203,7 @@
               "count": 3
             }
           ],
-          "missHint": "이건 왜 이 아니에요. 모양을 다시 보세요."
+          "missHint": "이건 왜가 아니에요. 모양을 다시 보세요."
         }
       ]
     },
@@ -254,7 +254,7 @@
         {
           "target": "왜",
           "broken": "오",
-          "prompt": "모음이 반쪽만 남았어요! 왜 로 고쳐 주세요.",
+          "prompt": "모음이 반쪽만 남았어요! 왜로 고쳐 주세요.",
           "tray": [
             {
               "jamo": "ㅗ",
@@ -322,13 +322,13 @@
           "target": "ㅙ",
           "kind": "jamo",
           "position": "jung",
-          "prompt": "왜 을 따라 써 보세요"
+          "prompt": "왜를 따라 써 보세요"
         },
         {
           "target": "왜",
           "kind": "syllable",
           "prompt": "'왜' 을 따라 써 보세요",
-          "note": "오 와 애 가 만나 왜 가 돼요."
+          "note": "오와 애가 만나 왜가 돼요."
         }
       ]
     },
@@ -373,7 +373,7 @@
         {
           "order": 4,
           "at": 315,
-          "caption": "오뚝이 에서 이응 을 찾았어요.",
+          "caption": "오뚝이 에서 이응을 찾았어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "place",
@@ -386,7 +386,7 @@
         {
           "order": 5,
           "at": 340,
-          "caption": "오 와 애 가 만나 왜 가 되었어요.",
+          "caption": "오와 애가 만나 왜가 되었어요.",
           "pic": {
             "kind": "scene",
             "sceneKind": "merge",
@@ -396,7 +396,7 @@
         {
           "order": 6,
           "at": 474,
-          "caption": "자판기에 넣으니 악어 이 나왔어요!",
+          "caption": "자판기에 넣으니 악어가 나왔어요!",
           "pic": {
             "kind": "scene",
             "sceneKind": "vending"
