@@ -88,7 +88,9 @@ for (const key of epKeys) {
   }
   if (!/^[\w-]{11}$/.test(ep.videoId || '')) fail(tag, `videoId 형식이 이상함: ${ep.videoId}`);
 
-  walk(ep.activities, null);
+  /* '낱말 고르기'(wordpair) 는 일부러 소리를 내지 않는다. 문장을 **읽는** 것이
+     과제라서 읽어 주면 아이가 귀로 답을 맞힌다. 그래서 음성 파일을 요구하지 않는다. */
+  walk(ep.activities.filter(function (a) { return a.type !== 'wordpair'; }), null);
   walk(ep.parent, null);
 
   // --- 누적 자모 규칙 ---

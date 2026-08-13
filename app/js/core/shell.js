@@ -831,7 +831,17 @@
     else out.appendChild(h('p', 'dev/selftest.js 가 로드되지 않았습니다.'));
   }
 
-  AIYA.shell = { boot: boot, go: go, youtubeEmbed: youtubeEmbed };
+  AIYA.shell = {
+    boot: boot, go: go, youtubeEmbed: youtubeEmbed,
+    /* 테스트용 — 화면에는 어떤 버튼으로도 나오지 않는다.
+     * 아이가 쓰는 '건너뛰기' 버튼은 없앴지만(막혔을 때가 아니라 하기 싫을 때
+     * 눌렀다), 자동 검사는 63편을 훑으려면 활동을 넘길 방법이 필요하다. */
+    devNext: function () {
+      if (!session) return false;
+      next({ stars: 0, skipped: true });
+      return true;
+    }
+  };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);

@@ -45,15 +45,18 @@
     return el;
   }
 
-  /** 두 번 연속 틀렸을 때 나오는 "나중에 같이 하자" 버튼 */
-  function skipRow(api, label) {
-    var row = h('div.skiprow', { style: { display: 'none' } },
-      h('button.btn.btn--ghost', {
-        type: 'button',
-        onclick: function () { api.skip(); }
-      }, label || '이건 나중에 같이 하자 →')
-    );
-    row.show = function () { row.style.display = 'flex'; };
+  /**
+   * 예전에 있던 "이건 나중에 같이 하자" 버튼의 자리.
+   *
+   * 버튼은 없앴다. 아이가 활동을 건너뛰는 길을 눈에 보이게 두면, 막혔을 때가
+   * 아니라 하기 싫을 때 누른다. 대신 각 활동이 **몇 번 틀리면 정답을 보여주고**
+   * 넘어가게 해서 아이가 화면에 갇히지 않게 한다. 그게 원래 목적이었다.
+   *
+   * 호출하는 곳을 한꺼번에 고치지 않아도 되게 껍데기는 남긴다.
+   */
+  function skipRow() {
+    var row = h('div.skiprow', { style: { display: 'none' } });
+    row.show = function () { /* 더는 아무것도 하지 않는다 */ };
     return row;
   }
 

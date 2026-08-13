@@ -46,8 +46,17 @@
       var misses = 0;
       var full = item.words.join(' ');
 
-      body.appendChild(B.prompt(item.prompt || '어절을 순서대로 놓아 문장을 만들어요', api,
-        { speakText: item.hint || '어절을 순서대로 놓아 문장을 만들어요' }));
+      /* 오답 어절이 섞여 있다는 것을 **먼저 알려 준다.**
+       * 알려주지 않으면 아이는 늘어놓은 어절이 다 쓰이는 줄 알고 순서만 고민한다.
+       * 그러면 오답을 눌렀을 때 왜 틀렸는지 이해하지 못한다. */
+      var decoyCount = (item.decoys || []).length;
+      var head = item.prompt || '어절을 순서대로 놓아 문장을 만들어요';
+      if (decoyCount) {
+        head += decoyCount === 1
+          ? '  —  틀린 낱말이 하나 섞여 있어요!'
+          : '  —  틀린 낱말이 ' + decoyCount + '개 섞여 있어요!';
+      }
+      body.appendChild(B.prompt(head, api, { speakText: head }));
       if (item.hint) body.appendChild(h('p.card__note', item.hint));
 
       var lineEl = h('div.sentline');
@@ -100,18 +109,26 @@
           setTimeout(function () { btn.classList.remove('sentchip--wrong'); }, 420);
           AIYA.store.recordConfusion(want, c.word, c.decoy ? 'wordSense' : 'wordOrder');
           var msg = c.decoy
-            ? '그 낱말은 이 문장에 없어요.'
+            ? "'" + c.word + "' 는 이 문장에 없는 낱말이에요."
             : '순서를 다시 생각해 볼까? 누가 먼저 나올까요?';
           fb.set(msg, false);
           api.say(msg);
-          wrongStreak++;
-          if (wrongStreak >= 2) skip.show();
+
+          /* 오답을 계속 누르면 다음에 올 어절을 반짝여 알려 준다.
+           * 예전에는 '나중에 하자' 버튼을 냈지만, 막혔을 때가 아니라 하기 싫을 때
+           * 눌러서 없앴다. 갇히지 않게 하는 목적은 이렇게 지킨다. */
+          if (misses >= 3) {
+            var hintBtn = trayEl.querySelector('[data-word="' + want + '"]');
+            if (hintBtn) hintBtn.classList.add('sentchip--hint');
+            fb.set('반짝이는 낱말이 다음 순서예요!', true);
+          }
           return;
         }
 
         placed.push(c.word);
         btn.disabled = true;
         btn.classList.add('sentchip--used');
+        btn.classList.remove('sentchip--hint');
         redraw();
 
         if (placed.length < item.words.length) {

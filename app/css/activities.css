@@ -98,7 +98,15 @@
   transition: transform 0.08s ease, border-color 0.15s ease, opacity 0.3s ease;
 }
 .option:active { transform: scale(0.97); }
-.option:hover { border-color: var(--brand); }
+/* 마우스가 있는 기기에서만 hover 를 켠다.
+   태블릿에서는 손가락을 뗀 뒤에도 hover 가 남아, 다음 문항의 같은 자리 버튼이
+   눌린 것처럼 강조돼 보인다. */
+@media (hover: hover) {
+  .option:hover { border-color: var(--brand); }
+}
+/* 키보드로 옮겨 다닐 때만 테두리를 보여준다. 손가락 탭에는 남지 않는다. */
+.option:focus { outline: none; }
+.option:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
 
 .option__label {
   position: relative;
@@ -373,6 +381,26 @@
 }
 .wordpair__sentence--filled { color: var(--good); }
 
+/* 정답 뒤 설명 — 아이가 다 읽고 '다음' 을 누르게 한다.
+   시간으로 맞추려 했더니 설명이 길 때 몇 초씩 멈춰 있어 고장난 것처럼 보였다. */
+.wordpair__after {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  align-items: flex-start;
+  padding: 16px 18px;
+  border-radius: var(--r-md);
+  background: var(--good-soft);
+  border: 3px solid var(--good);
+}
+.wordpair__afterText {
+  margin: 0;
+  font-size: clamp(17px, 2.6vw, 22px);
+  font-weight: 700;
+  line-height: 1.7;
+  word-break: keep-all;
+}
+
 .options--word { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
 .option--word { min-height: 96px; }
 .option__word {
@@ -431,6 +459,18 @@
   box-shadow: none;
 }
 .sentchip--wrong { animation: shake 0.4s ease; }
+/* 여러 번 막혔을 때 다음 순서를 반짝여 알려 준다 */
+.sentchip--hint {
+  border-color: var(--accent);
+  animation: sentblink 1.1s ease-in-out infinite;
+}
+@keyframes sentblink {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 112, 67, 0.55); }
+  50%      { box-shadow: 0 0 0 8px rgba(255, 112, 67, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sentchip--hint { animation: none; box-shadow: 0 0 0 4px rgba(255, 112, 67, 0.4); }
+}
 
 /* ---------- 장면 카드 ----------
    회차마다 삽화를 그리는 대신 장소 이모지 + 찾은 자모로 조립한다.
