@@ -528,3 +528,30 @@ body {
 .writing figcaption { font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
 
 .empty { color: var(--ink-soft); }
+
+/* ---------- 시즌2 낱말 카드 ----------
+   시즌1 은 글자(자모)를 모았고 시즌2 는 낱말을 모은다. 배운 것이 다르니
+   카드도 다르게 생겨야 한다 — 가로로 길고, 낱말을 크게 읽을 수 있게. */
+.wordalbum {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--gap);
+}
+.wordcard {
+  display: grid;
+  place-items: center;
+  min-height: 84px;
+  padding: 14px 12px;
+  border-radius: var(--r-md);
+  background: linear-gradient(160deg, #eef4ff, #f8fbff);
+  border: 3px solid var(--brand);
+  box-shadow: var(--shadow);
+}
+.wordcard__word {
+  font-size: clamp(20px, 3.4vw, 28px);
+  font-weight: 900;
+  color: var(--brand-dark);
+  word-break: keep-all;
+  text-align: center;
+}
+.reward .wordcard { animation: cardflip 0.55s ease-out both; min-width: 140px; }

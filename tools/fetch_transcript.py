@@ -88,7 +88,7 @@ def load_episodes(numbers: list[int] | None) -> list[dict]:
 
     if numbers is None:
         numbers = sorted(
-            int(p.stem[2:]) for p in (DATA / "episodes").glob("ep*.js")
+            int(p.stem[2:]) for p in (DATA / "episodes").glob("ep[0-9]*.js")
         )
 
     episodes = []

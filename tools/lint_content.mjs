@@ -40,7 +40,8 @@ for (const f of FILES) {
   new Function(src).call(globalThis);
 }
 
-const epFiles = readdirSync(join(ROOT, 'data/episodes')).filter((f) => /^ep\d+\.js$/.test(f)).sort();
+// 시즌2 파일은 s2ep029.js 처럼 생겼다. 예전 정규식(^ep\d+)이 이걸 놓쳤다.
+const epFiles = readdirSync(join(ROOT, 'data/episodes')).filter((f) => /^(s\d+)?ep\d+\.js$/.test(f)).sort();
 for (const f of epFiles) {
   const src = readFileSync(join(ROOT, 'data/episodes', f), 'utf8');
   new Function(src).call(globalThis);
@@ -94,12 +95,19 @@ for (const key of epKeys) {
   // N화 시점에 쓸 수 있는 카드 = N화 이전에 배운 것 + N화의 새 카드
   /* 기준은 '배정된 카드' 가 아니라 '그때까지 화면에 나온 자모' 다.
      방송은 목표 낱말을 만들려고 다른 자모도 그 회차에서 찾아와 소개한다
-     (3화 「어디」의 ㄷ 는 '다리' 에서 찾아온다). available() 이 그걸 포함한다. */
-  const allowedCards = new Set([
-    ...AIYA.data.available(ep.episode),
-    ...(ep.jamo?.new || []),
-    ...(ep.jamo?.seen || [])
-  ]);
+     (3화 「어디」의 ㄷ 는 '다리' 에서 찾아온다). available() 이 그걸 포함한다.
+
+     **시즌2 는 이 규칙을 적용하지 않는다.** 시즌2 는 글자를 다 배운 뒤 낱말의
+     뜻을 배우는 단원이라, 쓸 수 있는 글자를 제한하면 낱말을 고를 수가 없다.
+     ('비싸다' 를 쓰려면 쌍시옷이 필요한데 시즌1 38화에서 배운다) */
+  const isSeason2 = (ep.season || 1) >= 2;
+  const allowedCards = isSeason2
+    ? new Set(AIYA.data.cardOrder)
+    : new Set([
+        ...AIYA.data.available(ep.episode),
+        ...(ep.jamo?.new || []),
+        ...(ep.jamo?.seen || [])
+      ]);
 
   /** 글자 하나가 허용 범위 안인지. 받침은 '받침 X' 카드로 따로 따진다. */
   function checkSyllable(ch, where, { allowGuest = false } = {}) {

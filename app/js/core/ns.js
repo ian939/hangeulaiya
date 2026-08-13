@@ -15,10 +15,21 @@
   AIYA.episodes = AIYA.episodes || {};     // "021" -> 회차 데이터
   AIYA.data = AIYA.data || {};
 
-  /** 회차 데이터 파일이 스스로 등록한다. data/episodes/ep021.js 참고. */
+  /**
+   * 회차 데이터 파일이 스스로 등록한다. data/episodes/ep021.js 참고.
+   *
+   * 회차 키에 시즌을 넣는다. 시즌1 과 시즌2 에 같은 번호가 있어서
+   * (시즌1 29화 「낮」, 시즌2 29화 「싸다/비싸다」) 번호만 쓰면 덮어써진다.
+   *   시즌1 → "021"      (예전 키를 그대로 둔다. 아이 진도가 이 키로 저장돼 있다)
+   *   시즌2 → "s2-029"
+   */
+  AIYA.episodeKey = function (episode, season) {
+    var num = String(episode).padStart(3, '0');
+    return (!season || season === 1) ? num : 's' + season + '-' + num;
+  };
+
   AIYA.registerEpisode = function (ep) {
-    var key = String(ep.episode).padStart(3, '0');
-    AIYA.episodes[key] = ep;
+    AIYA.episodes[AIYA.episodeKey(ep.episode, ep.season)] = ep;
     return ep;
   };
 

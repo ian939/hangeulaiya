@@ -345,6 +345,93 @@
 }
 .seqcut__img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--r-sm); background: #eef1f8; }
 
+/* ---------- 시즌2: 낱말 고르기 ----------
+   문장을 읽고 빈칸에 맞는 낱말을 고른다. 선택지에 그림을 두지 않는다 —
+   그림이 있으면 문장을 안 읽고 그림만 보고 고르게 된다. */
+
+.wordpair__card {
+  padding: 20px 18px;
+  border-radius: var(--r-lg);
+  background: linear-gradient(160deg, #fffdf4, #fff8e2);
+  border: 3px solid #f0d68a;
+}
+.wordpair__sentence {
+  margin: 0;
+  font-size: clamp(21px, 3.6vw, 30px);
+  font-weight: 800;
+  line-height: 1.7;
+  word-break: keep-all;      /* 한국어는 어절 단위로 끊어야 읽기 쉽다 */
+}
+.wordpair__blank {
+  display: inline-grid;
+  place-items: center;
+  min-width: 2.4em;
+  margin: 0 0.15em;
+  padding: 0 0.3em;
+  border-bottom: 4px solid var(--accent);
+  color: var(--accent);
+}
+.wordpair__sentence--filled { color: var(--good); }
+
+.options--word { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.option--word { min-height: 96px; }
+.option__word {
+  font-size: clamp(24px, 4vw, 34px);
+  font-weight: 900;
+  word-break: keep-all;
+}
+
+/* ---------- 시즌2: 문장 만들기 ----------
+   어절을 순서대로 놓아 문장을 만든다. 자판기가 자모로 글자를 만들었듯이
+   여기서는 어절로 문장을 만든다. */
+
+.sentline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-height: 84px;
+  padding: 14px;
+  border-radius: var(--r-md);
+  background: #f4f7ff;
+  border: 3px dashed rgba(63, 99, 216, 0.35);
+}
+.sentline--done { border-style: solid; border-color: var(--good); background: var(--good-soft); }
+.sentline__ghost { color: var(--ink-soft); font-size: 16px; font-weight: 700; }
+
+.senttray {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.sentchip {
+  min-height: 60px;
+  padding: 12px 18px;
+  border: 3px solid var(--brand);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  font-family: inherit;
+  font-size: clamp(19px, 3vw, 26px);
+  font-weight: 800;
+  color: var(--brand-dark);
+  cursor: pointer;
+  touch-action: manipulation;
+  word-break: keep-all;
+  transition: transform 0.08s ease, opacity 0.2s ease;
+}
+.sentchip:active { transform: scale(0.95); }
+.sentchip--used { opacity: 0.25; pointer-events: none; }
+.sentchip--placed {
+  border-color: var(--good);
+  color: var(--good);
+  box-shadow: none;
+}
+.sentchip--wrong { animation: shake 0.4s ease; }
+
 /* ---------- 장면 카드 ----------
    회차마다 삽화를 그리는 대신 장소 이모지 + 찾은 자모로 조립한다.
    달라지는 건 장소와 자모뿐이라, 이 조합만으로 아이가 장면을 알아본다. */

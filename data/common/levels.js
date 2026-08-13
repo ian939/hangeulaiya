@@ -56,11 +56,23 @@
     }
   ];
 
-  /** 회차 번호가 속한 단계. */
-  AIYA.data.levelOf = function (episode) {
+  /* 시즌2 는 배우는 것이 달라서 단계를 따로 둔다.
+   * 시즌1 은 글자(자모)를 배웠고, 시즌2 는 낱말의 뜻을 배운다 —
+   * 반대말, 형태가 비슷한 낱말, 한 낱말의 여러 뜻. 글자를 다 읽는 아이의 다음 단계다. */
+  AIYA.data.levels.push({
+    id: 'words', order: 7, emoji: '💬', season: 2,
+    label: '낱말과 문장',
+    hint: '글자를 넘어 뜻으로',
+    desc: '반대말 · 형태가 비슷한 낱말 · 한 낱말의 여러 뜻 — 문장을 읽고 뜻을 가려요',
+    from: 29, to: 64
+  });
+
+  /** 회차가 속한 단계. */
+  AIYA.data.levelOf = function (episode, season) {
     var n = parseInt(episode, 10);
+    var s = season || 1;
     return AIYA.data.levels.filter(function (l) {
-      return n >= l.from && n <= l.to;
+      return (l.season || 1) === s && n >= l.from && n <= l.to;
     })[0] || null;
   };
 
@@ -68,9 +80,13 @@
   AIYA.data.episodesOfLevel = function (levelId) {
     var lv = AIYA.data.levels.filter(function (l) { return l.id === levelId; })[0];
     if (!lv) return [];
+    var season = lv.season || 1;
     return Object.keys(AIYA.episodes).filter(function (k) {
-      var n = parseInt(k, 10);
-      return n >= lv.from && n <= lv.to;
-    }).sort();
+      var ep = AIYA.episodes[k];
+      if ((ep.season || 1) !== season) return false;
+      return ep.episode >= lv.from && ep.episode <= lv.to;
+    }).sort(function (a, b) {
+      return AIYA.episodes[a].episode - AIYA.episodes[b].episode;
+    });
   };
 })(window.AIYA);

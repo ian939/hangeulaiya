@@ -71,11 +71,25 @@ KEY_RE = re.compile(
 # 낱말 자체도 읽어준다 (자판기·사라진 글자 활동)
 WORD_RE = re.compile(r"[\"']?\b(target|broken)\b[\"']?\s*:\s*([\"'])([^\"']+)\2")
 
+# 시즌2 '낱말 고르기' 의 문장. 빈칸을 '무엇' 으로 바꿔 읽어 준다
+# ("이 옷은 너무 ___." → "이 옷은 너무 무엇.")
+SENT_RE = re.compile(r"[\"']?\bsentence\b[\"']?\s*:\s*([\"'])((?:\\.|(?!\1).)*)\1")
+
 # 활동 엔진이 직접 말하는 고정 문구들 (회차 데이터에 없다)
 FIXED_LINES = [
     "잘했어! 👏", "맞았어! 🎉", "좋아! ⭐", "멋지다! 💪",
     "다시 한 번 들어볼까?", "음… 다른 걸 눌러 볼까?", "천천히 다시 볼까?",
     "맞았어요", "다시 들어볼까?", "다시 찾아볼까?", "다 찾았어! 👏",
+    # 시즌2 활동이 직접 말하는 고정 문구
+    "문장을 다시 읽어 볼까?",
+    "문장을 읽고 알맞은 낱말을 골라요",
+    "문장을 읽고 무슨 뜻인지 골라요",
+    "어절을 순서대로 놓아 문장을 만들어요",
+    "그 낱말은 이 문장에 없어요.",
+    "순서를 다시 생각해 볼까? 누가 먼저 나올까요?",
+    "반대말을 골라요",
+    "받침을 보고 골라요",
+    "오늘 배운 것을 떠올려 골라요",
     "완성! 잘했어 👏", "좋아! 다음 획이야.", "이렇게 그어 보자!",
     "조금 더 길게 그어 볼까?", "여기 점에서 시작해 봐!",
     "화살표 방향으로 그어 볼까?", "끝까지 쭉 이어 볼까?",
@@ -103,7 +117,8 @@ def unescape_js(s: str) -> str:
 def collect_lines() -> list[str]:
     lines: list[str] = []
 
-    for path in sorted((DATA / "episodes").glob("ep*.js")):
+    # 시즌2 파일은 s2ep029.js 라서 "ep*.js" 로는 잡히지 않는다
+    for path in sorted((DATA / "episodes").glob("*.js")):
         src = path.read_text(encoding="utf-8")
         for _, _, value in KEY_RE.findall(src):
             text = unescape_js(value).strip()
@@ -119,6 +134,12 @@ def collect_lines() -> list[str]:
             lines.append(word)
             lines.append(f"{word} 완성!")
             lines.append(f"{word}? 다시 해 볼까?")
+
+        # 시즌2 낱말 고르기 — 빈칸을 읽을 수 있는 말로 바꿔 둔다
+        for _, sent in SENT_RE.findall(src):
+            txt = unescape_js(sent).strip()
+            if "___" in txt:
+                lines.append(txt.replace("___", "무엇"))
 
     lines.extend(FIXED_LINES)
 

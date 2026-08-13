@@ -26,7 +26,10 @@
       version: 1,
       settings: Object.assign({}, DEFAULT_SETTINGS),
       episodes: {},   // "021": { activities: {id: {stars, attempts, at}}, done, watchedAt, course }
-      cards: {},      // "받침 ㄱ": 1
+      cards: {},      // "받침 ㄱ": 1   — 시즌1 한글 카드 (자모)
+      /* 시즌2 는 글자가 아니라 낱말을 배운다. 그래서 모으는 것도 낱말이다.
+       * 자모 카드와 섞으면 앨범이 뒤죽박죽이 되고, 무엇을 배웠는지도 흐려진다. */
+      words: {},      // "비싸다": 1    — 시즌2 낱말 카드
       badges: [],
       confusions: {}, // "ㄱ→ㅇ": 3   — 부모 리포트의 "헷갈린 짝"
       writings: {},   // "021:E1": dataURL (아이가 쓴 글자)
@@ -139,6 +142,7 @@
       settings: Object.assign({}, stored.settings || {}, state.settings || {}),
       episodes: mergeEpisodes(state.episodes, stored.episodes),
       cards: mergeCounts(state.cards, stored.cards),
+      words: mergeCounts(state.words, stored.words),
       badges: (stored.badges || []).concat(
         (state.badges || []).filter(function (x) {
           return (stored.badges || []).indexOf(x) < 0;
@@ -171,7 +175,8 @@
   }
 
   function ep(key) {
-    key = String(key).padStart(3, '0');
+    // 시즌2 키는 's2-029' 처럼 생겼다. 숫자 키만 세 자리로 맞춘다.
+    key = /^\d+$/.test(String(key)) ? String(key).padStart(3, '0') : String(key);
     if (!state.episodes[key]) {
       state.episodes[key] = { activities: {}, done: false, watchedAt: null, course: null };
     }
@@ -208,6 +213,17 @@
     save();
     return isNew;
   }
+
+  /** 시즌2 낱말 카드. 새로 얻었으면 true. */
+  function awardWord(word) {
+    if (!word) return false;
+    var isNew = !state.words[word];
+    state.words[word] = (state.words[word] || 0) + 1;
+    save();
+    return isNew;
+  }
+
+  function wordCount() { return Object.keys(state.words).length; }
 
   function awardBadge(badgeId) {
     if (!badgeId || state.badges.indexOf(badgeId) >= 0) return false;
@@ -301,6 +317,13 @@
           restored.push(c);
         }
       });
+      var words = (ep && ep.rewards && ep.rewards.words) || [];
+      words.forEach(function (w) {
+        if (!state.words[w]) {
+          state.words[w] = 1;
+          restored.push(w);
+        }
+      });
     });
     if (restored.length) flush();
     return restored;
@@ -340,6 +363,8 @@
     recordActivity: recordActivity,
     recordConfusion: recordConfusion,
     awardCard: awardCard,
+    awardWord: awardWord,
+    wordCount: wordCount,
     awardBadge: awardBadge,
     markWatched: markWatched,
     watchedToday: watchedToday,

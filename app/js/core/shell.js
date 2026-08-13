@@ -24,14 +24,14 @@
       AIYA.warn('카드 다시 채우기 실패', e);
     }
     /* 다른 창이 진도를 저장했을 때 화면을 다시 그린다.
-     놀이 중에는 건드리지 않는다 — 활동을 다시 그리면 아이가 하던 걸 잃는다. */
-  AIYA.onProgressChanged = function () {
-    if (session) return;
-    var r = parseHash();
-    if (r.screen === 'home' || r.screen === 'album' || r.screen === 'level') route();
-  };
+     * 놀이 중에는 건드리지 않는다 — 활동을 다시 그리면 아이가 하던 걸 잃는다. */
+    AIYA.onProgressChanged = function () {
+      if (session) return;
+      var r = parseHash();
+      if (r.screen === 'home' || r.screen === 'album' || r.screen === 'level') route();
+    };
 
-  window.addEventListener('hashchange', route);
+    window.addEventListener('hashchange', route);
     route();
   }
 
@@ -253,7 +253,7 @@
       h('div.home__foot',
         h('button.btn.btn--ghost', {
           type: 'button', onclick: function () { go('#/album'); }
-        }, '🗂 한글 카드 (' + AIYA.store.cardCount() + '장)'),
+        }, '🗂 카드 (' + AIYA.store.cardCount() + ' + ' + AIYA.store.wordCount() + '장)'),
         h('button.btn.btn--ghost', {
           type: 'button', onclick: function () { go('#/parent'); }
         }, '👪 부모님')
@@ -303,7 +303,7 @@
     if (sub === 'reward') return screenReward();
 
     var watched = AIYA.store.watchedToday(epKey);
-    var lv = AIYA.data.levelOf(ep.episode);
+    var lv = AIYA.data.levelOf(ep.episode, ep.season);
 
     render(h('div.screen.screen--episode',
       topbar(ep.episode + '화 ' + ep.title, lv ? '#/level/' + lv.id : '#/'),
@@ -536,6 +536,11 @@
     (ep.rewards && ep.rewards.cards || []).forEach(function (c) {
       if (AIYA.store.awardCard(c)) newCards.push(c);
     });
+    // 시즌2 는 자모가 아니라 낱말을 모은다
+    var newWords = [];
+    (ep.rewards && ep.rewards.words || []).forEach(function (w) {
+      if (AIYA.store.awardWord(w)) newWords.push(w);
+    });
     (ep.rewards && ep.rewards.badges || []).forEach(function (b) {
       AIYA.store.awardBadge(b.id || b);
     });
@@ -549,6 +554,12 @@
           h('p.reward__label', '새 한글 카드'),
           h('div.row.row--wrap', newCards.map(function (c) {
             return h('span.hangulcard', AIYA.dom.cardFace(c));
+          }))
+        ) : null,
+        newWords.length ? h('div.reward__cards',
+          h('p.reward__label', '새 낱말 카드'),
+          h('div.row.row--wrap', newWords.map(function (w) {
+            return h('span.wordcard', h('span.wordcard__word', w));
           }))
         ) : null,
         h('p.reward__note', ep.episode + '화 ' + ep.title + ' 끝!'),
@@ -572,14 +583,34 @@
     var owned = Object.keys(cards);
     var all = (AIYA.data.cardOrder || owned);
 
+    /* 시즌2 낱말 카드는 자모 카드와 섞지 않는다. 배운 것이 다르고
+     * (글자 vs 낱말의 뜻) 섞으면 무엇을 모았는지 흐려진다.
+     * 자모는 64칸이 정해져 있지만 낱말은 회차마다 늘어나니 모은 것만 보여준다. */
+    var words = Object.keys(AIYA.store.state.words || {}).sort();
+
     render(h('div.screen',
-      topbar('한글 카드 ' + owned.length + '장', '#/'),
-      h('div.album', all.map(function (c) {
-        var has = !!cards[c];
-        return h('div.albumslot' + (has ? '.albumslot--has' : ''),
-          h('span.albumslot__face', has ? AIYA.dom.cardFace(c) : '🔒')
-        );
-      }))
+      topbar('모은 카드', '#/'),
+
+      h('section.card',
+        h('h2.card__title', '한글 카드 ' + owned.length + ' / ' + all.length + '장'),
+        h('p.card__note', '시즌1 에서 배운 글자예요'),
+        h('div.album', all.map(function (c) {
+          var has = !!cards[c];
+          return h('div.albumslot' + (has ? '.albumslot--has' : ''),
+            h('span.albumslot__face', has ? AIYA.dom.cardFace(c) : '🔒')
+          );
+        }))
+      ),
+
+      h('section.card',
+        h('h2.card__title', '낱말 카드 ' + words.length + '장'),
+        h('p.card__note', '시즌2 에서 배운 낱말이에요'),
+        words.length
+          ? h('div.wordalbum', words.map(function (w) {
+              return h('div.wordcard', h('span.wordcard__word', w));
+            }))
+          : h('p.empty', '아직 없어요. 낱말과 문장 단계를 해 보세요!')
+      )
     ));
   }
 
@@ -745,7 +776,7 @@
             (e.course ? ' · ' + (e.course === 'short' ? '짧은 코스' : '전체 코스') : '')
           );
         })),
-        h('p.card__note', '한글 카드 ' + AIYA.store.cardCount() + '장 · 배지 ' + s.badges.length + '개')
+        h('p.card__note', '한글 카드 ' + AIYA.store.cardCount() + '장 · 낱말 카드 ' + AIYA.store.wordCount() + '장 · 배지 ' + s.badges.length + '개')
       ),
 
       h('section.card',
