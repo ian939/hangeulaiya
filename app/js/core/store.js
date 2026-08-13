@@ -279,6 +279,33 @@
     return value;
   }
 
+  /**
+   * 완료한 회차로부터 카드를 다시 채운다.
+   *
+   * 왜 필요한가: 창이 둘 열려 있을 때 오래된 창이 진도를 덮어쓰는 버그가 있었고
+   * (지금은 고쳤다) 그때 카드를 잃은 아이가 있다. 회차 완료 기록이 남아 있으면
+   * 그 회차가 주기로 한 카드는 아이가 정당하게 얻은 것이므로 되살려도 된다.
+   *
+   * 카드만 늘어나고 줄지 않는다. 여러 번 돌려도 결과가 같다.
+   * @returns {string[]} 되살린 카드 목록
+   */
+  function reconcileCards() {
+    var restored = [];
+    Object.keys(state.episodes).forEach(function (k) {
+      if (!state.episodes[k].done) return;
+      var ep = AIYA.episodes && AIYA.episodes[k];
+      var cards = (ep && ep.rewards && ep.rewards.cards) || [];
+      cards.forEach(function (c) {
+        if (!state.cards[c]) {
+          state.cards[c] = 1;
+          restored.push(c);
+        }
+      });
+    });
+    if (restored.length) flush();
+    return restored;
+  }
+
   /** 노는 아이가 바뀌었을 때 그 아이의 진도를 새로 읽는다.
    * 먼저 지금 아이의 진도를 확실히 저장한 다음 바꿔야 한다. */
   function switchProfile(id) {
@@ -326,7 +353,8 @@
     flush: flush,
     switchProfile: switchProfile,
     addProfile: addProfile,
-    removeProfile: removeProfile
+    removeProfile: removeProfile,
+    reconcileCards: reconcileCards
   };
 
   window.addEventListener('pagehide', function () { flush(); });

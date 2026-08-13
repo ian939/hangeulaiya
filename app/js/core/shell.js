@@ -11,6 +11,18 @@
   function boot() {
     root = document.getElementById('app');
     if (!root) { AIYA.warn('#app 을 찾을 수 없습니다.'); return; }
+
+    /* 완료한 회차의 카드를 다시 채운다.
+     * 창이 둘 열려 있을 때 진도가 덮어써지던 버그로 카드를 잃은 아이가 있다.
+     * 회차를 끝낸 기록이 남아 있으면 그 카드는 정당하게 얻은 것이라 되살린다.
+     * 카드만 늘고 줄지 않으며, 여러 번 돌려도 결과가 같다.
+     * 회차 데이터가 다 등록된 뒤(이 파일이 마지막이다)라야 rewards 를 볼 수 있다. */
+    try {
+      var back = AIYA.store.reconcileCards();
+      if (back.length) AIYA.warn('완료한 회차에서 카드 ' + back.length + '장을 되살렸습니다', back);
+    } catch (e) {
+      AIYA.warn('카드 다시 채우기 실패', e);
+    }
     /* 다른 창이 진도를 저장했을 때 화면을 다시 그린다.
      놀이 중에는 건드리지 않는다 — 활동을 다시 그리면 아이가 하던 걸 잃는다. */
   AIYA.onProgressChanged = function () {
@@ -573,6 +585,55 @@
 
   // ---------- 부모 화면 ----------
 
+  /**
+   * 카드 상태 점검.
+   *
+   * 창이 둘 열려 있을 때 진도가 덮어써지던 버그로 카드를 잃은 아이가 있다.
+   * 완료한 회차와 가진 카드를 맞춰 보고, 어긋나면 되살릴 수 있게 한다.
+   */
+  function cardHealthSection() {
+    var st = AIYA.store.state;
+    var doneKeys = Object.keys(st.episodes).filter(function (k) {
+      return st.episodes[k].done;
+    }).sort();
+
+    // 완료한 회차가 줘야 하는 카드
+    var should = {};
+    doneKeys.forEach(function (k) {
+      var ep = AIYA.episodes[k];
+      ((ep && ep.rewards && ep.rewards.cards) || []).forEach(function (c) { should[c] = 1; });
+    });
+    var missing = Object.keys(should).filter(function (c) { return !st.cards[c]; });
+    var have = Object.keys(st.cards).length;
+
+    return h('section.card',
+      h('h2.card__title', '카드 상태'),
+      h('p.card__note',
+        '가진 카드 ' + have + '장 · 끝낸 회차 ' + doneKeys.length + '편' +
+        (doneKeys.length ? ' (' + doneKeys.map(function (k) {
+          return parseInt(k, 10) + '화';
+        }).join(', ') + ')' : '')),
+      missing.length
+        ? h('div',
+            h('p.card__warn',
+              '끝낸 회차에 비해 카드 ' + missing.length + '장이 비어 있습니다: ' +
+              missing.join(', ')),
+            h('button.btn.btn--primary', {
+              type: 'button',
+              onclick: function () {
+                var back = AIYA.store.reconcileCards();
+                alert(back.length ? '카드 ' + back.length + '장을 되살렸습니다.'
+                                  : '되살릴 카드가 없습니다.');
+                route();
+              }
+            }, '카드 되살리기'))
+        : h('p.card__note', '끝낸 회차와 카드가 맞습니다.'),
+      h('p.card__note',
+        '카드가 이상하면 아래 내보내기로 진도 파일을 저장해 개발자에게 보내 주세요. ' +
+        '무엇이 어긋났는지 정확히 볼 수 있습니다.')
+    );
+  }
+
   function screenParent() {
     var s = AIYA.store.state;
     var conf = Object.keys(s.confusions)
@@ -645,6 +706,8 @@
           type: 'button', onclick: function () { go('#/who'); }
         }, '＋ 아이 추가 / 바꾸기')
       ),
+
+      cardHealthSection(),
 
       h('section.card',
         h('h2.card__title', '영상과 광고'),
