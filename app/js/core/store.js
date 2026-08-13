@@ -30,23 +30,129 @@
 
   var state = load();
 
+  function readRaw(store) {
+    try {
+      var raw = store.getItem(KEY);
+      if (!raw) return null;
+      var parsed = JSON.parse(raw);
+      return (parsed && parsed.version === 1) ? parsed : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function normalize(parsed) {
+    var out = Object.assign(blank(), parsed);
+    // 예전에 저장된 진도에는 settings 가 없다. 기본값을 채워 준다.
+    out.settings = Object.assign({}, DEFAULT_SETTINGS, parsed.settings || {});
+    return out;
+  }
+
   function load() {
     try {
-      var raw = localStorage.getItem(KEY) || sessionStorage.getItem(KEY);
-      if (!raw) return blank();
-      var parsed = JSON.parse(raw);
-      if (!parsed || parsed.version !== 1) return blank();
-      var merged = Object.assign(blank(), parsed);
-      // 예전에 저장된 진도에는 settings 가 없다. 기본값을 채워 준다.
-      merged.settings = Object.assign({}, DEFAULT_SETTINGS, parsed.settings || {});
-      return merged;
+      /* 둘 중 **더 새것** 을 고른다.
+       * 예전에는 localStorage 를 먼저 보고 있었는데, 다른 창이 오래된 상태로
+       * 덮어써 두면 그 오래된 것을 읽어 버렸다. */
+      var a = readRaw(localStorage);
+      var b = readRaw(sessionStorage);
+      var pick = a;
+      if (b && (!a || String(b.updatedAt || '') > String(a.updatedAt || ''))) pick = b;
+      if (!pick) return blank();
+      return normalize(pick);
     } catch (e) {
       AIYA.warn('진도를 읽지 못했습니다. 새로 시작합니다.', e);
       return blank();
     }
   }
 
-  function flush() {
+  /* ── 합치기 ────────────────────────────────────────────────
+   * 창(탭)이 둘 이상 열려 있으면 각 창이 메모리에 진도를 따로 들고 있다.
+   * 그래서 통째로 덮어쓰면 **먼저 열어 둔 창이 나중에 저장하는 순간
+   * 새 진도가 사라진다.** 아이패드에서 앱을 전환하기만 해도
+   * visibilitychange 로 저장이 돌기 때문에 실제로 자주 일어난다.
+   * (카드가 22장에서 16장으로 줄어든 것이 이 때문이었다.)
+   *
+   * 그래서 저장할 때마다 저장소에 있는 것과 합친다. 진도는 되돌아가지 않아야
+   * 하므로 모든 값을 '더 많은 쪽' 으로 맞춘다.
+   */
+  function mergeCounts(mine, theirs) {
+    var out = Object.assign({}, theirs || {});
+    Object.keys(mine || {}).forEach(function (k) {
+      out[k] = Math.max(out[k] || 0, mine[k] || 0);
+    });
+    return out;
+  }
+
+  function laterOf(a, b) {
+    if (!a) return b || null;
+    if (!b) return a;
+    return String(a) > String(b) ? a : b;
+  }
+
+  function mergeActivity(mine, theirs) {
+    if (!theirs) return mine;
+    if (!mine) return theirs;
+    return {
+      stars: Math.max(mine.stars || 0, theirs.stars || 0),
+      // 합치기를 여러 번 해도 값이 부풀지 않게 max 를 쓴다 (합이 아니다)
+      attempts: Math.max(mine.attempts || 0, theirs.attempts || 0),
+      correctFirstTry: Math.max(mine.correctFirstTry || 0, theirs.correctFirstTry || 0),
+      at: laterOf(mine.at, theirs.at)
+    };
+  }
+
+  function mergeEpisodes(mine, theirs) {
+    var out = {};
+    Object.keys(theirs || {}).concat(Object.keys(mine || {})).forEach(function (k) {
+      if (out[k]) return;
+      var m = (mine || {})[k];
+      var t = (theirs || {})[k];
+      if (!m || !t) { out[k] = m || t; return; }
+      var acts = {};
+      Object.keys(t.activities || {}).concat(Object.keys(m.activities || {}))
+        .forEach(function (id) {
+          if (acts[id]) return;
+          acts[id] = mergeActivity((m.activities || {})[id], (t.activities || {})[id]);
+        });
+      out[k] = {
+        activities: acts,
+        done: !!(m.done || t.done),
+        watchedAt: laterOf(m.watchedAt, t.watchedAt),
+        course: m.course || t.course
+      };
+    });
+    return out;
+  }
+
+  /** 저장소에 있는 진도와 합친 결과. 진도는 절대 줄지 않는다. */
+  function mergeWith(stored) {
+    if (!stored) return state;
+    return {
+      version: 1,
+      // 설정은 이 창에서 부모가 방금 바꾼 것일 수 있으니 내 것을 쓴다
+      settings: Object.assign({}, stored.settings || {}, state.settings || {}),
+      episodes: mergeEpisodes(state.episodes, stored.episodes),
+      cards: mergeCounts(state.cards, stored.cards),
+      badges: (stored.badges || []).concat(
+        (state.badges || []).filter(function (x) {
+          return (stored.badges || []).indexOf(x) < 0;
+        })),
+      confusions: mergeCounts(state.confusions, stored.confusions),
+      writings: Object.assign({}, stored.writings || {}, state.writings || {}),
+      updatedAt: new Date().toISOString()
+    };
+  }
+
+  /**
+   * @param {boolean} replace true 면 합치지 않고 통째로 바꾼다
+   *   (부모의 '불러오기'·'초기화' 는 일부러 되돌리는 동작이다)
+   */
+  function flush(replace) {
+    if (!replace) {
+      var stored = readRaw(localStorage);
+      // 내가 마지막으로 쓴 것과 다르면 다른 창이 손댄 것이다 → 합친다
+      if (stored) state = normalize(mergeWith(stored));
+    }
     state.updatedAt = new Date().toISOString();
     var raw = JSON.stringify(state);
     try { localStorage.setItem(KEY, raw); } catch (e) { AIYA.warn('localStorage 저장 실패', e); }
@@ -150,14 +256,14 @@
   function importJSON(text) {
     var parsed = JSON.parse(text);
     if (!parsed || parsed.version !== 1) throw new Error('진도 파일 형식이 아닙니다.');
-    state = Object.assign(blank(), parsed);
-    flush();
+    state = normalize(parsed);
+    flush(true);        // 일부러 되돌리는 동작이므로 합치지 않는다
     return state;
   }
 
   function reset() {
     state = blank();
-    flush();
+    flush(true);        // 초기화는 합치면 안 된다
   }
 
   function setting(key, value) {
@@ -187,8 +293,20 @@
     flush: flush
   };
 
-  window.addEventListener('pagehide', flush);
+  window.addEventListener('pagehide', function () { flush(); });
   document.addEventListener('visibilitychange', function () {
     if (document.visibilityState === 'hidden') flush();
+  });
+
+  /* 다른 창이 진도를 저장하면 그걸 즉시 받아들인다.
+   * 이게 없으면 이 창은 계속 오래된 진도를 들고 있다가, 다음에 저장할 때
+   * 상대 창의 진도를 되돌려 버린다(합치기가 있으니 잃지는 않지만,
+   * 화면에 보이는 카드 수가 창마다 달라 아이가 혼란스러워한다). */
+  window.addEventListener('storage', function (e) {
+    if (e.key !== KEY || !e.newValue) return;
+    var incoming = readRaw(localStorage);
+    if (!incoming) return;
+    state = normalize(mergeWith(incoming));
+    if (AIYA.onProgressChanged) AIYA.onProgressChanged();
   });
 })(window.AIYA);

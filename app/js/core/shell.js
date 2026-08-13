@@ -11,7 +11,15 @@
   function boot() {
     root = document.getElementById('app');
     if (!root) { AIYA.warn('#app 을 찾을 수 없습니다.'); return; }
-    window.addEventListener('hashchange', route);
+    /* 다른 창이 진도를 저장했을 때 화면을 다시 그린다.
+     놀이 중에는 건드리지 않는다 — 활동을 다시 그리면 아이가 하던 걸 잃는다. */
+  AIYA.onProgressChanged = function () {
+    if (session) return;
+    var r = parseHash();
+    if (r.screen === 'home' || r.screen === 'album' || r.screen === 'level') route();
+  };
+
+  window.addEventListener('hashchange', route);
     route();
   }
 
