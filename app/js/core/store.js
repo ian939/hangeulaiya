@@ -6,7 +6,13 @@
 (function (AIYA) {
   'use strict';
 
-  var KEY = 'aiya.progress.v1';
+  /* 저장 열쇠는 **지금 노는 아이마다 다르다.** 한 아이패드에서 두 아이가
+   * 놀 때 진도가 섞이지 않게 프로필별로 칸을 나눴다.
+   * app/js/core/profiles.js 가 열쇠를 정해 준다. */
+  function KEYOF() {
+    return AIYA.profiles.currentKey();
+  }
+
   var writeTimer = null;
 
   /* 부모가 정하는 설정.
@@ -32,7 +38,7 @@
 
   function readRaw(store) {
     try {
-      var raw = store.getItem(KEY);
+      var raw = store.getItem(KEYOF());
       if (!raw) return null;
       var parsed = JSON.parse(raw);
       return (parsed && parsed.version === 1) ? parsed : null;
@@ -155,8 +161,8 @@
     }
     state.updatedAt = new Date().toISOString();
     var raw = JSON.stringify(state);
-    try { localStorage.setItem(KEY, raw); } catch (e) { AIYA.warn('localStorage 저장 실패', e); }
-    try { sessionStorage.setItem(KEY, raw); } catch (e) { /* 무시 */ }
+    try { localStorage.setItem(KEYOF(), raw); } catch (e) { AIYA.warn('localStorage 저장 실패', e); }
+    try { sessionStorage.setItem(KEYOF(), raw); } catch (e) { /* 무시 */ }
   }
 
   function save() {
@@ -273,6 +279,33 @@
     return value;
   }
 
+  /** 노는 아이가 바뀌었을 때 그 아이의 진도를 새로 읽는다.
+   * 먼저 지금 아이의 진도를 확실히 저장한 다음 바꿔야 한다. */
+  function switchProfile(id) {
+    flush();                       // 지금 아이 진도를 마무리 저장
+    if (writeTimer) { clearTimeout(writeTimer); writeTimer = null; }
+    if (!AIYA.profiles.switchTo(id)) return false;
+    state = load();                // 열쇠가 바뀌었으니 그 아이 것을 읽는다
+    return true;
+  }
+
+  /** 아이를 새로 만들고 그 아이로 넘어간다. */
+  function addProfile(name, avatar) {
+    flush();
+    if (writeTimer) { clearTimeout(writeTimer); writeTimer = null; }
+    var p = AIYA.profiles.add(name, avatar);
+    state = load();                // 새 아이는 빈 진도로 시작한다
+    flush(true);
+    return p;
+  }
+
+  function removeProfile(id) {
+    var wasActive = AIYA.profiles.activeId() === id;
+    if (!AIYA.profiles.remove(id)) return false;
+    if (wasActive) state = load();
+    return true;
+  }
+
   AIYA.store = {
     get state() { return state; },
     setting: setting,
@@ -290,7 +323,10 @@
     importJSON: importJSON,
     reset: reset,
     save: save,
-    flush: flush
+    flush: flush,
+    switchProfile: switchProfile,
+    addProfile: addProfile,
+    removeProfile: removeProfile
   };
 
   window.addEventListener('pagehide', function () { flush(); });
@@ -303,7 +339,7 @@
    * 상대 창의 진도를 되돌려 버린다(합치기가 있으니 잃지는 않지만,
    * 화면에 보이는 카드 수가 창마다 달라 아이가 혼란스러워한다). */
   window.addEventListener('storage', function (e) {
-    if (e.key !== KEY || !e.newValue) return;
+    if (e.key !== KEYOF() || !e.newValue) return;
     var incoming = readRaw(localStorage);
     if (!incoming) return;
     state = normalize(mergeWith(incoming));

@@ -31,6 +31,7 @@
     if (!parts.length) return { screen: 'home' };
     if (parts[0] === 'ep') return { screen: 'episode', epKey: parts[1], sub: parts[2] };
     if (parts[0] === 'level') return { screen: 'level', levelId: parts[1] };
+    if (parts[0] === 'who') return { screen: 'who' };
     if (parts[0] === 'parent') return { screen: 'parent' };
     if (parts[0] === 'album') return { screen: 'album' };
     if (parts[0] === 'selftest') return { screen: 'selftest' };
@@ -48,6 +49,7 @@
     switch (r.screen) {
       case 'episode': return screenEpisode(r.epKey, r.sub);
       case 'level': return screenLevel(r.levelId);
+      case 'who': return screenWho(false);
       case 'parent': return screenParent();
       case 'album': return screenAlbum();
       case 'selftest': return screenSelfTest();
@@ -95,8 +97,95 @@
    * 어디를 눌러야 하는지 알기 어렵다. 단계를 먼저 고르게 하면
    * "한글을 처음 배워요" 로 시작할 수도, 하던 단계로 바로 갈 수도 있다.
    */
+  /**
+   * 누가 노는지 고르는 화면.
+   *
+   * 한 아이패드에서 두 아이가 놀면 진도가 섞인다. 형제나 친구가 번갈아 하면
+   * 서로의 카드가 뒤섞이고, 부모 리포트의 '헷갈린 짝' 도 쓸모없어진다.
+   * 그래서 아이마다 저장 칸을 따로 둔다.
+   *
+   * 글씨를 모르는 아이도 자기 자리를 찾을 수 있게 **캐릭터로 고르게** 한다.
+   */
+  function screenWho(mode) {
+    session = null;
+    var first = AIYA.profiles.needsSetup();
+
+    function card(p) {
+      var isNow = p.id === AIYA.profiles.activeId();
+      return h('button.whocard' + (isNow ? '.whocard--now' : ''), {
+        type: 'button',
+        onclick: function () {
+          AIYA.audio.unlock();
+          AIYA.store.switchProfile(p.id);
+          go('#/');
+        }
+      },
+        h('span.whocard__avatar', p.avatar),
+        h('span.whocard__name', p.name),
+        h('span.whocard__meta', isNow ? '지금 이 친구' : '누르면 바뀌어요')
+      );
+    }
+
+    /* 프로필 기능을 넣기 전에 쌓인 진도는 '첫 번째 친구' 로 옮겨진다.
+       그 이름을 그대로 두면 누구 진도인지 알 수 없으니 바꾸라고 알려 준다. */
+    var needsName = AIYA.profiles.list().some(function (p) {
+      return p.name === '첫 번째 친구';
+    });
+
+    var addBox = h('div.whoadd');
+    var nameInput = h('input.whoadd__name', {
+      type: 'text', placeholder: '이름 (예: 지온)', maxlength: '12'
+    });
+    var chosen = { avatar: AIYA.profiles.freeAvatars()[0] };
+    var avatarRow = h('div.whoadd__avatars',
+      AIYA.profiles.freeAvatars().map(function (a) {
+        var btn = h('button.avatarpick' + (a === chosen.avatar ? '.avatarpick--on' : ''), {
+          type: 'button',
+          onclick: function () {
+            chosen.avatar = a;
+            Array.prototype.forEach.call(
+              avatarRow.querySelectorAll('.avatarpick'),
+              function (x) { x.classList.remove('avatarpick--on'); });
+            btn.classList.add('avatarpick--on');
+          }
+        }, a);
+        return btn;
+      })
+    );
+    addBox.appendChild(h('p.whoadd__label', '새 친구 만들기'));
+    addBox.appendChild(avatarRow);
+    addBox.appendChild(h('div.row.row--wrap',
+      nameInput,
+      h('button.btn.btn--primary', {
+        type: 'button',
+        onclick: function () {
+          AIYA.audio.unlock();
+          AIYA.store.addProfile(nameInput.value, chosen.avatar);
+          go('#/');
+        }
+      }, '＋ 만들기')
+    ));
+
+    render(h('div.screen.screen--who',
+      first ? null : topbar('누가 놀고 있나요?', '#/'),
+      first ? h('header.home__head',
+        h('h1.home__title', '아이야 한글놀이'),
+        h('p.home__sub', '먼저 누가 놀지 정해요. 아이마다 카드와 진도가 따로 모여요.')
+      ) : null,
+      AIYA.profiles.list().length
+        ? h('div.whogrid', AIYA.profiles.list().map(card))
+        : null,
+      needsName ? h('p.card__note',
+        '지금까지 모은 카드는 "첫 번째 친구" 에 그대로 있습니다. ' +
+        '부모님 화면에서 이름을 아이 이름으로 바꿔 주세요.') : null,
+      addBox
+    ));
+  }
+
   function screenHome() {
     session = null;
+    // 아이가 아직 없으면 진도를 담을 곳도 없다. 먼저 정하게 한다.
+    if (AIYA.profiles.needsSetup()) return screenWho(true);
 
     var tiles = AIYA.data.levels.map(function (lv) {
       var keys = AIYA.data.episodesOfLevel(lv.id);
@@ -132,8 +221,18 @@
       );
     }).filter(Boolean);
 
+    var me = AIYA.profiles.active();
+
     render(h('div.screen.screen--home',
       h('header.home__head',
+        // 지금 누가 노는지 늘 보이게 둔다. 눌러서 바꿀 수 있다.
+        h('button.whochip', {
+          type: 'button', onclick: function () { go('#/who'); }
+        },
+          h('span.whochip__avatar', me ? me.avatar : '🙂'),
+          h('span.whochip__name', me ? me.name : '친구'),
+          h('span.whochip__swap', '바꾸기')
+        ),
         h('h1.home__title', '아이야 한글놀이'),
         h('p.home__sub', '한글용사 아이야를 보고, 놀면서 한글을 익혀요'),
         h('p.home__pick', '어디부터 할까요?')
@@ -496,9 +595,56 @@
     });
 
     var inApp = AIYA.store.setting('openInApp');
+    var me = AIYA.profiles.active();
 
     render(h('div.screen',
       topbar('부모님 화면', '#/'),
+
+      h('section.card',
+        h('h2.card__title', '아이별 진도'),
+        h('p.card__note',
+          '한 기기에서 여러 아이가 놀면 진도가 섞입니다. 아이마다 칸을 따로 두었습니다. ' +
+          '아래 목록에서 이름을 고치거나 지울 수 있습니다.'),
+        h('p.card__note.card__note--strong',
+          '아래 진도·헷갈린 짝·글씨는 모두 ' +
+          (me ? me.avatar + ' ' + me.name : '지금 아이') + ' 의 것입니다.'),
+        h('div.prolist', AIYA.profiles.list().map(function (p) {
+          var isNow = p.id === AIYA.profiles.activeId();
+          return h('div.prorow' + (isNow ? '.prorow--now' : ''),
+            h('span.prorow__avatar', p.avatar),
+            h('span.prorow__name', p.name + (isNow ? ' (지금)' : '')),
+            h('div.row.row--wrap',
+              isNow ? null : h('button.btn.btn--ghost.btn--sm', {
+                type: 'button',
+                onclick: function () { AIYA.store.switchProfile(p.id); route(); }
+              }, '이 아이 보기'),
+              h('button.btn.btn--ghost.btn--sm', {
+                type: 'button',
+                onclick: function () {
+                  var n = prompt('이름을 바꿉니다.', p.name);
+                  if (n) { AIYA.profiles.rename(p.id, n); route(); }
+                }
+              }, '이름'),
+              h('button.btn.btn--ghost.btn--sm', {
+                type: 'button',
+                onclick: function () {
+                  if (AIYA.profiles.list().length <= 1) {
+                    alert('마지막 아이는 지울 수 없습니다. 진도만 지우려면 아래 초기화를 쓰세요.');
+                    return;
+                  }
+                  if (confirm('"' + p.name + '" 의 진도를 모두 지웁니다. 되돌릴 수 없습니다. 계속할까요?')) {
+                    AIYA.store.removeProfile(p.id);
+                    route();
+                  }
+                }
+              }, '지우기')
+            )
+          );
+        })),
+        h('button.btn.btn--ghost', {
+          type: 'button', onclick: function () { go('#/who'); }
+        }, '＋ 아이 추가 / 바꾸기')
+      ),
 
       h('section.card',
         h('h2.card__title', '영상과 광고'),
