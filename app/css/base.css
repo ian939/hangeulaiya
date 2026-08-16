@@ -44,8 +44,29 @@ html, body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font);
+  /* 아이패드를 옆으로 눕혀도 글자 크기가 제멋대로 커지지 않게 */
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
+
+  /* 아이가 잘못 만져서 확대되지 않게.
+     manipulation 은 스크롤은 그대로 두고 **두 번 두드려 확대**만 막는다.
+     두 손가락 핀치는 CSS 로 막을 수 없어서 nozoom.js 가 따로 막는다. */
+  touch-action: manipulation;
+
+  /* 글자를 길게 눌렀을 때 나오는 선택 손잡이와 복사 풍선을 없앤다.
+     아이가 낱말을 누르다 자주 띄우는데, 놀이를 가린다. */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* 이름을 적는 칸은 골라서 지울 수 있어야 한다 */
+input, textarea {
+  -webkit-user-select: text;
+  user-select: text;
+  /* iOS 는 글자가 16px 보다 작은 칸을 누르면 화면을 확대한다 */
+  font-size: max(17px, 1rem);
 }
 
 body {

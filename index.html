@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8">
 <title>아이야 한글놀이</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<!-- 아이가 실수로 확대하지 못하게. iOS Safari 는 maximum-scale/user-scalable 을
+     무시하므로 app/js/core/nozoom.js 가 제스처를 직접 막는다. -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, minimum-scale=1, user-scalable=no">
 <meta name="description" content="한글용사 아이야를 보고 놀면서 받침을 익히는 태블릿 학습 놀이">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -27,6 +29,7 @@
 
 <!-- 기반 — profiles.js 가 store.js 보다 먼저다. 저장 열쇠를 정해 주기 때문이다. -->
 <script src="app/js/core/ns.js"></script>
+<script src="app/js/core/nozoom.js"></script>
 <script src="app/js/core/dom.js"></script>
 <script src="app/js/core/profiles.js"></script>
 <script src="app/js/core/store.js"></script>
